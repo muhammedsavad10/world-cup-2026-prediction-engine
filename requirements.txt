@@ -1,0 +1,8 @@
+streamlit
+numpy
+pandas
+networkx
+matplotlib
+scikit-learn
+groq
+duckduckgo_search

@@ -1,0 +1,4418 @@
+[
+  {
+    "team": "Mexico",
+    "coach": {
+      "name": "Javier Aguirre",
+      "years_in_charge": "1.9",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "High-press, defensive compactness, direct transition play."
+    },
+    "captain": {
+      "name": "Edson Álvarez",
+      "position": "Midfielder",
+      "club": "West Ham United"
+    },
+    "top_scorer": {
+      "name": "Raúl Jiménez",
+      "goals": "43"
+    },
+    "key_players": [
+      {
+        "name": "Santiago Giménez",
+        "position": "Forward",
+        "club": "Feyenoord",
+        "age": "25",
+        "caps": "32",
+        "goals": "4",
+        "market_value": "€40.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "26 goals, 6 assists in 38 club matches",
+        "recent_form_summary": "Strong finish in Eredivisie, regular starter for national team"
+      },
+      {
+        "name": "Edson Álvarez",
+        "position": "Midfielder",
+        "club": "West Ham United",
+        "age": "28",
+        "caps": "80",
+        "goals": "5",
+        "market_value": "€35.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "35 matches, 2 goals, 2 assists in Premier League",
+        "recent_form_summary": "Solid defensive presence, key link player for Mexico"
+      },
+      {
+        "name": "Luis Chávez",
+        "position": "Midfielder",
+        "club": "Dynamo Moscow",
+        "age": "30",
+        "caps": "35",
+        "goals": "4",
+        "market_value": "€9.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 6 assists in Russian Premier League",
+        "recent_form_summary": "Main set-piece taker, dangerous from distance"
+      },
+      {
+        "name": "Johan Vásquez",
+        "position": "Defender",
+        "club": "Genoa",
+        "age": "27",
+        "caps": "28",
+        "goals": "1",
+        "market_value": "€12.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "34 Serie A starts, strong defensive actions",
+        "recent_form_summary": "In outstanding club form, anchoring the national defense"
+      },
+      {
+        "name": "César Montes",
+        "position": "Defender",
+        "club": "Lokomotiv Moscow",
+        "age": "29",
+        "caps": "48",
+        "goals": "1",
+        "market_value": "€10.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "28 appearances in club competition",
+        "recent_form_summary": "Physically dominant in the air, starting center-back"
+      },
+      {
+        "name": "Luis Romo",
+        "position": "Midfielder",
+        "club": "Cruz Azul",
+        "age": "30",
+        "caps": "50",
+        "goals": "3",
+        "market_value": "€6.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Key player in Liga MX with 4 goals, 5 assists",
+        "recent_form_summary": "Brings physical strength and box-to-box utility"
+      }
+    ]
+  },
+  {
+    "team": "South Korea",
+    "coach": {
+      "name": "Hong Myung-bo",
+      "years_in_charge": "1.9",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "Tactical discipline, quick transition, reliance on dynamic wingers."
+    },
+    "captain": {
+      "name": "Son Heung-min",
+      "position": "Forward",
+      "club": "Tottenham Hotspur"
+    },
+    "top_scorer": {
+      "name": "Son Heung-min",
+      "goals": "48"
+    },
+    "key_players": [
+      {
+        "name": "Son Heung-min",
+        "position": "Forward",
+        "club": "Tottenham Hotspur",
+        "age": "33",
+        "caps": "127",
+        "goals": "48",
+        "market_value": "€30.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "15 goals, 9 assists in Premier League",
+        "recent_form_summary": "Top scorer and focal point of the national team attack"
+      },
+      {
+        "name": "Kim Min-jae",
+        "position": "Defender",
+        "club": "Bayern Munich",
+        "age": "29",
+        "caps": "65",
+        "goals": "4",
+        "market_value": "€45.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "32 starts for Bayern Munich in Bundesliga",
+        "recent_form_summary": "World-class defensive stopper, controls the high defensive line"
+      },
+      {
+        "name": "Lee Kang-in",
+        "position": "Midfielder",
+        "club": "Paris Saint-Germain",
+        "age": "25",
+        "caps": "30",
+        "goals": "9",
+        "market_value": "€25.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "5 goals, 7 assists in Ligue 1",
+        "recent_form_summary": "Primary playmaker, excellent dribbling and key passes"
+      },
+      {
+        "name": "Hwang Hee-chan",
+        "position": "Forward",
+        "club": "Wolverhampton Wanderers",
+        "age": "30",
+        "caps": "66",
+        "goals": "14",
+        "market_value": "€22.00m",
+        "injury_status": "Minor Knock",
+        "current_season_stats": "8 goals, 3 assists in Premier League",
+        "recent_form_summary": "High work-rate winger, key direct attacking threat"
+      },
+      {
+        "name": "Hwang In-beom",
+        "position": "Midfielder",
+        "club": "Feyenoord",
+        "age": "29",
+        "caps": "60",
+        "goals": "6",
+        "market_value": "€10.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "32 appearances, 4 goals, 5 assists in Eredivisie",
+        "recent_form_summary": "Controls tempo in midfield, highly consistent distributor"
+      },
+      {
+        "name": "Seol Young-woo",
+        "position": "Defender",
+        "club": "Crvena Zvezda",
+        "age": "27",
+        "caps": "20",
+        "goals": "0",
+        "market_value": "€4.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Regular starter in Serbian League & Champions League",
+        "recent_form_summary": "Versatile fullback who provides width and overlap support"
+      }
+    ]
+  },
+  {
+    "team": "South Africa",
+    "coach": {
+      "name": "Hugo Broos",
+      "years_in_charge": "5.1",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "Compact defensive organization, quick counter-attacking, integration of local talent."
+    },
+    "captain": {
+      "name": "Ronwen Williams",
+      "position": "Goalkeeper",
+      "club": "Mamelodi Sundowns"
+    },
+    "top_scorer": {
+      "name": "Percy Tau",
+      "goals": "16"
+    },
+    "key_players": [
+      {
+        "name": "Ronwen Williams",
+        "position": "Goalkeeper",
+        "club": "Mamelodi Sundowns",
+        "age": "34",
+        "caps": "45",
+        "goals": "0",
+        "market_value": "€1.20m",
+        "injury_status": "Healthy",
+        "current_season_stats": "18 clean sheets in domestic & CAF Champions League",
+        "recent_form_summary": "Heroic penalty saver, crucial organizer of Bafana Bafana defense"
+      },
+      {
+        "name": "Percy Tau",
+        "position": "Forward",
+        "club": "Al Ahly",
+        "age": "32",
+        "caps": "48",
+        "goals": "16",
+        "market_value": "€1.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 goals in Egyptian League & CAF Champions League",
+        "recent_form_summary": "Leading active top scorer, provides veteran attacking threat"
+      },
+      {
+        "name": "Teboho Mokoena",
+        "position": "Midfielder",
+        "club": "Mamelodi Sundowns",
+        "age": "29",
+        "caps": "36",
+        "goals": "6",
+        "market_value": "€2.20m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 8 assists in domestic campaign",
+        "recent_form_summary": "Dynamic box-to-box midfielder with exceptional long-range shooting"
+      },
+      {
+        "name": "Themba Zwane",
+        "position": "Midfielder",
+        "club": "Mamelodi Sundowns",
+        "age": "36",
+        "caps": "42",
+        "goals": "9",
+        "market_value": "€0.40m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 7 assists in all competitions",
+        "recent_form_summary": "Creative spark of the national team, veteran playmaker"
+      },
+      {
+        "name": "Aubrey Modiba",
+        "position": "Defender",
+        "club": "Mamelodi Sundowns",
+        "age": "30",
+        "caps": "28",
+        "goals": "3",
+        "market_value": "€1.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Regular left-back starter with 4 assists",
+        "recent_form_summary": "Consistent defensive duties, strong overlapping ability"
+      },
+      {
+        "name": "Khuliso Mudau",
+        "position": "Defender",
+        "club": "Mamelodi Sundowns",
+        "age": "31",
+        "caps": "21",
+        "goals": "1",
+        "market_value": "€1.20m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Solid domestic display with high interception rates",
+        "recent_form_summary": "Highly energetic right-back with great recovering pace"
+      }
+    ]
+  },
+  {
+    "team": "Czechia",
+    "coach": {
+      "name": "Miroslav Koubek",
+      "years_in_charge": "0.5",
+      "preferred_formation": "3-4-1-2",
+      "tactical_style": "High physical intensity, direct transitions, solid defensive low block."
+    },
+    "captain": {
+      "name": "Ladislav Krejčí",
+      "position": "Defender",
+      "club": "Wolverhampton Wanderers"
+    },
+    "top_scorer": {
+      "name": "Patrik Schick",
+      "goals": "20"
+    },
+    "key_players": [
+      {
+        "name": "Patrik Schick",
+        "position": "Forward",
+        "club": "Bayer Leverkusen",
+        "age": "30",
+        "caps": "42",
+        "goals": "20",
+        "market_value": "€22.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "14 goals, 3 assists in Bundesliga",
+        "recent_form_summary": "Primary attacking target-man, clinical finisher when service is provided"
+      },
+      {
+        "name": "Tomáš Souček",
+        "position": "Midfielder",
+        "club": "West Ham United",
+        "age": "31",
+        "caps": "76",
+        "goals": "13",
+        "market_value": "€30.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 2 assists in Premier League",
+        "recent_form_summary": "Midfield engine, crucial for set-pieces and defensive screen"
+      },
+      {
+        "name": "Ladislav Krejčí",
+        "position": "Defender",
+        "club": "Wolverhampton Wanderers",
+        "age": "27",
+        "caps": "20",
+        "goals": "3",
+        "market_value": "€10.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "24 Premier League starts, physically dominant",
+        "recent_form_summary": "National team captain, dominant in the air, starts as left center-back"
+      },
+      {
+        "name": "Vladimír Coufal",
+        "position": "Defender",
+        "club": "West Ham United",
+        "age": "33",
+        "caps": "48",
+        "goals": "1",
+        "market_value": "€2.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "28 appearances in Premier League",
+        "recent_form_summary": "Experienced right-back, provides crossing quality and defensive workrate"
+      },
+      {
+        "name": "Adam Hložek",
+        "position": "Forward",
+        "club": "Hoffenheim",
+        "age": "23",
+        "caps": "34",
+        "goals": "2",
+        "market_value": "€12.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 5 assists in Bundesliga",
+        "recent_form_summary": "Highly versatile forward, creative in final third"
+      },
+      {
+        "name": "Martin Vitík",
+        "position": "Defender",
+        "club": "Sparta Prague",
+        "age": "23",
+        "caps": "12",
+        "goals": "0",
+        "market_value": "€15.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Key starter in Sparta Prague title-winning campaign",
+        "recent_form_summary": "Highly rated young central defender with great speed and composure"
+      }
+    ]
+  },
+  {
+    "team": "Canada",
+    "coach": {
+      "name": "Jesse Marsch",
+      "years_in_charge": "2.1",
+      "preferred_formation": "4-2-2-2",
+      "tactical_style": "High-intensity vertical pressing, counter-pressing, rapid direct transition."
+    },
+    "captain": {
+      "name": "Alphonso Davies",
+      "position": "Defender",
+      "club": "Bayern Munich"
+    },
+    "top_scorer": {
+      "name": "Cyle Larin",
+      "goals": "29"
+    },
+    "key_players": [
+      {
+        "name": "Alphonso Davies",
+        "position": "Defender",
+        "club": "Bayern Munich",
+        "age": "25",
+        "caps": "56",
+        "goals": "15",
+        "market_value": "€50.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "3 goals, 6 assists in Bundesliga",
+        "recent_form_summary": "National team captain and emotional leader, dynamic overlapping fullback"
+      },
+      {
+        "name": "Jonathan David",
+        "position": "Forward",
+        "club": "Lille",
+        "age": "26",
+        "caps": "54",
+        "goals": "28",
+        "market_value": "€45.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "22 goals, 4 assists in Ligue 1",
+        "recent_form_summary": "Lethal finisher with superb link-up play, main attacking spearhead"
+      },
+      {
+        "name": "Cyle Larin",
+        "position": "Forward",
+        "club": "Mallorca",
+        "age": "31",
+        "caps": "68",
+        "goals": "29",
+        "market_value": "€8.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals in La Liga",
+        "recent_form_summary": "Canada's all-time top scorer, acts as physical target-man"
+      },
+      {
+        "name": "Stephen Eustáquio",
+        "position": "Midfielder",
+        "club": "Porto",
+        "age": "29",
+        "caps": "44",
+        "goals": "4",
+        "market_value": "€15.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "30 appearances, 3 goals, 4 assists in Primeira Liga",
+        "recent_form_summary": "Tactical heart of midfield, controls tempo and defensive transition"
+      },
+      {
+        "name": "Tajon Buchanan",
+        "position": "Midfielder",
+        "club": "Inter Milan",
+        "age": "27",
+        "caps": "42",
+        "goals": "4",
+        "market_value": "€10.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Rotational winger in Serie A after recovering from leg injury",
+        "recent_form_summary": "Brings explosive speed and direct dribbling threat out wide"
+      },
+      {
+        "name": "Alistair Johnston",
+        "position": "Defender",
+        "club": "Celtic",
+        "age": "27",
+        "caps": "48",
+        "goals": "1",
+        "market_value": "€9.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "36 appearances, 2 goals, 5 assists in Scottish Premiership",
+        "recent_form_summary": "Highly aggressive right-back, solid defensively and in duels"
+      }
+    ]
+  },
+  {
+    "team": "Bosnia and Herzegovina",
+    "coach": {
+      "name": "Sergej Barbarez",
+      "years_in_charge": "2.2",
+      "preferred_formation": "3-5-2",
+      "tactical_style": "Physical resilience, structural discipline, deep defensive block."
+    },
+    "captain": {
+      "name": "Edin Džeko",
+      "position": "Forward",
+      "club": "Fenerbahçe"
+    },
+    "top_scorer": {
+      "name": "Edin Džeko",
+      "goals": "65"
+    },
+    "key_players": [
+      {
+        "name": "Edin Džeko",
+        "position": "Forward",
+        "club": "Fenerbahçe",
+        "age": "40",
+        "caps": "134",
+        "goals": "65",
+        "market_value": "€2.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "18 goals, 5 assists in Turkish Süper Lig",
+        "recent_form_summary": "Veteran leader, legendary target man who remains clinical in the box"
+      },
+      {
+        "name": "Ermedin Demirović",
+        "position": "Forward",
+        "club": "Stuttgart",
+        "age": "28",
+        "caps": "26",
+        "goals": "2",
+        "market_value": "€28.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "16 goals, 6 assists in Bundesliga",
+        "recent_form_summary": "In fantastic club form, provides high pressing and secondary striker runs"
+      },
+      {
+        "name": "Amar Dedić",
+        "position": "Defender",
+        "club": "Salzburg",
+        "age": "23",
+        "caps": "15",
+        "goals": "1",
+        "market_value": "€20.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 5 assists in Austrian Bundesliga",
+        "recent_form_summary": "Highly energetic right wing-back, dangerous crosser and solid defender"
+      },
+      {
+        "name": "Sead Kolašinac",
+        "position": "Defender",
+        "club": "Atalanta",
+        "age": "32",
+        "caps": "58",
+        "goals": "0",
+        "market_value": "€8.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "30 starts in Serie A and European competition",
+        "recent_form_summary": "Provides physical aggression and experience as a left center-back"
+      },
+      {
+        "name": "Denis Huseinbašić",
+        "position": "Midfielder",
+        "club": "Köln",
+        "age": "24",
+        "caps": "8",
+        "goals": "0",
+        "market_value": "€5.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 5 assists in 2. Bundesliga",
+        "recent_form_summary": "Energetic presence in central midfield, link-up play contributor"
+      },
+      {
+        "name": "Benjamin Tahirović",
+        "position": "Midfielder",
+        "club": "Ajax",
+        "age": "23",
+        "caps": "12",
+        "goals": "0",
+        "market_value": "€6.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "22 appearances in Eredivisie",
+        "recent_form_summary": "Brings defensive screens and composure in central midfield"
+      }
+    ]
+  },
+  {
+    "team": "Qatar",
+    "coach": {
+      "name": "Julen Lopetegui",
+      "years_in_charge": "1.1",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "Possession-based positional play, structured press, patient build-up."
+    },
+    "captain": {
+      "name": "Hassan Al-Haydos",
+      "position": "Midfielder",
+      "club": "Al-Sadd"
+    },
+    "top_scorer": {
+      "name": "Almoez Ali",
+      "goals": "54"
+    },
+    "key_players": [
+      {
+        "name": "Akram Afif",
+        "position": "Forward",
+        "club": "Al-Sadd",
+        "age": "29",
+        "caps": "112",
+        "goals": "38",
+        "market_value": "€6.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "18 goals, 22 assists in Qatar Stars League",
+        "recent_form_summary": "Reigning Asian Player of the Year, main creative force out wide"
+      },
+      {
+        "name": "Almoez Ali",
+        "position": "Forward",
+        "club": "Al-Duhail",
+        "age": "29",
+        "caps": "110",
+        "goals": "54",
+        "market_value": "€3.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "14 goals, 5 assists in domestic league",
+        "recent_form_summary": "Qatar's all-time top scorer, dangerous target man in deep areas"
+      },
+      {
+        "name": "Hassan Al-Haydos",
+        "position": "Midfielder",
+        "club": "Al-Sadd",
+        "age": "35",
+        "caps": "182",
+        "goals": "41",
+        "market_value": "€0.80m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 10 assists in Stars League",
+        "recent_form_summary": "Returned from retirement, team captain, provides crucial tactical leadership"
+      },
+      {
+        "name": "Lucas Mendes",
+        "position": "Defender",
+        "club": "Al-Wakrah",
+        "age": "35",
+        "caps": "18",
+        "goals": "1",
+        "market_value": "€0.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Consistent defensive presence in Qatar Stars League",
+        "recent_form_summary": "Experienced left-footed center-back who anchors the defense"
+      },
+      {
+        "name": "Boualem Khoukhi",
+        "position": "Defender",
+        "club": "Al-Sadd",
+        "age": "35",
+        "caps": "118",
+        "goals": "21",
+        "market_value": "€0.75m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Regular starter, versatile defensive leader",
+        "recent_form_summary": "Excellent in aerial duels and building from the back"
+      },
+      {
+        "name": "Meshaal Barsham",
+        "position": "Goalkeeper",
+        "club": "Al-Sadd",
+        "age": "28",
+        "caps": "42",
+        "goals": "0",
+        "market_value": "€1.20m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 clean sheets in all competitions",
+        "recent_form_summary": "Outstanding reflex goalkeeper, first-choice in national team"
+      }
+    ]
+  },
+  {
+    "team": "Switzerland",
+    "coach": {
+      "name": "Murat Yakin",
+      "years_in_charge": "4.8",
+      "preferred_formation": "3-4-2-1",
+      "tactical_style": "Tactical flexibility, solid back three, possession retention, patient build-up."
+    },
+    "captain": {
+      "name": "Granit Xhaka",
+      "position": "Midfielder",
+      "club": "Bayer Leverkusen"
+    },
+    "top_scorer": {
+      "name": "Breel Embolo",
+      "goals": "15"
+    },
+    "key_players": [
+      {
+        "name": "Granit Xhaka",
+        "position": "Midfielder",
+        "club": "Bayer Leverkusen",
+        "age": "33",
+        "caps": "125",
+        "goals": "14",
+        "market_value": "€20.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "34 Bundesliga matches, 3 goals, 5 assists",
+        "recent_form_summary": "Captain, undisputed leader, orchestrates midfield play with elite passing"
+      },
+      {
+        "name": "Manuel Akanji",
+        "position": "Defender",
+        "club": "Manchester City",
+        "age": "30",
+        "caps": "65",
+        "goals": "3",
+        "market_value": "€45.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "32 appearances in Premier League under Guardiola",
+        "recent_form_summary": "Tactical genius at the back, can step into midfield during buildup"
+      },
+      {
+        "name": "Gregor Kobel",
+        "position": "Goalkeeper",
+        "club": "Borussia Dortmund",
+        "age": "28",
+        "caps": "12",
+        "goals": "0",
+        "market_value": "€40.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "14 clean sheets in Bundesliga & Champions League",
+        "recent_form_summary": "Emerged as undisputed No. 1 after Sommer's retirement, world-class stopper"
+      },
+      {
+        "name": "Breel Embolo",
+        "position": "Forward",
+        "club": "Monaco",
+        "age": "29",
+        "caps": "68",
+        "goals": "15",
+        "market_value": "€12.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "10 goals, 4 assists in Ligue 1",
+        "recent_form_summary": "Provides raw power, hold-up play, and pace upfront"
+      },
+      {
+        "name": "Remo Freuler",
+        "position": "Midfielder",
+        "club": "Bologna",
+        "age": "34",
+        "caps": "72",
+        "goals": "9",
+        "market_value": "€5.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "32 matches in Serie A, highly disciplined tactical engine",
+        "recent_form_summary": "Combines with Xhaka to form a highly resilient double-pivot"
+      },
+      {
+        "name": "Dan Ndoye",
+        "position": "Forward",
+        "club": "Bologna",
+        "age": "25",
+        "caps": "18",
+        "goals": "2",
+        "market_value": "€22.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 8 assists in Serie A",
+        "recent_form_summary": "Highly electric winger, stretches defensive lines with pace"
+      }
+    ]
+  },
+  {
+    "team": "Brazil",
+    "coach": {
+      "name": "Carlo Ancelotti",
+      "years_in_charge": "1.1",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "Fluid attacking movement, defensive balance, rapid transitions, individual freedom."
+    },
+    "captain": {
+      "name": "Marquinhos",
+      "position": "Defender",
+      "club": "Paris Saint-Germain"
+    },
+    "top_scorer": {
+      "name": "Neymar",
+      "goals": "79"
+    },
+    "key_players": [
+      {
+        "name": "Vinícius Júnior",
+        "position": "Forward",
+        "club": "Real Madrid",
+        "age": "25",
+        "caps": "35",
+        "goals": "5",
+        "market_value": "€180.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "24 goals, 11 assists in La Liga and Champions League",
+        "recent_form_summary": "Main target for Brazil out wide, Ballon d'Or contender"
+      },
+      {
+        "name": "Gabriel Martinelli",
+        "position": "Forward",
+        "club": "Arsenal",
+        "age": "24",
+        "caps": "23",
+        "goals": "4",
+        "market_value": "€45.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 6 assists in 35 Premier League matches",
+        "recent_form_summary": "Highly energetic winger, dynamic dribbler, provides width and high pressing depth for Brazil."
+      },
+      {
+        "name": "Bruno Guimarães",
+        "position": "Midfielder",
+        "club": "Newcastle United",
+        "age": "28",
+        "caps": "28",
+        "goals": "1",
+        "market_value": "€85.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "7 goals, 9 assists in Premier League",
+        "recent_form_summary": "Midfield controller, provides defensive stability and transitional passes"
+      },
+      {
+        "name": "Marquinhos",
+        "position": "Defender",
+        "club": "Paris Saint-Germain",
+        "age": "32",
+        "caps": "89",
+        "goals": "7",
+        "market_value": "€50.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "34 starts in Ligue 1 and Champions League",
+        "recent_form_summary": "Captain, experienced central defender with elite recovery pace"
+      },
+      {
+        "name": "Alisson Becker",
+        "position": "Goalkeeper",
+        "club": "Liverpool",
+        "age": "33",
+        "caps": "68",
+        "goals": "0",
+        "market_value": "€28.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "15 clean sheets in Premier League",
+        "recent_form_summary": "World-class shot stopper, key for building play from the back"
+      },
+      {
+        "name": "Neymar",
+        "position": "Forward",
+        "club": "Al-Hilal",
+        "age": "34",
+        "caps": "128",
+        "goals": "79",
+        "market_value": "€30.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 matches, 6 goals, 8 assists in Saudi Pro League after injury recovery",
+        "recent_form_summary": "Brazil's all-time top scorer, plays as central playmaker under Ancelotti"
+      }
+    ]
+  },
+  {
+    "team": "Morocco",
+    "coach": {
+      "name": "Mohamed Ouahbi",
+      "years_in_charge": "0.3",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "Direct transitions, technical wing play, defensive compactness, fluid pivots."
+    },
+    "captain": {
+      "name": "Achraf Hakimi",
+      "position": "Defender",
+      "club": "Paris Saint-Germain"
+    },
+    "top_scorer": {
+      "name": "Hakim Ziyech",
+      "goals": "25"
+    },
+    "key_players": [
+      {
+        "name": "Achraf Hakimi",
+        "position": "Defender",
+        "club": "Paris Saint-Germain",
+        "age": "27",
+        "caps": "78",
+        "goals": "9",
+        "market_value": "€60.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 8 assists in Ligue 1",
+        "recent_form_summary": "Captain, elite right-back with outstanding overlapping threat"
+      },
+      {
+        "name": "Brahim Díaz",
+        "position": "Forward",
+        "club": "Real Madrid",
+        "age": "26",
+        "caps": "10",
+        "goals": "3",
+        "market_value": "€40.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 goals, 8 assists in La Liga",
+        "recent_form_summary": "Dynamic attacking midfielder, creative core of the team"
+      },
+      {
+        "name": "Sofyan Amrabat",
+        "position": "Midfielder",
+        "club": "Fenerbahçe",
+        "age": "29",
+        "caps": "60",
+        "goals": "0",
+        "market_value": "€22.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "30 appearances in Süper Lig, robust defensive shield",
+        "recent_form_summary": "Combative defensive midfielder, crucial for breaking opponent play"
+      },
+      {
+        "name": "Yassine Bounou",
+        "position": "Goalkeeper",
+        "club": "Al-Hilal",
+        "age": "35",
+        "caps": "66",
+        "goals": "0",
+        "market_value": "€11.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "16 clean sheets in Saudi League",
+        "recent_form_summary": "Incredible reflexes, massive presence in high stakes national games"
+      },
+      {
+        "name": "Youssef En-Nesyri",
+        "position": "Forward",
+        "club": "Fenerbahçe",
+        "age": "29",
+        "caps": "72",
+        "goals": "20",
+        "market_value": "€20.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "14 goals, 3 assists in Turkish league",
+        "recent_form_summary": "Primary center-forward, excellent in aerial duels and defensive work"
+      },
+      {
+        "name": "Amine Adli",
+        "position": "Forward",
+        "club": "Bayer Leverkusen",
+        "age": "26",
+        "caps": "12",
+        "goals": "2",
+        "market_value": "€25.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 7 assists in Bundesliga",
+        "recent_form_summary": "Fast, technical winger with great link-up capacity out wide"
+      }
+    ]
+  },
+  {
+    "team": "Haiti",
+    "coach": {
+      "name": "Sébastien Migné",
+      "years_in_charge": "2.2",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "Direct attacking, physical presence, low block defensive counter-attack."
+    },
+    "captain": {
+      "name": "Johny Placide",
+      "position": "Goalkeeper",
+      "club": "Bastia"
+    },
+    "top_scorer": {
+      "name": "Duckens Nazon",
+      "goals": "30"
+    },
+    "key_players": [
+      {
+        "name": "Duckens Nazon",
+        "position": "Forward",
+        "club": "Kayserispor",
+        "age": "32",
+        "caps": "55",
+        "goals": "30",
+        "market_value": "€1.80m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 goals in Turkish Süper Lig",
+        "recent_form_summary": "Leading goal scorer, powerful target forward and penalty taker"
+      },
+      {
+        "name": "Frantzdy Pierrot",
+        "position": "Forward",
+        "club": "AEK Athens",
+        "age": "31",
+        "caps": "30",
+        "goals": "21",
+        "market_value": "€3.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "15 goals, 4 assists in Greek Super League",
+        "recent_form_summary": "Exceptional physical presence, great in target-man duties"
+      },
+      {
+        "name": "Johny Placide",
+        "position": "Goalkeeper",
+        "club": "Bastia",
+        "age": "38",
+        "caps": "65",
+        "goals": "0",
+        "market_value": "€0.20m",
+        "injury_status": "Healthy",
+        "current_season_stats": "10 clean sheets in Ligue 2",
+        "recent_form_summary": "Veteran captain, outstanding shot stopper under heavy pressure"
+      },
+      {
+        "name": "Carlens Arcus",
+        "position": "Defender",
+        "club": "Angers",
+        "age": "30",
+        "caps": "38",
+        "goals": "1",
+        "market_value": "€1.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "28 appearances in Ligue 1",
+        "recent_form_summary": "Reliable right-back with strong defensive recovery capabilities"
+      },
+      {
+        "name": "Danley Jean Jacques",
+        "position": "Midfielder",
+        "club": "Metz",
+        "age": "26",
+        "caps": "15",
+        "goals": "1",
+        "market_value": "€2.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "32 starts, high tackle success rate in Ligue 2",
+        "recent_form_summary": "Defensive anchor in midfield, high-energy ball winner"
+      },
+      {
+        "name": "Carl Sainte",
+        "position": "Midfielder",
+        "club": "Dallas",
+        "age": "23",
+        "caps": "12",
+        "goals": "0",
+        "market_value": "€0.80m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Rotational defensive midfielder in MLS",
+        "recent_form_summary": "Young player with high physical ceiling and interception rate"
+      }
+    ]
+  },
+  {
+    "team": "Scotland",
+    "coach": {
+      "name": "Steve Clarke",
+      "years_in_charge": "7.1",
+      "preferred_formation": "3-4-2-1",
+      "tactical_style": "Low-block defensive rigidity, direct transitions, wingback crosses, physical midfield."
+    },
+    "captain": {
+      "name": "Andy Robertson",
+      "position": "Defender",
+      "club": "Liverpool"
+    },
+    "top_scorer": {
+      "name": "John McGinn",
+      "goals": "18"
+    },
+    "key_players": [
+      {
+        "name": "Andy Robertson",
+        "position": "Defender",
+        "club": "Liverpool",
+        "age": "32",
+        "caps": "74",
+        "goals": "3",
+        "market_value": "€30.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "2 goals, 7 assists in Premier League",
+        "recent_form_summary": "Captain, elite crossing capability and indefatigable leader down left flank"
+      },
+      {
+        "name": "Scott McTominay",
+        "position": "Midfielder",
+        "club": "Napoli",
+        "age": "29",
+        "caps": "54",
+        "goals": "9",
+        "market_value": "€32.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 4 assists in Serie A under Conte",
+        "recent_form_summary": "Crucial goal threat from deep midfield runs, physical anchor"
+      },
+      {
+        "name": "John McGinn",
+        "position": "Midfielder",
+        "club": "Aston Villa",
+        "age": "31",
+        "caps": "68",
+        "goals": "18",
+        "market_value": "€28.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 8 assists in Premier League & Champions League",
+        "recent_form_summary": "Fierce combatant, chief creative spark in final third, top active scorer"
+      },
+      {
+        "name": "Billy Gilmour",
+        "position": "Midfielder",
+        "club": "Napoli",
+        "age": "24",
+        "caps": "32",
+        "goals": "2",
+        "market_value": "€18.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "34 appearances, 89% passing accuracy in Serie A",
+        "recent_form_summary": "Technically gifted deep playmaker, dictates tempo of team build-up"
+      },
+      {
+        "name": "Che Adams",
+        "position": "Forward",
+        "club": "Torino",
+        "age": "29",
+        "caps": "35",
+        "goals": "6",
+        "market_value": "€15.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 goals, 3 assists in Serie A",
+        "recent_form_summary": "Highly physical striker, excels in pressuring center-backs"
+      },
+      {
+        "name": "Lewis Ferguson",
+        "position": "Midfielder",
+        "club": "Bologna",
+        "age": "26",
+        "caps": "16",
+        "goals": "0",
+        "market_value": "€24.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Returned from knee injury to score 4 goals in late domestic season",
+        "recent_form_summary": "Highly intelligent offensive midfielder, dynamic penalty-box runs"
+      }
+    ]
+  },
+  {
+    "team": "United States",
+    "coach": {
+      "name": "Mauricio Pochettino",
+      "years_in_charge": "1.8",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "High pressing, structured positional build-up, vertical wing transitions."
+    },
+    "captain": {
+      "name": "Tim Ream",
+      "position": "Defender",
+      "club": "Charlotte FC"
+    },
+    "top_scorer": {
+      "name": "Christian Pulisic",
+      "goals": "30"
+    },
+    "key_players": [
+      {
+        "name": "Christian Pulisic",
+        "position": "Forward",
+        "club": "AC Milan",
+        "age": "27",
+        "caps": "70",
+        "goals": "30",
+        "market_value": "€40.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "14 goals, 8 assists in Serie A & Champions League",
+        "recent_form_summary": "Undisputed attacking star, highly clinical wing play"
+      },
+      {
+        "name": "Weston McKennie",
+        "position": "Midfielder",
+        "club": "Juventus",
+        "age": "27",
+        "caps": "56",
+        "goals": "11",
+        "market_value": "€28.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 7 assists in Serie A",
+        "recent_form_summary": "Dynamic box-to-box midfielder, incredible engine and aerial threat"
+      },
+      {
+        "name": "Antonee Robinson",
+        "position": "Defender",
+        "club": "Fulham",
+        "age": "28",
+        "caps": "46",
+        "goals": "4",
+        "market_value": "€25.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 assists, elite tackle metrics in Premier League",
+        "recent_form_summary": "In outstanding club form, provides relentless width on the left"
+      },
+      {
+        "name": "Yunus Musah",
+        "position": "Midfielder",
+        "club": "AC Milan",
+        "age": "23",
+        "caps": "38",
+        "goals": "0",
+        "market_value": "€22.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "28 matches in Serie A, high dribble success rates",
+        "recent_form_summary": "High press resistance, carrying utility in transitional play"
+      },
+      {
+        "name": "Folarin Balogun",
+        "position": "Forward",
+        "club": "Monaco",
+        "age": "24",
+        "caps": "20",
+        "goals": "5",
+        "market_value": "€30.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 goals, 3 assists in Ligue 1",
+        "recent_form_summary": "Primary center-forward with great movement behind defense"
+      },
+      {
+        "name": "Chris Richards",
+        "position": "Defender",
+        "club": "Crystal Palace",
+        "age": "26",
+        "caps": "22",
+        "goals": "1",
+        "market_value": "€14.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "26 starts in Premier League",
+        "recent_form_summary": "Main choice at center-back, composed distributor from the back"
+      }
+    ]
+  },
+  {
+    "team": "Paraguay",
+    "coach": {
+      "name": "Gustavo Alfaro",
+      "years_in_charge": "1.8",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "Extreme defensive solidity, deep low block, transition wing play, set-piece threat."
+    },
+    "captain": {
+      "name": "Gustavo Gómez",
+      "position": "Defender",
+      "club": "Palmeiras"
+    },
+    "top_scorer": {
+      "name": "Derlis González",
+      "goals": "9"
+    },
+    "key_players": [
+      {
+        "name": "Gustavo Gómez",
+        "position": "Defender",
+        "club": "Palmeiras",
+        "age": "33",
+        "caps": "74",
+        "goals": "4",
+        "market_value": "€7.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Consistent defensive stats in Serie A (Brazil)",
+        "recent_form_summary": "National team captain and defensive pillar, immense leadership"
+      },
+      {
+        "name": "Julio Enciso",
+        "position": "Forward",
+        "club": "Brighton & Hove Albion",
+        "age": "22",
+        "caps": "16",
+        "goals": "1",
+        "market_value": "€22.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 5 assists in Premier League",
+        "recent_form_summary": "Highly creative and unpredictable, main spark out wide"
+      },
+      {
+        "name": "Miguel Almirón",
+        "position": "Forward",
+        "club": "Newcastle United",
+        "age": "32",
+        "caps": "58",
+        "goals": "7",
+        "market_value": "€16.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 3 assists in Premier League",
+        "recent_form_summary": "High workrate winger, runs back to cover defense consistently"
+      },
+      {
+        "name": "Ramón Sosa",
+        "position": "Forward",
+        "club": "Nottingham Forest",
+        "age": "26",
+        "caps": "14",
+        "goals": "0",
+        "market_value": "€13.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 2 assists in Premier League out wide",
+        "recent_form_summary": "Explosive pace on the left flank, excels in counter-attacks"
+      },
+      {
+        "name": "Omar Alderete",
+        "position": "Defender",
+        "club": "Getafe",
+        "age": "29",
+        "caps": "25",
+        "goals": "1",
+        "market_value": "€8.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "32 starts in La Liga, strong tackler",
+        "recent_form_summary": "Forms a tough center-back partnership with Gustavo Gómez"
+      },
+      {
+        "name": "Diego Gómez",
+        "position": "Midfielder",
+        "club": "Inter Miami",
+        "age": "23",
+        "caps": "10",
+        "goals": "0",
+        "market_value": "€8.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 6 assists in MLS",
+        "recent_form_summary": "Combative box-to-box midfielder, high energy and late runs"
+      }
+    ]
+  },
+  {
+    "team": "Australia",
+    "coach": {
+      "name": "Tony Popovic",
+      "years_in_charge": "1.7",
+      "preferred_formation": "3-4-2-1",
+      "tactical_style": "Deep defensive discipline, rapid physical transitions, set-piece reliance."
+    },
+    "captain": {
+      "name": "Mathew Ryan",
+      "position": "Goalkeeper",
+      "club": "Roma"
+    },
+    "top_scorer": {
+      "name": "Mathew Leckie",
+      "goals": "14"
+    },
+    "key_players": [
+      {
+        "name": "Mathew Ryan",
+        "position": "Goalkeeper",
+        "club": "Roma",
+        "age": "34",
+        "caps": "94",
+        "goals": "0",
+        "market_value": "€1.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Rotational goalkeeper for Roma",
+        "recent_form_summary": "Experienced captain, crucial organizer of Socceroos' defensive line"
+      },
+      {
+        "name": "Jackson Irvine",
+        "position": "Midfielder",
+        "club": "St. Pauli",
+        "age": "33",
+        "caps": "69",
+        "goals": "11",
+        "market_value": "€2.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 5 assists in Bundesliga",
+        "recent_form_summary": "Midfield leader, dominant in aerial duels and box-to-box actions"
+      },
+      {
+        "name": "Harry Souttar",
+        "position": "Defender",
+        "club": "Sheffield United",
+        "age": "27",
+        "caps": "30",
+        "goals": "11",
+        "market_value": "€8.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "38 starts in EFL Championship",
+        "recent_form_summary": "Giant defender, main set-piece weapon (high international goal ratio)"
+      },
+      {
+        "name": "Craig Goodwin",
+        "position": "Forward",
+        "club": "Al-Wehda",
+        "age": "34",
+        "caps": "26",
+        "goals": "6",
+        "market_value": "€1.20m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 10 assists in Saudi Pro League",
+        "recent_form_summary": "Elite crosser and set-piece delivery specialist out wide"
+      },
+      {
+        "name": "Nestory Irankunda",
+        "position": "Forward",
+        "club": "Bayern Munich",
+        "age": "20",
+        "caps": "5",
+        "goals": "1",
+        "market_value": "€4.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Emerged as regular sub in Bayern's first team, stellar youth record",
+        "recent_form_summary": "Exceptional explosive pace and shooting power, wildcard off the bench"
+      },
+      {
+        "name": "Alessandro Circati",
+        "position": "Defender",
+        "club": "Parma",
+        "age": "22",
+        "caps": "6",
+        "goals": "0",
+        "market_value": "€8.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Composed starts in Serie A before and after injury",
+        "recent_form_summary": "Highly rated young ball-playing center back"
+      }
+    ]
+  },
+  {
+    "team": "Turkey",
+    "coach": {
+      "name": "Vincenzo Montella",
+      "years_in_charge": "2.7",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "Fluid attacking rotations, technical midfield control, high pressing intensity."
+    },
+    "captain": {
+      "name": "Hakan Çalhanoğlu",
+      "position": "Midfielder",
+      "club": "Inter Milan"
+    },
+    "top_scorer": {
+      "name": "Cenk Tosun",
+      "goals": "21"
+    },
+    "key_players": [
+      {
+        "name": "Hakan Çalhanoğlu",
+        "position": "Midfielder",
+        "club": "Inter Milan",
+        "age": "32",
+        "caps": "95",
+        "goals": "20",
+        "market_value": "€35.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 6 assists in Serie A",
+        "recent_form_summary": "Captain and tactical hub, world-class deep playmaker and penalty specialist"
+      },
+      {
+        "name": "Arda Güler",
+        "position": "Forward",
+        "club": "Real Madrid",
+        "age": "21",
+        "caps": "16",
+        "goals": "3",
+        "market_value": "€45.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 5 assists in La Liga in rotating appearances",
+        "recent_form_summary": "Extraordinary technical quality, chief creator in final third"
+      },
+      {
+        "name": "Kenan Yıldız",
+        "position": "Forward",
+        "club": "Juventus",
+        "age": "21",
+        "caps": "12",
+        "goals": "2",
+        "market_value": "€40.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "10 goals, 6 assists in Serie A, wearing No. 10",
+        "recent_form_summary": "Highly direct dribbler down the left wing, lethal cut-inside threat"
+      },
+      {
+        "name": "Ferdi Kadıoğlu",
+        "position": "Defender",
+        "club": "Brighton & Hove Albion",
+        "age": "26",
+        "caps": "24",
+        "goals": "1",
+        "market_value": "€30.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "30 appearances in Premier League, high tackle/interception rate",
+        "recent_form_summary": "Inverted fullback who plays on left and right, essential for buildup"
+      },
+      {
+        "name": "Barış Alper Yılmaz",
+        "position": "Forward",
+        "club": "Galatasaray",
+        "age": "26",
+        "caps": "22",
+        "goals": "3",
+        "market_value": "€20.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 goals, 8 assists in Süper Lig",
+        "recent_form_summary": "Extremely high physical work rate, plays as striker or winger"
+      },
+      {
+        "name": "Orkun Kökçü",
+        "position": "Midfielder",
+        "club": "Benfica",
+        "age": "25",
+        "caps": "35",
+        "goals": "2",
+        "market_value": "€28.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 10 assists in Primeira Liga",
+        "recent_form_summary": "Brings exceptional passing range and high-tempo distribution"
+      }
+    ]
+  },
+  {
+    "team": "Germany",
+    "coach": {
+      "name": "Julian Nagelsmann",
+      "years_in_charge": "2.7",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "Fluid positional rotation, high counter-press, inverted wingers, speed in transition."
+    },
+    "captain": {
+      "name": "Joshua Kimmich",
+      "position": "Midfielder",
+      "club": "Bayern Munich"
+    },
+    "top_scorer": {
+      "name": "Serge Gnabry",
+      "goals": "22"
+    },
+    "key_players": [
+      {
+        "name": "Florian Wirtz",
+        "position": "Midfielder",
+        "club": "Bayer Leverkusen",
+        "age": "23",
+        "caps": "26",
+        "goals": "4",
+        "market_value": "€130.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "18 goals, 16 assists in all competitions",
+        "recent_form_summary": "Exceptional pocket player, creates chances at a world-class level"
+      },
+      {
+        "name": "Jamal Musiala",
+        "position": "Midfielder",
+        "club": "Bayern Munich",
+        "age": "23",
+        "caps": "34",
+        "goals": "6",
+        "market_value": "€130.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "15 goals, 10 assists in Bundesliga",
+        "recent_form_summary": "Mesmerizing dribbler, core component of Germany's attacking midfield"
+      },
+      {
+        "name": "Joshua Kimmich",
+        "position": "Midfielder",
+        "club": "Bayern Munich",
+        "age": "31",
+        "caps": "90",
+        "goals": "6",
+        "market_value": "€50.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Starts at right-back/midfield, 8 assists in Bundesliga",
+        "recent_form_summary": "Captain, dictates build-up and sets the tempo"
+      },
+      {
+        "name": "Kai Havertz",
+        "position": "Forward",
+        "club": "Arsenal",
+        "age": "27",
+        "caps": "51",
+        "goals": "20",
+        "market_value": "€75.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "18 goals, 7 assists in Premier League",
+        "recent_form_summary": "Starts as focal center-forward, key for aerial link-up and pressing"
+      },
+      {
+        "name": "Antonio Rüdiger",
+        "position": "Defender",
+        "club": "Real Madrid",
+        "age": "33",
+        "caps": "74",
+        "goals": "3",
+        "market_value": "€25.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Defensive anchor for Real Madrid's domestic campaign",
+        "recent_form_summary": "Aggressive stopper, matches elite strikers with physical presence"
+      },
+      {
+        "name": "Nico Schlotterbeck",
+        "position": "Defender",
+        "club": "Borussia Dortmund",
+        "age": "26",
+        "caps": "18",
+        "goals": "0",
+        "market_value": "€40.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Regular starter with high passing accuracy from defense",
+        "recent_form_summary": "Forms the first-choice center back pair, key left-footed builder"
+      }
+    ]
+  },
+  {
+    "team": "Curacao",
+    "coach": {
+      "name": "Dick Advocaat",
+      "years_in_charge": "0.1",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "Structured defensive organization, rapid wing transition, utilizing Dutch-born players."
+    },
+    "captain": {
+      "name": "Leandro Bacuna",
+      "position": "Midfielder",
+      "club": "Groningen"
+    },
+    "top_scorer": {
+      "name": "Leandro Bacuna",
+      "goals": "14"
+    },
+    "key_players": [
+      {
+        "name": "Leandro Bacuna",
+        "position": "Midfielder",
+        "club": "Groningen",
+        "age": "34",
+        "caps": "52",
+        "goals": "14",
+        "market_value": "€0.60m",
+        "injury_status": "Healthy",
+        "current_season_stats": "3 goals, 4 assists in Eredivisie",
+        "recent_form_summary": "Captain, leading active scorer, anchor of Curacao midfield"
+      },
+      {
+        "name": "Juninho Bacuna",
+        "position": "Midfielder",
+        "club": "Al-Wahda",
+        "age": "28",
+        "caps": "32",
+        "goals": "5",
+        "market_value": "€3.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 8 assists in UAE Pro League",
+        "recent_form_summary": "Primary creative force, dangerous with long range shots"
+      },
+      {
+        "name": "Juriën Gaari",
+        "position": "Defender",
+        "club": "Al-Hazem",
+        "age": "32",
+        "caps": "38",
+        "goals": "1",
+        "market_value": "€0.80m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Regular appearances in Saudi First Division",
+        "recent_form_summary": "Highly reliable right-back who provides physical strength"
+      },
+      {
+        "name": "Kenji Gorré",
+        "position": "Forward",
+        "club": "Umm Salal",
+        "age": "31",
+        "caps": "22",
+        "goals": "3",
+        "market_value": "€1.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals in Qatari Stars League",
+        "recent_form_summary": "Fast winger, creates space with trickery down the flank"
+      },
+      {
+        "name": "Roshon van Eijma",
+        "position": "Defender",
+        "club": "Roda JC",
+        "age": "28",
+        "caps": "14",
+        "goals": "0",
+        "market_value": "€0.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "30 starts in Eerste Divisie",
+        "recent_form_summary": "Tall center-back, solid in aerial challenges and build-up"
+      },
+      {
+        "name": "Eloy Room",
+        "position": "Goalkeeper",
+        "club": "Vitesse",
+        "age": "37",
+        "caps": "48",
+        "goals": "0",
+        "market_value": "€0.30m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Experienced stopper in Eredivisie/Eerste Divisie",
+        "recent_form_summary": "Commanding keeper, legendary performance track record for Curacao"
+      }
+    ]
+  },
+  {
+    "team": "Ivory Coast",
+    "coach": {
+      "name": "Emerse Faé",
+      "years_in_charge": "2.4",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "Energetic midfield pressing, rapid transitions down the wings, solid low block."
+    },
+    "captain": {
+      "name": "Franck Kessié",
+      "position": "Midfielder",
+      "club": "Al-Ahli"
+    },
+    "top_scorer": {
+      "name": "Sébastien Haller",
+      "goals": "10"
+    },
+    "key_players": [
+      {
+        "name": "Franck Kessié",
+        "position": "Midfielder",
+        "club": "Al-Ahli",
+        "age": "29",
+        "caps": "80",
+        "goals": "11",
+        "market_value": "€18.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 5 assists in Saudi Pro League",
+        "recent_form_summary": "Captain, penalty specialist, brings elite box-to-box physicalpresence"
+      },
+      {
+        "name": "Sébastien Haller",
+        "position": "Forward",
+        "club": "Leganés",
+        "age": "31",
+        "caps": "26",
+        "goals": "10",
+        "market_value": "€8.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "10 goals in La Liga",
+        "recent_form_summary": "Crucial target striker, brings physical presence in key matches"
+      },
+      {
+        "name": "Simon Adingra",
+        "position": "Forward",
+        "club": "Brighton & Hove Albion",
+        "age": "24",
+        "caps": "16",
+        "goals": "2",
+        "market_value": "€30.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 7 assists in Premier League",
+        "recent_form_summary": "Dynamic, fast winger with excellent crossing and 1v1 threat"
+      },
+      {
+        "name": "Ousmane Diomande",
+        "position": "Defender",
+        "club": "Sporting CP",
+        "age": "22",
+        "caps": "12",
+        "goals": "0",
+        "market_value": "€40.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "32 matches in Primeira Liga, highly rated",
+        "recent_form_summary": "Fast, physical center-back with outstanding ball-carrying ability"
+      },
+      {
+        "name": "Evan Ndicka",
+        "position": "Defender",
+        "club": "Roma",
+        "age": "26",
+        "caps": "18",
+        "goals": "0",
+        "market_value": "€24.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "34 starts in Serie A",
+        "recent_form_summary": "Forms a rock-solid center-back pairing with Diomande"
+      },
+      {
+        "name": "Seko Fofana",
+        "position": "Midfielder",
+        "club": "Al-Ettifaq",
+        "age": "31",
+        "caps": "24",
+        "goals": "6",
+        "market_value": "€12.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 5 assists in Saudi Pro League",
+        "recent_form_summary": "Provides physical dominance and transition carries in midfield"
+      }
+    ]
+  },
+  {
+    "team": "Ecuador",
+    "coach": {
+      "name": "Sebastián Beccacece",
+      "years_in_charge": "1.8",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "High pressing, aggressive verticality, fluid overlapping wing-backs."
+    },
+    "captain": {
+      "name": "Enner Valencia",
+      "position": "Forward",
+      "club": "Internacional"
+    },
+    "top_scorer": {
+      "name": "Enner Valencia",
+      "goals": "43"
+    },
+    "key_players": [
+      {
+        "name": "Moisés Caicedo",
+        "position": "Midfielder",
+        "club": "Chelsea",
+        "age": "24",
+        "caps": "48",
+        "goals": "3",
+        "market_value": "€75.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "35 matches in Premier League, elite tackle/interception metrics",
+        "recent_form_summary": "Tactical heart of Ecuador, breaks up play and starts counters"
+      },
+      {
+        "name": "Piero Hincapié",
+        "position": "Defender",
+        "club": "Bayer Leverkusen",
+        "age": "24",
+        "caps": "38",
+        "goals": "2",
+        "market_value": "€40.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "30 starts in Bundesliga title campaign",
+        "recent_form_summary": "Elite left-sided defender, quick, aggressive and comfortable on ball"
+      },
+      {
+        "name": "Willian Pacho",
+        "position": "Defender",
+        "club": "Paris Saint-Germain",
+        "age": "24",
+        "caps": "18",
+        "goals": "2",
+        "market_value": "€45.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "32 appearances in Ligue 1 for PSG",
+        "recent_form_summary": "Forms a world-class young central defensive duo with Hincapié"
+      },
+      {
+        "name": "Enner Valencia",
+        "position": "Forward",
+        "club": "Internacional",
+        "age": "36",
+        "caps": "89",
+        "goals": "43",
+        "market_value": "€1.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 goals in Campeonato Brasileiro",
+        "recent_form_summary": "Captain, legendary goalscorer, main attacking outlet"
+      },
+      {
+        "name": "Pervis Estupiñán",
+        "position": "Defender",
+        "club": "Brighton & Hove Albion",
+        "age": "28",
+        "caps": "42",
+        "goals": "4",
+        "market_value": "€28.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "5 assists in Premier League out wide",
+        "recent_form_summary": "Exceptional left wing-back with elite overlapping runs"
+      },
+      {
+        "name": "Kendry Páez",
+        "position": "Midfielder",
+        "club": "Independiente del Valle",
+        "age": "19",
+        "caps": "15",
+        "goals": "2",
+        "market_value": "€12.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "10 goals, 8 assists in Ecuador domestic campaign",
+        "recent_form_summary": "Phenomenal young playmaker with elite vision and creative passing"
+      }
+    ]
+  },
+  {
+    "team": "Netherlands",
+    "coach": {
+      "name": "Ronald Koeman",
+      "years_in_charge": "3.4",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "Dynamic possession, overlapping fullbacks, fluid front three."
+    },
+    "captain": {
+      "name": "Virgil van Dijk",
+      "position": "Defender",
+      "club": "Liverpool"
+    },
+    "top_scorer": {
+      "name": "Memphis Depay",
+      "goals": "46"
+    },
+    "key_players": [
+      {
+        "name": "Virgil van Dijk",
+        "position": "Defender",
+        "club": "Liverpool",
+        "age": "34",
+        "caps": "77",
+        "goals": "9",
+        "market_value": "€30.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "36 starts in Premier League, elite defensive stats",
+        "recent_form_summary": "Captain, defensive leader, immense aerial presence"
+      },
+      {
+        "name": "Frenkie de Jong",
+        "position": "Midfielder",
+        "club": "Barcelona",
+        "age": "29",
+        "caps": "54",
+        "goals": "2",
+        "market_value": "€60.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "28 matches in La Liga after recovering from ankle issues",
+        "recent_form_summary": "Tactical hub, controls progression out of defense"
+      },
+      {
+        "name": "Cody Gakpo",
+        "position": "Forward",
+        "club": "Liverpool",
+        "age": "27",
+        "caps": "34",
+        "goals": "12",
+        "market_value": "€50.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "14 goals, 8 assists in Premier League",
+        "recent_form_summary": "Excels on left wing in national team, major goalscorer"
+      },
+      {
+        "name": "Tijjani Reijnders",
+        "position": "Midfielder",
+        "club": "Manchester City",
+        "age": "27",
+        "caps": "32",
+        "goals": "7",
+        "market_value": "€50.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 7 assists in all competitions",
+        "recent_form_summary": "First-choice midfielder for Manchester City, highly consistent distributor and box-to-box playmaker."
+      },
+      {
+        "name": "Ryan Gravenberch",
+        "position": "Midfielder",
+        "club": "Liverpool",
+        "age": "24",
+        "caps": "27",
+        "goals": "1",
+        "market_value": "€90.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 5 assists in 38 Premier League matches",
+        "recent_form_summary": "Outstanding defensive midfielder for Liverpool, key distributor and transitional pivot."
+      },
+      {
+        "name": "Bart Verbruggen",
+        "position": "Goalkeeper",
+        "club": "Brighton & Hove Albion",
+        "age": "23",
+        "caps": "15",
+        "goals": "0",
+        "market_value": "€22.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "26 appearances in Premier League",
+        "recent_form_summary": "First choice goalkeeper, excellent with his feet, high saving rate"
+      }
+    ]
+  },
+  {
+    "team": "Japan",
+    "coach": {
+      "name": "Hajime Moriyasu",
+      "years_in_charge": "7.8",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "High work-rate, organized medium block, rapid wing-focused transitions."
+    },
+    "captain": {
+      "name": "Ko Itakura",
+      "position": "Defender",
+      "club": "Borussia Mönchengladbach"
+    },
+    "top_scorer": {
+      "name": "Takumi Minamino",
+      "goals": "23"
+    },
+    "key_players": [
+      {
+        "name": "Ko Itakura",
+        "position": "Defender",
+        "club": "Borussia Mönchengladbach",
+        "age": "29",
+        "caps": "34",
+        "goals": "1",
+        "market_value": "€15.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "28 appearances in Bundesliga",
+        "recent_form_summary": "Newly appointed captain, defensive pillar, solid organizer"
+      },
+      {
+        "name": "Kaoru Mitoma",
+        "position": "Forward",
+        "club": "Brighton & Hove Albion",
+        "age": "29",
+        "caps": "24",
+        "goals": "8",
+        "market_value": "€45.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 9 assists in Premier League",
+        "recent_form_summary": "Explosive dribbler down left flank, primary threat in 1v1s"
+      },
+      {
+        "name": "Takefusa Kubo",
+        "position": "Forward",
+        "club": "Real Sociedad",
+        "age": "25",
+        "caps": "35",
+        "goals": "4",
+        "market_value": "€50.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "10 goals, 8 assists in La Liga",
+        "recent_form_summary": "Exceptional technical quality, drifts inside to create overloads"
+      },
+      {
+        "name": "Takumi Minamino",
+        "position": "Forward",
+        "club": "Monaco",
+        "age": "31",
+        "caps": "59",
+        "goals": "23",
+        "market_value": "€20.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 goals, 8 assists in Ligue 1",
+        "recent_form_summary": "Active top scorer, highly intelligent movement around box"
+      },
+      {
+        "name": "Hidemasa Morita",
+        "position": "Midfielder",
+        "club": "Sporting CP",
+        "age": "31",
+        "caps": "34",
+        "goals": "3",
+        "market_value": "€15.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "30 appearances in Liga Portugal title-winning season",
+        "recent_form_summary": "Key double-pivot distributor, tactical anchor in midfield"
+      },
+      {
+        "name": "Ritsu Doan",
+        "position": "Forward",
+        "club": "Freiburg",
+        "age": "27",
+        "caps": "50",
+        "goals": "10",
+        "market_value": "€18.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "9 goals, 4 assists in Bundesliga",
+        "recent_form_summary": "High intensity winger with strong track record in major tournaments"
+      }
+    ]
+  },
+  {
+    "team": "Sweden",
+    "coach": {
+      "name": "Graham Potter",
+      "years_in_charge": "0.7",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "Positional build-up, fluid wing rotations, defensive compactness."
+    },
+    "captain": {
+      "name": "Victor Lindelöf",
+      "position": "Defender",
+      "club": "Manchester United"
+    },
+    "top_scorer": {
+      "name": "Emil Forsberg",
+      "goals": "21"
+    },
+    "key_players": [
+      {
+        "name": "Alexander Isak",
+        "position": "Forward",
+        "club": "Newcastle United",
+        "age": "26",
+        "caps": "48",
+        "goals": "15",
+        "market_value": "€75.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "24 goals, 5 assists in Premier League",
+        "recent_form_summary": "Focal forward, world-class movement and finishing"
+      },
+      {
+        "name": "Viktor Gyökeres",
+        "position": "Forward",
+        "club": "Sporting CP",
+        "age": "28",
+        "caps": "22",
+        "goals": "6",
+        "market_value": "€70.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "38 goals, 15 assists in all club competitions",
+        "recent_form_summary": "Outstanding physical forward, runs channels and destroys defenses"
+      },
+      {
+        "name": "Dejan Kulusevski",
+        "position": "Forward",
+        "club": "Tottenham Hotspur",
+        "age": "26",
+        "caps": "39",
+        "goals": "3",
+        "market_value": "€55.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 10 assists in Premier League",
+        "recent_form_summary": "Drifts inside as playmaker, highly physical winger"
+      },
+      {
+        "name": "Victor Lindelöf",
+        "position": "Defender",
+        "club": "Manchester United",
+        "age": "31",
+        "caps": "68",
+        "goals": "3",
+        "market_value": "€15.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Rotational defender for club, starts in national team",
+        "recent_form_summary": "Captain, experienced center-back, composed builder"
+      },
+      {
+        "name": "Hugo Larsson",
+        "position": "Midfielder",
+        "club": "Eintracht Frankfurt",
+        "age": "21",
+        "caps": "8",
+        "goals": "0",
+        "market_value": "€28.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "32 starts in Bundesliga, highly composed",
+        "recent_form_summary": "Young midfield metronome, high passing accuracy"
+      },
+      {
+        "name": "Emil Forsberg",
+        "position": "Forward",
+        "club": "New York Red Bulls",
+        "age": "34",
+        "caps": "86",
+        "goals": "21",
+        "market_value": "€5.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 10 assists in MLS",
+        "recent_form_summary": "Veteran creator, active top scorer, clutch set-piece taker"
+      }
+    ]
+  },
+  {
+    "team": "Tunisia",
+    "coach": {
+      "name": "Sabri Lamouchi",
+      "years_in_charge": "0.4",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "Balanced defensive block, quick counter-attacks, technical midfield control."
+    },
+    "captain": {
+      "name": "Ellyes Skhiri",
+      "position": "Midfielder",
+      "club": "Eintracht Frankfurt"
+    },
+    "top_scorer": {
+      "name": "Youssef Msakni",
+      "goals": "23"
+    },
+    "key_players": [
+      {
+        "name": "Ellyes Skhiri",
+        "position": "Midfielder",
+        "club": "Eintracht Frankfurt",
+        "age": "31",
+        "caps": "65",
+        "goals": "3",
+        "market_value": "€13.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "28 matches in Bundesliga, high distance covered",
+        "recent_form_summary": "Captain, screens defense, vital for transitions"
+      },
+      {
+        "name": "Youssef Msakni",
+        "position": "Forward",
+        "club": "Al-Arabi",
+        "age": "35",
+        "caps": "100",
+        "goals": "23",
+        "market_value": "€1.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "14 goals, 6 assists in Qatari League",
+        "recent_form_summary": "Veteran talisman, dangerous cutting inside from the left"
+      },
+      {
+        "name": "Hannibal Mejbri",
+        "position": "Midfielder",
+        "club": "Burnley",
+        "age": "23",
+        "caps": "27",
+        "goals": "0",
+        "market_value": "€9.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "34 appearances, 4 goals, 6 assists in EFL Championship",
+        "recent_form_summary": "Aggressive, high-pressing midfielder with great energy out wide/center"
+      },
+      {
+        "name": "Montassar Talbi",
+        "position": "Defender",
+        "club": "Lorient",
+        "age": "28",
+        "caps": "40",
+        "goals": "2",
+        "market_value": "€8.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "34 appearances in domestic campaign",
+        "recent_form_summary": "Strong center-back, dominates aerial duels, regular starter"
+      },
+      {
+        "name": "Aïssa Laïdouni",
+        "position": "Midfielder",
+        "club": "Al-Wakrah",
+        "age": "29",
+        "caps": "42",
+        "goals": "2",
+        "market_value": "€6.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Solid midfield presence in Qatar Stars League",
+        "recent_form_summary": "Highly combative ball-winner, partner to Skhiri"
+      },
+      {
+        "name": "Elias Achouri",
+        "position": "Forward",
+        "club": "Copenhagen",
+        "age": "27",
+        "caps": "15",
+        "goals": "1",
+        "market_value": "€4.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 12 assists in Danish Superliga",
+        "recent_form_summary": "Fast winger, primary provider of crosses for Tunisian strikers"
+      }
+    ]
+  },
+  {
+    "team": "Belgium",
+    "coach": {
+      "name": "Rudi Garcia",
+      "years_in_charge": "1.4",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "Possession-based control, high-intensity transition, fluid fullbacks."
+    },
+    "captain": {
+      "name": "Youri Tielemans",
+      "position": "Midfielder",
+      "club": "Aston Villa"
+    },
+    "top_scorer": {
+      "name": "Romelu Lukaku",
+      "goals": "85"
+    },
+    "key_players": [
+      {
+        "name": "Kevin De Bruyne",
+        "position": "Midfielder",
+        "club": "Manchester City",
+        "age": "34",
+        "caps": "105",
+        "goals": "28",
+        "market_value": "€30.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 18 assists in Premier League",
+        "recent_form_summary": "Creative genius, orchestrates Belgium's final-third attacking play"
+      },
+      {
+        "name": "Romelu Lukaku",
+        "position": "Forward",
+        "club": "Napoli",
+        "age": "33",
+        "caps": "118",
+        "goals": "85",
+        "market_value": "€25.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "20 goals, 6 assists in Serie A under Conte",
+        "recent_form_summary": "Leading goalscorer, physical focal point upfront"
+      },
+      {
+        "name": "Youri Tielemans",
+        "position": "Midfielder",
+        "club": "Aston Villa",
+        "age": "29",
+        "caps": "70",
+        "goals": "8",
+        "market_value": "€30.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 8 assists in Premier League",
+        "recent_form_summary": "Captain, controls midfield buildup, excellent passing distribution"
+      },
+      {
+        "name": "Jérémy Doku",
+        "position": "Forward",
+        "club": "Manchester City",
+        "age": "24",
+        "caps": "26",
+        "goals": "2",
+        "market_value": "€65.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "7 goals, 10 assists in Premier League out wide",
+        "recent_form_summary": "Highly explosive dribbler, stretches backlines out wide"
+      },
+      {
+        "name": "Amadou Onana",
+        "position": "Midfielder",
+        "club": "Aston Villa",
+        "age": "24",
+        "caps": "18",
+        "goals": "0",
+        "market_value": "€50.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "34 starts, high tackle success rate in Premier League",
+        "recent_form_summary": "Physical midfield anchor, covers ground quickly in defense"
+      },
+      {
+        "name": "Loïs Openda",
+        "position": "Forward",
+        "club": "RB Leipzig",
+        "age": "26",
+        "caps": "22",
+        "goals": "4",
+        "market_value": "€60.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "24 goals, 6 assists in Bundesliga",
+        "recent_form_summary": "Pacey backup or partner to Lukaku, highly clinical inside box"
+      }
+    ]
+  },
+  {
+    "team": "Egypt",
+    "coach": {
+      "name": "Hossam Hassan",
+      "years_in_charge": "2.3",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "Direct attacking transitions, high pressing, heavy reliance on inside wingers."
+    },
+    "captain": {
+      "name": "Mohamed Salah",
+      "position": "Forward",
+      "club": "Liverpool"
+    },
+    "top_scorer": {
+      "name": "Mohamed Salah",
+      "goals": "57"
+    },
+    "key_players": [
+      {
+        "name": "Mohamed Salah",
+        "position": "Forward",
+        "club": "Liverpool",
+        "age": "33",
+        "caps": "100",
+        "goals": "57",
+        "market_value": "€55.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "25 goals, 14 assists in Premier League",
+        "recent_form_summary": "Captain, undisputed star, major threat from right wing"
+      },
+      {
+        "name": "Omar Marmoush",
+        "position": "Forward",
+        "club": "Eintracht Frankfurt",
+        "age": "27",
+        "caps": "34",
+        "goals": "6",
+        "market_value": "€40.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "18 goals, 8 assists in Bundesliga",
+        "recent_form_summary": "In incredible club form, plays as dynamic left winger or striker"
+      },
+      {
+        "name": "Mostafa Mohamed",
+        "position": "Forward",
+        "club": "Nantes",
+        "age": "28",
+        "caps": "40",
+        "goals": "13",
+        "market_value": "€15.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 goals in Ligue 1",
+        "recent_form_summary": "Highly physical target-man, excellent in air"
+      },
+      {
+        "name": "Trézéguet",
+        "position": "Forward",
+        "club": "Al-Rayyan",
+        "age": "31",
+        "caps": "76",
+        "goals": "18",
+        "market_value": "€6.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "10 goals, 6 assists in Qatar Stars League",
+        "recent_form_summary": "Experienced winger, brings intense work rate and direct runs"
+      },
+      {
+        "name": "Mohamed Elneny",
+        "position": "Midfielder",
+        "club": "Al-Jazira",
+        "age": "33",
+        "caps": "102",
+        "goals": "8",
+        "market_value": "€1.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Regular starts in UAE Pro League",
+        "recent_form_summary": "Veteran midfield anchor, provides structural discipline"
+      },
+      {
+        "name": "Marwan Attia",
+        "position": "Midfielder",
+        "club": "Al Ahly",
+        "age": "27",
+        "caps": "18",
+        "goals": "0",
+        "market_value": "€2.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Key engine in Al Ahly domestic & CAF Champions League campaign",
+        "recent_form_summary": "Hard-tackling midfielder who breaks up opponent attacks"
+      }
+    ]
+  },
+  {
+    "team": "Iran",
+    "coach": {
+      "name": "Amir Ghalenoei",
+      "years_in_charge": "3.2",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "Physical setup, deep compact defensive block, direct aerial build-up."
+    },
+    "captain": {
+      "name": "Mehdi Taremi",
+      "position": "Forward",
+      "club": "Inter Milan"
+    },
+    "top_scorer": {
+      "name": "Sardar Azmoun",
+      "goals": "53"
+    },
+    "key_players": [
+      {
+        "name": "Mehdi Taremi",
+        "position": "Forward",
+        "club": "Inter Milan",
+        "age": "33",
+        "caps": "85",
+        "goals": "51",
+        "market_value": "€10.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "10 goals, 6 assists in Serie A/Champions League in rotation",
+        "recent_form_summary": "Captain, elite link-up forward, major threat inside box"
+      },
+      {
+        "name": "Sardar Azmoun",
+        "position": "Forward",
+        "club": "Shabab Al-Ahli",
+        "age": "31",
+        "caps": "82",
+        "goals": "53",
+        "market_value": "€8.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "16 goals in UAE Pro League",
+        "recent_form_summary": "Leading scorer, forms lethal forward partnership with Taremi"
+      },
+      {
+        "name": "Alireza Jahanbakhsh",
+        "position": "Forward",
+        "club": "Heerenveen",
+        "age": "32",
+        "caps": "84",
+        "goals": "17",
+        "market_value": "€1.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 5 assists in Eredivisie",
+        "recent_form_summary": "Veteran winger, provides crossings and long-range shooting threat"
+      },
+      {
+        "name": "Saman Ghoddos",
+        "position": "Midfielder",
+        "club": "Ittihad Kalba",
+        "age": "32",
+        "caps": "52",
+        "goals": "3",
+        "market_value": "€1.80m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 8 assists in UAE League",
+        "recent_form_summary": "Main creative engine in midfield, takes key set-pieces"
+      },
+      {
+        "name": "Milad Mohammadi",
+        "position": "Defender",
+        "club": "Persepolis",
+        "age": "32",
+        "caps": "60",
+        "goals": "1",
+        "market_value": "€1.20m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Regular starter in Iranian Gulf Pro League",
+        "recent_form_summary": "Highly experienced left-back with excellent workrate"
+      },
+      {
+        "name": "Alireza Beiranvand",
+        "position": "Goalkeeper",
+        "club": "Tractor",
+        "age": "33",
+        "caps": "70",
+        "goals": "0",
+        "market_value": "€1.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "15 clean sheets in Persian Gulf Pro League",
+        "recent_form_summary": "Famous for long throws and penalty saves, undisputed No. 1"
+      }
+    ]
+  },
+  {
+    "team": "New Zealand",
+    "coach": {
+      "name": "Darren Bazeley",
+      "years_in_charge": "2.9",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "Structured buildup, utilization of tall target forwards, direct winger play."
+    },
+    "captain": {
+      "name": "Chris Wood",
+      "position": "Forward",
+      "club": "Nottingham Forest"
+    },
+    "top_scorer": {
+      "name": "Chris Wood",
+      "goals": "34"
+    },
+    "key_players": [
+      {
+        "name": "Chris Wood",
+        "position": "Forward",
+        "club": "Nottingham Forest",
+        "age": "34",
+        "caps": "76",
+        "goals": "34",
+        "market_value": "€7.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "18 goals in Premier League",
+        "recent_form_summary": "Captain, focal point of attack, clinical target-man"
+      },
+      {
+        "name": "Liberato Cacace",
+        "position": "Defender",
+        "club": "Empoli",
+        "age": "25",
+        "caps": "25",
+        "goals": "1",
+        "market_value": "€3.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "28 matches in Serie A",
+        "recent_form_summary": "Highly modern left-back, provides overlaps and defensive cover"
+      },
+      {
+        "name": "Marko Stamenić",
+        "position": "Midfielder",
+        "club": "Olympiacos",
+        "age": "24",
+        "caps": "21",
+        "goals": "1",
+        "market_value": "€5.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "30 appearances in Greek Super League",
+        "recent_form_summary": "Composed deep midfielder, screens defense and progresses ball"
+      },
+      {
+        "name": "Sarpreet Singh",
+        "position": "Midfielder",
+        "club": "União de Leiria",
+        "age": "27",
+        "caps": "14",
+        "goals": "1",
+        "market_value": "€1.20m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 6 assists in Liga Portugal 2",
+        "recent_form_summary": "Main creative midfielder when fit, drifts out wide"
+      },
+      {
+        "name": "Matthew Garbett",
+        "position": "Midfielder",
+        "club": "NAC Breda",
+        "age": "24",
+        "caps": "22",
+        "goals": "3",
+        "market_value": "€1.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "3 goals, 4 assists in Eredivisie",
+        "recent_form_summary": "Brings high energy, box-to-box presence for the All Whites"
+      },
+      {
+        "name": "Tyler Bindon",
+        "position": "Defender",
+        "club": "Reading",
+        "age": "21",
+        "caps": "10",
+        "goals": "0",
+        "market_value": "€2.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "42 starts in League One, highly composed center-back",
+        "recent_form_summary": "Promising defender, solid in duels and building out from back"
+      }
+    ]
+  },
+  {
+    "team": "Spain",
+    "coach": {
+      "name": "Luis de la Fuente",
+      "years_in_charge": "3.5",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "Direct vertical possession, intense high pressing, rapid winger isolation."
+    },
+    "captain": {
+      "name": "Rodri",
+      "position": "Midfielder",
+      "club": "Manchester City"
+    },
+    "top_scorer": {
+      "name": "Álvaro Morata",
+      "goals": "36"
+    },
+    "key_players": [
+      {
+        "name": "Rodri",
+        "position": "Midfielder",
+        "club": "Manchester City",
+        "age": "29",
+        "caps": "56",
+        "goals": "4",
+        "market_value": "€130.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Fully recovered from ACL, 25 matches in late season for Man City",
+        "recent_form_summary": "Captain, world's best defensive midfielder, dictates tactical shape"
+      },
+      {
+        "name": "Lamine Yamal",
+        "position": "Forward",
+        "club": "Barcelona",
+        "age": "18",
+        "caps": "20",
+        "goals": "5",
+        "market_value": "€150.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 goals, 16 assists in La Liga and Champions League",
+        "recent_form_summary": "Sensational winger, elite dribbler, primary attacking spark"
+      },
+      {
+        "name": "Nico Williams",
+        "position": "Forward",
+        "club": "Athletic Bilbao",
+        "age": "23",
+        "caps": "24",
+        "goals": "4",
+        "market_value": "€75.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "10 goals, 12 assists in La Liga",
+        "recent_form_summary": "Highly explosive winger, provides width and runs behind backline"
+      },
+      {
+        "name": "Dani Olmo",
+        "position": "Midfielder",
+        "club": "Barcelona",
+        "age": "28",
+        "caps": "39",
+        "goals": "11",
+        "market_value": "€70.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 goals, 8 assists in domestic campaign",
+        "recent_form_summary": "Outstanding pocket midfielder, clinical inside penalty area"
+      },
+      {
+        "name": "Pedri",
+        "position": "Midfielder",
+        "club": "Barcelona",
+        "age": "23",
+        "caps": "30",
+        "goals": "2",
+        "market_value": "€80.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 10 assists in La Liga",
+        "recent_form_summary": "Elite connector, controls tempo with vision and short passing"
+      },
+      {
+        "name": "Dani Carvajal",
+        "position": "Defender",
+        "club": "Real Madrid",
+        "age": "34",
+        "caps": "49",
+        "goals": "1",
+        "market_value": "€12.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Experienced title run-in with Real Madrid",
+        "recent_form_summary": "Elite defensive fullback, brings winning mentality and grit"
+      }
+    ]
+  },
+  {
+    "team": "Cape Verde",
+    "coach": {
+      "name": "Bubista",
+      "years_in_charge": "6.4",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "Fast-paced counter-attacks, athletic midfield press, technical wing combinations."
+    },
+    "captain": {
+      "name": "Ryan Mendes",
+      "position": "Forward",
+      "club": "Kocaelispor"
+    },
+    "top_scorer": {
+      "name": "Ryan Mendes",
+      "goals": "20"
+    },
+    "key_players": [
+      {
+        "name": "Ryan Mendes",
+        "position": "Forward",
+        "club": "Kocaelispor",
+        "age": "36",
+        "caps": "78",
+        "goals": "20",
+        "market_value": "€0.30m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals in TFF First League",
+        "recent_form_summary": "Captain, leading scorer, veteran leader out wide"
+      },
+      {
+        "name": "Logan Costa",
+        "position": "Defender",
+        "club": "Villarreal",
+        "age": "25",
+        "caps": "18",
+        "goals": "0",
+        "market_value": "€15.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "30 appearances in La Liga",
+        "recent_form_summary": "Commanding center-back, high value, key to Cape Verde's defense"
+      },
+      {
+        "name": "Jovane Cabral",
+        "position": "Forward",
+        "club": "Estrela da Amadora",
+        "age": "28",
+        "caps": "10",
+        "goals": "1",
+        "market_value": "€2.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "5 goals, 4 assists in Primeira Liga",
+        "recent_form_summary": "Technical winger, provides flair and shooting ability out wide"
+      },
+      {
+        "name": "Jamiro Monteiro",
+        "position": "Midfielder",
+        "club": "PEC Zwolle",
+        "age": "32",
+        "caps": "38",
+        "goals": "4",
+        "market_value": "€1.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 5 assists in Eredivisie",
+        "recent_form_summary": "Dynamic playmaker, brings mobility and ball-carrying into midfield"
+      },
+      {
+        "name": "Garry Rodrigues",
+        "position": "Forward",
+        "club": "Sivasspor",
+        "age": "35",
+        "caps": "50",
+        "goals": "8",
+        "market_value": "€1.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals in Turkish Süper Lig",
+        "recent_form_summary": "Experienced winger, dangerous on the counter with pace"
+      },
+      {
+        "name": "Bebé",
+        "position": "Forward",
+        "club": "Zaragoza",
+        "age": "35",
+        "caps": "26",
+        "goals": "6",
+        "market_value": "€0.40m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Rotational winger in Segunda Division",
+        "recent_form_summary": "Set-piece weapon, famous for long range free kick goals"
+      }
+    ]
+  },
+  {
+    "team": "Saudi Arabia",
+    "coach": {
+      "name": "Georgios Donis",
+      "years_in_charge": "0.2",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "Disciplined low block, possession retention, quick transitions out wide."
+    },
+    "captain": {
+      "name": "Salem Al-Dawsari",
+      "position": "Forward",
+      "club": "Al-Hilal"
+    },
+    "top_scorer": {
+      "name": "Salem Al-Dawsari",
+      "goals": "22"
+    },
+    "key_players": [
+      {
+        "name": "Salem Al-Dawsari",
+        "position": "Forward",
+        "club": "Al-Hilal",
+        "age": "34",
+        "caps": "85",
+        "goals": "22",
+        "market_value": "€1.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 goals, 10 assists in Saudi Pro League",
+        "recent_form_summary": "Captain, legendary winger with clutch scoring abilities"
+      },
+      {
+        "name": "Firas Al-Buraikan",
+        "position": "Forward",
+        "club": "Al-Ahli",
+        "age": "26",
+        "caps": "42",
+        "goals": "10",
+        "market_value": "€6.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "18 goals in Saudi Pro League (top scoring local player)",
+        "recent_form_summary": "Clinical center-forward, excellent movement inside box"
+      },
+      {
+        "name": "Saud Abdulhamid",
+        "position": "Defender",
+        "club": "Roma",
+        "age": "26",
+        "caps": "35",
+        "goals": "1",
+        "market_value": "€4.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Rotational appearances in Serie A",
+        "recent_form_summary": "First-choice right-back, explosive speed and overlap capacity"
+      },
+      {
+        "name": "Mohamed Kanno",
+        "position": "Midfielder",
+        "club": "Al-Hilal",
+        "age": "31",
+        "caps": "55",
+        "goals": "3",
+        "market_value": "€1.20m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Solid appearances, 3 goals, 4 assists",
+        "recent_form_summary": "Physically imposing midfielder, controls central area"
+      },
+      {
+        "name": "Ali Al-Bulaihi",
+        "position": "Defender",
+        "club": "Al-Hilal",
+        "age": "36",
+        "caps": "52",
+        "goals": "2",
+        "market_value": "€0.35m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Starting center-back in domestic title-winning season",
+        "recent_form_summary": "Aggressive, combative central defender, key organizer"
+      },
+      {
+        "name": "Sultan Al-Ghannam",
+        "position": "Defender",
+        "club": "Al-Nassr",
+        "age": "32",
+        "caps": "30",
+        "goals": "0",
+        "market_value": "€1.80m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 assists in domestic league",
+        "recent_form_summary": "Attacking right-back, provides excellent crosses for strikers"
+      }
+    ]
+  },
+  {
+    "team": "Uruguay",
+    "coach": {
+      "name": "Marcelo Bielsa",
+      "years_in_charge": "3.1",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "High-intensity man-marking, rapid vertical build-up, relentless pressing."
+    },
+    "captain": {
+      "name": "José María Giménez",
+      "position": "Defender",
+      "club": "Atlético Madrid"
+    },
+    "top_scorer": {
+      "name": "Darwin Núñez",
+      "goals": "13"
+    },
+    "key_players": [
+      {
+        "name": "Federico Valverde",
+        "position": "Midfielder",
+        "club": "Real Madrid",
+        "age": "27",
+        "caps": "60",
+        "goals": "7",
+        "market_value": "€120.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 10 assists for Real Madrid",
+        "recent_form_summary": "World-class engine, drives transition and acts as vice-captain"
+      },
+      {
+        "name": "Darwin Núñez",
+        "position": "Forward",
+        "club": "Liverpool",
+        "age": "26",
+        "caps": "32",
+        "goals": "13",
+        "market_value": "€65.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "18 goals, 8 assists in Premier League",
+        "recent_form_summary": "Highly explosive striker, lead scorer under Bielsa's system"
+      },
+      {
+        "name": "Ronald Araújo",
+        "position": "Defender",
+        "club": "Barcelona",
+        "age": "27",
+        "caps": "22",
+        "goals": "1",
+        "market_value": "€70.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Fully recovered, solid starts in La Liga",
+        "recent_form_summary": "Defensive rock, exceptionally fast and physically dominant"
+      },
+      {
+        "name": "Manuel Ugarte",
+        "position": "Midfielder",
+        "club": "Manchester United",
+        "age": "25",
+        "caps": "26",
+        "goals": "0",
+        "market_value": "€50.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "32 appearances in Premier League, elite tackle count",
+        "recent_form_summary": "Bielsa's chief ball winner, screens backline aggressively"
+      },
+      {
+        "name": "Rodrigo Bentancur",
+        "position": "Midfielder",
+        "club": "Tottenham Hotspur",
+        "age": "28",
+        "caps": "64",
+        "goals": "3",
+        "market_value": "€35.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 6 assists in Premier League",
+        "recent_form_summary": "Brings composure and box-to-box carrying capabilities"
+      },
+      {
+        "name": "José María Giménez",
+        "position": "Defender",
+        "club": "Atlético Madrid",
+        "age": "31",
+        "caps": "88",
+        "goals": "8",
+        "market_value": "€22.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "28 matches in La Liga",
+        "recent_form_summary": "Captain, provides veteran presence and aerial dominance"
+      }
+    ]
+  },
+  {
+    "team": "France",
+    "coach": {
+      "name": "Didier Deschamps",
+      "years_in_charge": "13.9",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "Pragmatic defensive organization, lethal counter-attacks, individual winger quality."
+    },
+    "captain": {
+      "name": "Kylian Mbappé",
+      "position": "Forward",
+      "club": "Real Madrid"
+    },
+    "top_scorer": {
+      "name": "Kylian Mbappé",
+      "goals": "48"
+    },
+    "key_players": [
+      {
+        "name": "Kylian Mbappé",
+        "position": "Forward",
+        "club": "Real Madrid",
+        "age": "27",
+        "caps": "88",
+        "goals": "48",
+        "market_value": "€180.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "36 goals, 10 assists in La Liga and Champions League",
+        "recent_form_summary": "Captain, premier striker, stretches backlines with elite speed"
+      },
+      {
+        "name": "William Saliba",
+        "position": "Defender",
+        "club": "Arsenal",
+        "age": "25",
+        "caps": "26",
+        "goals": "0",
+        "market_value": "€80.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "38 matches in Premier League, elite defensive metrics",
+        "recent_form_summary": "First choice center-back, calm, elegant and highly consistent"
+      },
+      {
+        "name": "Aurélien Tchouaméni",
+        "position": "Midfielder",
+        "club": "Real Madrid",
+        "age": "26",
+        "caps": "38",
+        "goals": "3",
+        "market_value": "€100.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "34 starts in midfield/defense for Real Madrid",
+        "recent_form_summary": "Screens the back four, crucial for tactical balance"
+      },
+      {
+        "name": "Eduardo Camavinga",
+        "position": "Midfielder",
+        "club": "Real Madrid",
+        "age": "23",
+        "caps": "24",
+        "goals": "2",
+        "market_value": "€100.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 6 assists in La Liga",
+        "recent_form_summary": "Dynamo in midfield, break-resistant ball carrier"
+      },
+      {
+        "name": "Ousmane Dembélé",
+        "position": "Forward",
+        "club": "Paris Saint-Germain",
+        "age": "29",
+        "caps": "50",
+        "goals": "6",
+        "market_value": "€60.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "10 goals, 14 assists in Ligue 1",
+        "recent_form_summary": "Lethal winger on right side, creates 1v1 overloads"
+      },
+      {
+        "name": "Mike Maignan",
+        "position": "Goalkeeper",
+        "club": "AC Milan",
+        "age": "30",
+        "caps": "28",
+        "goals": "0",
+        "market_value": "€38.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "16 clean sheets in Serie A",
+        "recent_form_summary": "First choice keeper, exceptional reflexes and penalty stopping"
+      }
+    ]
+  },
+  {
+    "team": "Senegal",
+    "coach": {
+      "name": "Pape Thiaw",
+      "years_in_charge": "1.7",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "Solid physical foundation, fast direct wing transitions, intense midfield combat."
+    },
+    "captain": {
+      "name": "Kalidou Koulibaly",
+      "position": "Defender",
+      "club": "Al-Hilal"
+    },
+    "top_scorer": {
+      "name": "Sadio Mané",
+      "goals": "43"
+    },
+    "key_players": [
+      {
+        "name": "Sadio Mané",
+        "position": "Forward",
+        "club": "Al-Nassr",
+        "age": "34",
+        "caps": "107",
+        "goals": "43",
+        "market_value": "€15.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "18 goals, 14 assists in Saudi Pro League",
+        "recent_form_summary": "Senegal's all-time top scorer, plays out wide or as second striker"
+      },
+      {
+        "name": "Nicolas Jackson",
+        "position": "Forward",
+        "club": "Chelsea",
+        "age": "24",
+        "caps": "18",
+        "goals": "3",
+        "market_value": "€45.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "18 goals, 6 assists in Premier League",
+        "recent_form_summary": "First-choice striker, excellent link-up play and work rate"
+      },
+      {
+        "name": "Pape Matar Sarr",
+        "position": "Midfielder",
+        "club": "Tottenham Hotspur",
+        "age": "23",
+        "caps": "24",
+        "goals": "1",
+        "market_value": "€45.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 5 assists in Premier League",
+        "recent_form_summary": "Dynamic box-to-box midfielder, high energy and recovery"
+      },
+      {
+        "name": "Lamine Camara",
+        "position": "Midfielder",
+        "club": "Monaco",
+        "age": "22",
+        "caps": "15",
+        "goals": "3",
+        "market_value": "€18.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 8 assists in Ligue 1",
+        "recent_form_summary": "Playmaker in midfield, takes set-pieces, high tactical ceiling"
+      },
+      {
+        "name": "Kalidou Koulibaly",
+        "position": "Defender",
+        "club": "Al-Hilal",
+        "age": "34",
+        "caps": "82",
+        "goals": "3",
+        "market_value": "€9.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Solid defense stats in domestic title campaign",
+        "recent_form_summary": "Captain, experienced leader at the back, dominant in air"
+      },
+      {
+        "name": "Edouard Mendy",
+        "position": "Goalkeeper",
+        "club": "Al-Ahli",
+        "age": "34",
+        "caps": "39",
+        "goals": "0",
+        "market_value": "€8.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "14 clean sheets in Saudi League",
+        "recent_form_summary": "First choice goalkeeper, highly experienced stopper"
+      }
+    ]
+  },
+  {
+    "team": "Iraq",
+    "coach": {
+      "name": "Graham Arnold",
+      "years_in_charge": "1.5",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "High physical intensity, compact double-pivot, clinical target-man play."
+    },
+    "captain": {
+      "name": "Jalal Hassan",
+      "position": "Goalkeeper",
+      "club": "Al-Zawraa"
+    },
+    "top_scorer": {
+      "name": "Aymen Hussein",
+      "goals": "28"
+    },
+    "key_players": [
+      {
+        "name": "Aymen Hussein",
+        "position": "Forward",
+        "club": "Al-Khor",
+        "age": "30",
+        "caps": "76",
+        "goals": "28",
+        "market_value": "€2.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "15 goals in Qatar/Iraq campaigns",
+        "recent_form_summary": "Lethal target-man, excellent in air, focal point of attack"
+      },
+      {
+        "name": "Ali Jasim",
+        "position": "Forward",
+        "club": "Como",
+        "age": "22",
+        "caps": "18",
+        "goals": "2",
+        "market_value": "€3.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Rotational starts in Serie A under Cesc Fabregas",
+        "recent_form_summary": "Highly creative young winger, outstanding crosser and dribbler"
+      },
+      {
+        "name": "Zidane Iqbal",
+        "position": "Midfielder",
+        "club": "Utrecht",
+        "age": "23",
+        "caps": "15",
+        "goals": "1",
+        "market_value": "€2.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 5 assists in Eredivisie",
+        "recent_form_summary": "Primary playmaker, brings European composure and dribbling to midfield"
+      },
+      {
+        "name": "Ibrahim Bayesh",
+        "position": "Midfielder",
+        "club": "Al-Quwa Al-Jawiya",
+        "age": "26",
+        "caps": "46",
+        "goals": "6",
+        "market_value": "€1.20m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 10 assists in Iraqi Premier League",
+        "recent_form_summary": "Hard-working winger/midfielder, essential for tactical balance"
+      },
+      {
+        "name": "Jalal Hassan",
+        "position": "Goalkeeper",
+        "club": "Al-Zawraa",
+        "age": "34",
+        "caps": "82",
+        "goals": "0",
+        "market_value": "€0.35m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Consistent clean sheets in domestic league",
+        "recent_form_summary": "Captain, veteran presence and reliable shot-stopper"
+      },
+      {
+        "name": "Sulaka Rebin",
+        "position": "Defender",
+        "club": "FC Seoul",
+        "age": "34",
+        "caps": "42",
+        "goals": "1",
+        "market_value": "€0.40m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Starting center-back in K-League",
+        "recent_form_summary": "Provides necessary height and physical strength in center defense"
+      }
+    ]
+  },
+  {
+    "team": "Norway",
+    "coach": {
+      "name": "Ståle Solbakken",
+      "years_in_charge": "5.5",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "Direct vertical attacking, high pressing, heavy reliance on world-class spine."
+    },
+    "captain": {
+      "name": "Martin Ødegaard",
+      "position": "Midfielder",
+      "club": "Arsenal"
+    },
+    "top_scorer": {
+      "name": "Erling Haaland",
+      "goals": "31"
+    },
+    "key_players": [
+      {
+        "name": "Erling Haaland",
+        "position": "Forward",
+        "club": "Manchester City",
+        "age": "25",
+        "caps": "37",
+        "goals": "31",
+        "market_value": "€180.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "34 goals, 5 assists in Premier League",
+        "recent_form_summary": "World's most lethal center-forward, major target inside penalty box"
+      },
+      {
+        "name": "Martin Ødegaard",
+        "position": "Midfielder",
+        "club": "Arsenal",
+        "age": "27",
+        "caps": "60",
+        "goals": "3",
+        "market_value": "€110.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "10 goals, 12 assists in Premier League",
+        "recent_form_summary": "Captain, chief playmaker, creative hub in final third"
+      },
+      {
+        "name": "Alexander Sørloth",
+        "position": "Forward",
+        "club": "Atlético Madrid",
+        "age": "30",
+        "caps": "53",
+        "goals": "18",
+        "market_value": "€25.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "16 goals, 5 assists in La Liga",
+        "recent_form_summary": "Starts on right wing or alongside Haaland, highly physical target forward"
+      },
+      {
+        "name": "Antonio Nusa",
+        "position": "Forward",
+        "club": "RB Leipzig",
+        "age": "21",
+        "caps": "10",
+        "goals": "1",
+        "market_value": "€22.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 9 assists in Bundesliga",
+        "recent_form_summary": "Young explosive dribbler on the left, provides unpredictability out wide"
+      },
+      {
+        "name": "Sander Berge",
+        "position": "Midfielder",
+        "club": "Fulham",
+        "age": "28",
+        "caps": "46",
+        "goals": "1",
+        "market_value": "€20.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "32 matches in Premier League, solid recovery stats",
+        "recent_form_summary": "Defensive midfield anchor, carries ball out of deep positions"
+      },
+      {
+        "name": "Leo Østigård",
+        "position": "Defender",
+        "club": "Rennes",
+        "age": "26",
+        "caps": "26",
+        "goals": "2",
+        "market_value": "€10.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "30 starts in Ligue 1",
+        "recent_form_summary": "Aggressive, high-jumping central defender, key for aerial defense"
+      }
+    ]
+  },
+  {
+    "team": "Argentina",
+    "coach": {
+      "name": "Lionel Scaloni",
+      "years_in_charge": "7.8",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "Flexible possession, aggressive counter-pressing, compact shape, freedom for Messi."
+    },
+    "captain": {
+      "name": "Lionel Messi",
+      "position": "Forward",
+      "club": "Inter Miami"
+    },
+    "top_scorer": {
+      "name": "Lionel Messi",
+      "goals": "112"
+    },
+    "key_players": [
+      {
+        "name": "Lionel Messi",
+        "position": "Forward",
+        "club": "Inter Miami",
+        "age": "38",
+        "caps": "184",
+        "goals": "112",
+        "market_value": "€25.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "22 goals, 15 assists in MLS",
+        "recent_form_summary": "Captain, legendary playmaker, dictates the entire offensive flow"
+      },
+      {
+        "name": "Lautaro Martínez",
+        "position": "Forward",
+        "club": "Inter Milan",
+        "age": "28",
+        "caps": "68",
+        "goals": "29",
+        "market_value": "€110.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "26 goals in Serie A (Capocannoniere winner)",
+        "recent_form_summary": "Starting striker, clinical finisher and high work-rate presser"
+      },
+      {
+        "name": "Emiliano Martínez",
+        "position": "Goalkeeper",
+        "club": "Aston Villa",
+        "age": "33",
+        "caps": "42",
+        "goals": "0",
+        "market_value": "€28.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "14 clean sheets, key Champions League run with Aston Villa",
+        "recent_form_summary": "Clutch goalkeeper, massive psychological presence in shootouts"
+      },
+      {
+        "name": "Alexis Mac Allister",
+        "position": "Midfielder",
+        "club": "Liverpool",
+        "age": "27",
+        "caps": "30",
+        "goals": "3",
+        "market_value": "€75.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 9 assists in Premier League",
+        "recent_form_summary": "Highly intelligent connector, excels in deep progression or late runs"
+      },
+      {
+        "name": "Cristian Romero",
+        "position": "Defender",
+        "club": "Tottenham Hotspur",
+        "age": "28",
+        "caps": "36",
+        "goals": "3",
+        "market_value": "€60.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "34 starts in Premier League, high interception counts",
+        "recent_form_summary": "World-class center-back, highly aggressive stopper"
+      },
+      {
+        "name": "Enzo Fernández",
+        "position": "Midfielder",
+        "club": "Chelsea",
+        "age": "25",
+        "caps": "28",
+        "goals": "4",
+        "market_value": "€75.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 8 assists in Premier League",
+        "recent_form_summary": "Deep playmaker, controls tempo and switches play efficiently"
+      }
+    ]
+  },
+  {
+    "team": "Algeria",
+    "coach": {
+      "name": "Vladimir Petković",
+      "years_in_charge": "2.3",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "Technical possession, structured build-up, wing-focused transitions."
+    },
+    "captain": {
+      "name": "Riyad Mahrez",
+      "position": "Forward",
+      "club": "Al-Ahli"
+    },
+    "top_scorer": {
+      "name": "Islam Slimani",
+      "goals": "46"
+    },
+    "key_players": [
+      {
+        "name": "Riyad Mahrez",
+        "position": "Forward",
+        "club": "Al-Ahli",
+        "age": "35",
+        "caps": "94",
+        "goals": "31",
+        "market_value": "€12.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 goals, 16 assists in Saudi Pro League",
+        "recent_form_summary": "Captain, primary creator on right side, exceptional first touch"
+      },
+      {
+        "name": "Rayan Aït-Nouri",
+        "position": "Defender",
+        "club": "Wolverhampton Wanderers",
+        "age": "25",
+        "caps": "15",
+        "goals": "1",
+        "market_value": "€35.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 6 assists in Premier League out wide",
+        "recent_form_summary": "Elite attacking fullback, carries ball out of defense under pressure"
+      },
+      {
+        "name": "Houssem Aouar",
+        "position": "Midfielder",
+        "club": "Al-Ittihad",
+        "age": "27",
+        "caps": "18",
+        "goals": "3",
+        "market_value": "€10.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 7 assists in Saudi Pro League",
+        "recent_form_summary": "Primary attacking midfielder, key for final third connections"
+      },
+      {
+        "name": "Amine Gouiri",
+        "position": "Forward",
+        "club": "Rennes",
+        "age": "26",
+        "caps": "12",
+        "goals": "2",
+        "market_value": "€25.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "14 goals, 5 assists in Ligue 1",
+        "recent_form_summary": "Highly versatile striker/winger, clinical finisher in club play"
+      },
+      {
+        "name": "Ismaël Bennacer",
+        "position": "Midfielder",
+        "club": "AC Milan",
+        "age": "28",
+        "caps": "50",
+        "goals": "2",
+        "market_value": "€30.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Fully fit, 28 appearances in Serie A",
+        "recent_form_summary": "Combative double-pivot midfielder, transitions ball out of defense"
+      },
+      {
+        "name": "Saïd Benrahma",
+        "position": "Forward",
+        "club": "Lyon",
+        "age": "30",
+        "caps": "30",
+        "goals": "2",
+        "market_value": "€15.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 9 assists in Ligue 1",
+        "recent_form_summary": "Creative left winger with excellent dribbling and shot power"
+      }
+    ]
+  },
+  {
+    "team": "Austria",
+    "coach": {
+      "name": "Ralf Rangnick",
+      "years_in_charge": "4.0",
+      "preferred_formation": "4-2-2-2",
+      "tactical_style": "Relentless gegenpressing, high-tempo vertical transitions, compact central shapes."
+    },
+    "captain": {
+      "name": "David Alaba",
+      "position": "Defender",
+      "club": "Real Madrid"
+    },
+    "top_scorer": {
+      "name": "Marko Arnautović",
+      "goals": "37"
+    },
+    "key_players": [
+      {
+        "name": "David Alaba",
+        "position": "Defender",
+        "club": "Real Madrid",
+        "age": "33",
+        "caps": "105",
+        "goals": "15",
+        "market_value": "€20.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Fully recovered from knee issues, starts for Real Madrid",
+        "recent_form_summary": "Captain, team leader, starts as center back or drifts into midfield"
+      },
+      {
+        "name": "Marcel Sabitzer",
+        "position": "Midfielder",
+        "club": "Borussia Dortmund",
+        "age": "32",
+        "caps": "82",
+        "goals": "17",
+        "market_value": "€20.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "10 goals, 8 assists in Bundesliga & Champions League",
+        "recent_form_summary": "Vocal leader, drives transitions, lethal shooter from range"
+      },
+      {
+        "name": "Konrad Laimer",
+        "position": "Midfielder",
+        "club": "Bayern Munich",
+        "age": "29",
+        "caps": "40",
+        "goals": "3",
+        "market_value": "€30.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Relentless pressing stats in Bundesliga for Bayern",
+        "recent_form_summary": "Gegenpressing specialist, vital for Rangnick's high-pressure system"
+      },
+      {
+        "name": "Dejan Ljubicic",
+        "position": "Midfielder",
+        "club": "Schalke 04",
+        "age": "28",
+        "caps": "9",
+        "goals": "1",
+        "market_value": "€3.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 6 assists in 2. Bundesliga",
+        "recent_form_summary": "Defensive midfielder who was called up as the direct squad replacement for Baumgartner."
+      },
+      {
+        "name": "Michael Gregoritsch",
+        "position": "Forward",
+        "club": "Freiburg",
+        "age": "32",
+        "caps": "55",
+        "goals": "15",
+        "market_value": "€5.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 goals in Bundesliga",
+        "recent_form_summary": "Physical target-forward, excellent in aerial build-ups"
+      },
+      {
+        "name": "Marko Arnautović",
+        "position": "Forward",
+        "club": "Inter Milan",
+        "age": "37",
+        "caps": "112",
+        "goals": "37",
+        "market_value": "€2.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Rotational starts, 6 goals in Serie A",
+        "recent_form_summary": "Veteran talisman, active top scorer, provides physical target outlet"
+      }
+    ]
+  },
+  {
+    "team": "Jordan",
+    "coach": {
+      "name": "Jamal Sellami",
+      "years_in_charge": "2.0",
+      "preferred_formation": "3-4-2-1",
+      "tactical_style": "Deep defensive block, rapid counter-attacks, heavy reliance on speedy wingers."
+    },
+    "captain": {
+      "name": "Ihsan Haddad",
+      "position": "Defender",
+      "club": "Al-Faisaly"
+    },
+    "top_scorer": {
+      "name": "Hamza Al-Dardour",
+      "goals": "35"
+    },
+    "key_players": [
+      {
+        "name": "Musa Al-Taamari",
+        "position": "Forward",
+        "club": "Montpellier",
+        "age": "28",
+        "caps": "70",
+        "goals": "22",
+        "market_value": "€8.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 6 assists in Ligue 1",
+        "recent_form_summary": "Jordan's star player, explosive right winger with elite dribbling"
+      },
+      {
+        "name": "Yazan Al-Naimat",
+        "position": "Forward",
+        "club": "Al-Ahli",
+        "age": "26",
+        "caps": "48",
+        "goals": "18",
+        "market_value": "€2.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "14 goals in Qatar Stars League",
+        "recent_form_summary": "Clinical center-forward, fantastic tournament goal scoring record"
+      },
+      {
+        "name": "Ali Olwan",
+        "position": "Forward",
+        "club": "Selangor",
+        "age": "26",
+        "caps": "42",
+        "goals": "12",
+        "market_value": "€1.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "10 goals, 8 assists in Malaysian Super League",
+        "recent_form_summary": "Dynamic left winger, key partner to Al-Taamari in attack"
+      },
+      {
+        "name": "Ihsan Haddad",
+        "position": "Defender",
+        "club": "Al-Faisaly",
+        "age": "32",
+        "caps": "72",
+        "goals": "2",
+        "market_value": "€0.40m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Consistent starter in domestic league",
+        "recent_form_summary": "Captain, experienced right-back, solid defensive presence"
+      },
+      {
+        "name": "Yazan Al-Arab",
+        "position": "Defender",
+        "club": "FC Seoul",
+        "age": "30",
+        "caps": "55",
+        "goals": "2",
+        "market_value": "€0.80m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Starting center-back in K-League",
+        "recent_form_summary": "Forms the central defensive pillar, highly aggressive in tackles"
+      },
+      {
+        "name": "Noor Al-Rawabdeh",
+        "position": "Midfielder",
+        "club": "Selangor",
+        "age": "29",
+        "caps": "46",
+        "goals": "4",
+        "market_value": "€0.65m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Consistent starts in midfield",
+        "recent_form_summary": "Box-to-box midfielder, break-stopper in central third"
+      }
+    ]
+  },
+  {
+    "team": "Portugal",
+    "coach": {
+      "name": "Roberto Martínez",
+      "years_in_charge": "3.4",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "Attacking possession, fluid wing rotations, robust double pivot."
+    },
+    "captain": {
+      "name": "Cristiano Ronaldo",
+      "position": "Forward",
+      "club": "Al-Nassr"
+    },
+    "top_scorer": {
+      "name": "Cristiano Ronaldo",
+      "goals": "130"
+    },
+    "key_players": [
+      {
+        "name": "Cristiano Ronaldo",
+        "position": "Forward",
+        "club": "Al-Nassr",
+        "age": "41",
+        "caps": "212",
+        "goals": "130",
+        "market_value": "€15.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "32 goals, 8 assists in Saudi Pro League & AFC Champions League",
+        "recent_form_summary": "Captain, legendary top scorer, main target inside the box"
+      },
+      {
+        "name": "Bruno Fernandes",
+        "position": "Midfielder",
+        "club": "Manchester United",
+        "age": "31",
+        "caps": "68",
+        "goals": "22",
+        "market_value": "€70.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "15 goals, 16 assists in Premier League",
+        "recent_form_summary": "Main creative hub, takes set-pieces, exceptional vision"
+      },
+      {
+        "name": "Bernardo Silva",
+        "position": "Midfielder",
+        "club": "Manchester City",
+        "age": "31",
+        "caps": "88",
+        "goals": "12",
+        "market_value": "€70.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 12 assists in Premier League",
+        "recent_form_summary": "Keeps ball under heavy pressure, drifts out wide to create overloads"
+      },
+      {
+        "name": "Rafael Leão",
+        "position": "Forward",
+        "club": "AC Milan",
+        "age": "26",
+        "caps": "30",
+        "goals": "4",
+        "market_value": "€90.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "14 goals, 12 assists in Serie A out wide",
+        "recent_form_summary": "Highly explosive left winger, creates chances from individual runs"
+      },
+      {
+        "name": "Rúben Dias",
+        "position": "Defender",
+        "club": "Manchester City",
+        "age": "29",
+        "caps": "60",
+        "goals": "3",
+        "market_value": "€80.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "34 starts in Premier League",
+        "recent_form_summary": "Defensive anchor, directs backline positioning, elite organizer"
+      },
+      {
+        "name": "João Palhinha",
+        "position": "Midfielder",
+        "club": "Bayern Munich",
+        "age": "30",
+        "caps": "32",
+        "goals": "2",
+        "market_value": "€50.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "30 starts in Bundesliga, top tackle counts",
+        "recent_form_summary": "Robust defensive midfielder, screens defense with high physical capacity"
+      }
+    ]
+  },
+  {
+    "team": "DR Congo",
+    "coach": {
+      "name": "Sébastien Desabre",
+      "years_in_charge": "3.8",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "Compact defensive low block, transition-focused out wide, rapid winger plays."
+    },
+    "captain": {
+      "name": "Chancel Mbemba",
+      "position": "Defender",
+      "club": "Marseille"
+    },
+    "top_scorer": {
+      "name": "Cédric Bakambu",
+      "goals": "16"
+    },
+    "key_players": [
+      {
+        "name": "Chancel Mbemba",
+        "position": "Defender",
+        "club": "Marseille",
+        "age": "31",
+        "caps": "80",
+        "goals": "6",
+        "market_value": "€12.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "30 starts in Ligue 1",
+        "recent_form_summary": "Captain, elite center-back, highly physical in duels and set-pieces"
+      },
+      {
+        "name": "Yoane Wissa",
+        "position": "Forward",
+        "club": "Brentford",
+        "age": "29",
+        "caps": "24",
+        "goals": "5",
+        "market_value": "€28.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "14 goals, 4 assists in Premier League",
+        "recent_form_summary": "Highly active striker/winger, main goalscorer in recent national games"
+      },
+      {
+        "name": "Arthur Masuaku",
+        "position": "Defender",
+        "club": "Beşiktaş",
+        "age": "32",
+        "caps": "32",
+        "goals": "2",
+        "market_value": "€3.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 assists in Turkish Süper Lig out wide",
+        "recent_form_summary": "First-choice left-back, provides crossing quality and progression"
+      },
+      {
+        "name": "Samuel Moutoussamy",
+        "position": "Midfielder",
+        "club": "Nantes",
+        "age": "29",
+        "caps": "35",
+        "goals": "0",
+        "market_value": "€4.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "28 matches in Ligue 1",
+        "recent_form_summary": "Hard working defensive midfielder, breaks up central attacks"
+      },
+      {
+        "name": "Meschak Elia",
+        "position": "Forward",
+        "club": "Young Boys",
+        "age": "28",
+        "caps": "40",
+        "goals": "8",
+        "market_value": "€6.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "10 goals, 8 assists in Swiss Super League",
+        "recent_form_summary": "Pacey winger, dangerous on counter-attacks out wide"
+      },
+      {
+        "name": "Cédric Bakambu",
+        "position": "Forward",
+        "club": "Real Betis",
+        "age": "35",
+        "caps": "54",
+        "goals": "16",
+        "market_value": "€1.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals in La Liga in rotating appearances",
+        "recent_form_summary": "Leading active top scorer, provides veteran finishing depth"
+      }
+    ]
+  },
+  {
+    "team": "Uzbekistan",
+    "coach": {
+      "name": "Fabio Cannavaro",
+      "years_in_charge": "0.3",
+      "preferred_formation": "3-4-2-1",
+      "tactical_style": "Italian-influenced deep low block, rigid defensive organization, rapid vertical counter."
+    },
+    "captain": {
+      "name": "Eldor Shomurodov",
+      "position": "Forward",
+      "club": "Roma"
+    },
+    "top_scorer": {
+      "name": "Eldor Shomurodov",
+      "goals": "40"
+    },
+    "key_players": [
+      {
+        "name": "Eldor Shomurodov",
+        "position": "Forward",
+        "club": "Roma",
+        "age": "30",
+        "caps": "72",
+        "goals": "40",
+        "market_value": "€5.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals in Serie A/Europe",
+        "recent_form_summary": "Captain, leading goal scorer, focal point of direct counter-attacks"
+      },
+      {
+        "name": "Abbosbek Fayzullaev",
+        "position": "Midfielder",
+        "club": "CSKA Moscow",
+        "age": "22",
+        "caps": "18",
+        "goals": "4",
+        "market_value": "€10.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 12 assists in Russian Premier League",
+        "recent_form_summary": "Highly technical young playmaker, brilliant dribbler and creator"
+      },
+      {
+        "name": "Jaloliddin Masharipov",
+        "position": "Forward",
+        "club": "Esteghlal",
+        "age": "32",
+        "caps": "64",
+        "goals": "12",
+        "market_value": "€1.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 8 assists in Persian Gulf Pro League",
+        "recent_form_summary": "Experienced left winger, creative provider of crosses"
+      },
+      {
+        "name": "Otabek Shukurov",
+        "position": "Midfielder",
+        "club": "Al-Fayha",
+        "age": "29",
+        "caps": "60",
+        "goals": "5",
+        "market_value": "€2.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 5 assists in Saudi Pro League",
+        "recent_form_summary": "Combative midfielder, controls transitions and possesses great stamina"
+      },
+      {
+        "name": "Husniddin Aliqulov",
+        "position": "Defender",
+        "club": "Samsunspor",
+        "age": "27",
+        "caps": "24",
+        "goals": "1",
+        "market_value": "€3.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "32 starts in Turkish Süper Lig",
+        "recent_form_summary": "Forms central defensive core under Cannavaro's structured line"
+      },
+      {
+        "name": "Rustam Ashurmatov",
+        "position": "Defender",
+        "club": "Rubin Kazan",
+        "age": "29",
+        "caps": "30",
+        "goals": "0",
+        "market_value": "€2.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "26 appearances in Russian Premier League",
+        "recent_form_summary": "Highly disciplined defender, strong in low defensive shapes"
+      }
+    ]
+  },
+  {
+    "team": "Colombia",
+    "coach": {
+      "name": "Néstor Lorenzo",
+      "years_in_charge": "4.0",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "High-intensity physical press, vertical transitions, set-piece efficiency."
+    },
+    "captain": {
+      "name": "James Rodríguez",
+      "position": "Midfielder",
+      "club": "Rayo Vallecano"
+    },
+    "top_scorer": {
+      "name": "James Rodríguez",
+      "goals": "28"
+    },
+    "key_players": [
+      {
+        "name": "Luis Díaz",
+        "position": "Forward",
+        "club": "Liverpool",
+        "age": "29",
+        "caps": "52",
+        "goals": "14",
+        "market_value": "€75.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "16 goals, 8 assists in Premier League",
+        "recent_form_summary": "Direct, explosive left winger, main scoring outlet"
+      },
+      {
+        "name": "James Rodríguez",
+        "position": "Midfielder",
+        "club": "Rayo Vallecano",
+        "age": "34",
+        "caps": "106",
+        "goals": "28",
+        "market_value": "€5.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Rotational club starts, 8 assists in La Liga",
+        "recent_form_summary": "Captain, undisputed playmaker in national system, elite vision/set-pieces"
+      },
+      {
+        "name": "Daniel Muñoz",
+        "position": "Defender",
+        "club": "Crystal Palace",
+        "age": "30",
+        "caps": "32",
+        "goals": "3",
+        "market_value": "€22.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 6 assists in Premier League out wide",
+        "recent_form_summary": "Highly energetic right-back, essential for overlapping runs"
+      },
+      {
+        "name": "Jefferson Lerma",
+        "position": "Midfielder",
+        "club": "Crystal Palace",
+        "age": "31",
+        "caps": "48",
+        "goals": "2",
+        "market_value": "€20.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "34 starts in Premier League, high ball recovery counts",
+        "recent_form_summary": "Physical anchor in double-pivot, protects center-backs"
+      },
+      {
+        "name": "Davinson Sánchez",
+        "position": "Defender",
+        "club": "Galatasaray",
+        "age": "30",
+        "caps": "62",
+        "goals": "2",
+        "market_value": "€18.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Starting center-back, won domestic title in Turkey",
+        "recent_form_summary": "Highly physical, dominant in the air, starting center-back"
+      },
+      {
+        "name": "Jhon Durán",
+        "position": "Forward",
+        "club": "Aston Villa",
+        "age": "22",
+        "caps": "18",
+        "goals": "3",
+        "market_value": "€35.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "16 goals in all competitions, outstanding goal-per-minute ratio",
+        "recent_form_summary": "Pacey, highly physical forward, major threat inside box"
+      }
+    ]
+  },
+  {
+    "team": "England",
+    "coach": {
+      "name": "Thomas Tuchel",
+      "years_in_charge": "1.4",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "Possession-based control, structured counter-pressing, tactical flexibility."
+    },
+    "captain": {
+      "name": "Harry Kane",
+      "position": "Forward",
+      "club": "Bayern Munich"
+    },
+    "top_scorer": {
+      "name": "Harry Kane",
+      "goals": "68"
+    },
+    "key_players": [
+      {
+        "name": "Harry Kane",
+        "position": "Forward",
+        "club": "Bayern Munich",
+        "age": "32",
+        "caps": "98",
+        "goals": "68",
+        "market_value": "€100.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "38 goals, 12 assists in all club competitions",
+        "recent_form_summary": "Captain, world-class target man and playmaker, top scorer"
+      },
+      {
+        "name": "Jude Bellingham",
+        "position": "Midfielder",
+        "club": "Real Madrid",
+        "age": "22",
+        "caps": "40",
+        "goals": "6",
+        "market_value": "€180.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "16 goals, 12 assists in La Liga and Champions League",
+        "recent_form_summary": "Elite box-to-box midfielder, high defensive output and clutch goals"
+      },
+      {
+        "name": "Bukayo Saka",
+        "position": "Forward",
+        "club": "Arsenal",
+        "age": "24",
+        "caps": "42",
+        "goals": "12",
+        "market_value": "€140.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "18 goals, 15 assists in Premier League",
+        "recent_form_summary": "World-class right winger, creative core and goal scorer"
+      },
+      {
+        "name": "Declan Rice",
+        "position": "Midfielder",
+        "club": "Arsenal",
+        "age": "27",
+        "caps": "56",
+        "goals": "4",
+        "market_value": "€120.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 10 assists in Premier League",
+        "recent_form_summary": "Undisputed defensive midfielder, screens backline and carries ball forward"
+      },
+      {
+        "name": "John Stones",
+        "position": "Defender",
+        "club": "Manchester City",
+        "age": "32",
+        "caps": "74",
+        "goals": "3",
+        "market_value": "€35.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "28 matches in Premier League, steps into midfield build-up",
+        "recent_form_summary": "Extremely composed ball-playing center-back, crucial for Tuchel"
+      },
+      {
+        "name": "Ollie Watkins",
+        "position": "Forward",
+        "club": "Aston Villa",
+        "age": "30",
+        "caps": "21",
+        "goals": "6",
+        "market_value": "€25.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "19 goals, 13 assists in club matches",
+        "recent_form_summary": "Highly consistent forward, excellent hold-up and off-the-shoulder runs, crucial squad depth."
+      }
+    ]
+  },
+  {
+    "team": "Croatia",
+    "coach": {
+      "name": "Zlatko Dalić",
+      "years_in_charge": "8.7",
+      "preferred_formation": "4-3-3",
+      "tactical_style": "Patient possession, experienced midfield tempo control, compact defensive unit."
+    },
+    "captain": {
+      "name": "Luka Modrić",
+      "position": "Midfielder",
+      "club": "Real Madrid"
+    },
+    "top_scorer": {
+      "name": "Luka Modrić",
+      "goals": "27"
+    },
+    "key_players": [
+      {
+        "name": "Luka Modrić",
+        "position": "Midfielder",
+        "club": "Real Madrid",
+        "age": "40",
+        "caps": "178",
+        "goals": "27",
+        "market_value": "€5.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Played vital role in late season for Real Madrid, 4 goals, 8 assists",
+        "recent_form_summary": "Captain, undisputed team brain, dictates play from deep positions"
+      },
+      {
+        "name": "Mateo Kovačić",
+        "position": "Midfielder",
+        "club": "Manchester City",
+        "age": "32",
+        "caps": "104",
+        "goals": "5",
+        "market_value": "€30.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "34 appearances in Premier League under Pep Guardiola",
+        "recent_form_summary": "Press-resistant ball carrier, links defence and midfield"
+      },
+      {
+        "name": "Joško Gvardiol",
+        "position": "Defender",
+        "club": "Manchester City",
+        "age": "24",
+        "caps": "35",
+        "goals": "3",
+        "market_value": "€75.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 4 assists as left-back in Premier League",
+        "recent_form_summary": "Elite central defender/left-back, excellent ball carrier and recovery"
+      },
+      {
+        "name": "Andrej Kramarić",
+        "position": "Forward",
+        "club": "Hoffenheim",
+        "age": "34",
+        "caps": "96",
+        "goals": "28",
+        "market_value": "€4.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "16 goals, 6 assists in Bundesliga",
+        "recent_form_summary": "Highly versatile forward, clever movements inside box"
+      },
+      {
+        "name": "Mario Pašalić",
+        "position": "Midfielder",
+        "club": "Atalanta",
+        "age": "31",
+        "caps": "62",
+        "goals": "10",
+        "market_value": "€13.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "8 goals, 6 assists in Serie A",
+        "recent_form_summary": "Provides goalscoring runs from deep, physical backup player"
+      },
+      {
+        "name": "Josip Šutalo",
+        "position": "Defender",
+        "club": "Ajax",
+        "age": "26",
+        "caps": "18",
+        "goals": "0",
+        "market_value": "€15.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "32 appearances in Eredivisie, high passing accuracy",
+        "recent_form_summary": "Starting center-back next to Gvardiol, reliable defender"
+      }
+    ]
+  },
+  {
+    "team": "Ghana",
+    "coach": {
+      "name": "Carlos Queiroz",
+      "years_in_charge": "0.2",
+      "preferred_formation": "4-2-3-1",
+      "tactical_style": "Strict defensive discipline, deep low block, fast wing counter-attacks."
+    },
+    "captain": {
+      "name": "Jordan Ayew",
+      "position": "Forward",
+      "club": "Leicester City"
+    },
+    "top_scorer": {
+      "name": "Jordan Ayew",
+      "goals": "28"
+    },
+    "key_players": [
+      {
+        "name": "Mohammed Kudus",
+        "position": "Midfielder",
+        "club": "West Ham United",
+        "age": "25",
+        "caps": "34",
+        "goals": "11",
+        "market_value": "€50.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 goals, 8 assists in Premier League",
+        "recent_form_summary": "Most creative player, elite dribbler, primary direct threat out wide"
+      },
+      {
+        "name": "Iñaki Williams",
+        "position": "Forward",
+        "club": "Athletic Bilbao",
+        "age": "31",
+        "caps": "17",
+        "goals": "1",
+        "market_value": "€25.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "14 goals, 8 assists in La Liga",
+        "recent_form_summary": "Focal forward or right-winger, provides blistering pace"
+      },
+      {
+        "name": "Thomas Partey",
+        "position": "Midfielder",
+        "club": "Arsenal",
+        "age": "32",
+        "caps": "47",
+        "goals": "13",
+        "market_value": "€18.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "28 starts, 90% passing accuracy in Premier League",
+        "recent_form_summary": "Controls midfield tempo, screens defense, vital for distribution"
+      },
+      {
+        "name": "Jordan Ayew",
+        "position": "Forward",
+        "club": "Leicester City",
+        "age": "34",
+        "caps": "104",
+        "goals": "28",
+        "market_value": "€4.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "6 goals, 6 assists in Premier League",
+        "recent_form_summary": "Captain, workrate specialist, active top scorer"
+      },
+      {
+        "name": "Antoine Semenyo",
+        "position": "Forward",
+        "club": "Bournemouth",
+        "age": "26",
+        "caps": "21",
+        "goals": "2",
+        "market_value": "€20.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "10 goals, 5 assists in Premier League out wide",
+        "recent_form_summary": "Highly physical, fast winger with excellent recovery runs"
+      },
+      {
+        "name": "Salis Abdul Samed",
+        "position": "Midfielder",
+        "club": "Sunderland",
+        "age": "26",
+        "caps": "19",
+        "goals": "0",
+        "market_value": "€8.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "34 starts in EFL Championship",
+        "recent_form_summary": "Brings defensive steel to central midfield double-pivot"
+      }
+    ]
+  },
+  {
+    "team": "Panama",
+    "coach": {
+      "name": "Thomas Christiansen",
+      "years_in_charge": "5.9",
+      "preferred_formation": "3-4-3",
+      "tactical_style": "Possession-based build-up from back, fluid wingers, aggressive high press."
+    },
+    "captain": {
+      "name": "Aníbal Godoy",
+      "position": "Midfielder",
+      "club": "Nashville SC"
+    },
+    "top_scorer": {
+      "name": "Cecilio Waterman",
+      "goals": "10"
+    },
+    "key_players": [
+      {
+        "name": "Adalberto Carrasquilla",
+        "position": "Midfielder",
+        "club": "Houston Dynamo",
+        "age": "27",
+        "caps": "55",
+        "goals": "2",
+        "market_value": "€4.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "4 goals, 10 assists in MLS",
+        "recent_form_summary": "Primary playmaker, dynamic dribbler, creative core of the team"
+      },
+      {
+        "name": "Aníbal Godoy",
+        "position": "Midfielder",
+        "club": "Nashville SC",
+        "age": "36",
+        "caps": "138",
+        "goals": "4",
+        "market_value": "€0.40m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Rotational stats in MLS",
+        "recent_form_summary": "Captain, veteran anchor, screens defensive backline"
+      },
+      {
+        "name": "José Córdoba",
+        "position": "Defender",
+        "club": "Norwich City",
+        "age": "25",
+        "caps": "18",
+        "goals": "0",
+        "market_value": "€3.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "32 starts in EFL Championship",
+        "recent_form_summary": "Highly physical, young center-back, dominant in tackles"
+      },
+      {
+        "name": "Michael Amir Murillo",
+        "position": "Defender",
+        "club": "Marseille",
+        "age": "30",
+        "caps": "72",
+        "goals": "7",
+        "market_value": "€9.00m",
+        "injury_status": "Healthy",
+        "current_season_stats": "2 goals, 3 assists in Ligue 1 out wide",
+        "recent_form_summary": "First-choice right wing-back, provides overlaps and defensive speed"
+      },
+      {
+        "name": "Eric Davis",
+        "position": "Defender",
+        "club": "Vila Nova",
+        "age": "35",
+        "caps": "88",
+        "goals": "7",
+        "market_value": "€0.50m",
+        "injury_status": "Healthy",
+        "current_season_stats": "Consistent starts in Brazilian Serie B",
+        "recent_form_summary": "Experienced left-back, primary set-piece taker, solid crossings"
+      },
+      {
+        "name": "Ismael Díaz",
+        "position": "Forward",
+        "club": "Universidad Católica",
+        "age": "29",
+        "caps": "38",
+        "goals": "9",
+        "market_value": "€1.20m",
+        "injury_status": "Healthy",
+        "current_season_stats": "12 goals in Ecuadorian Serie A",
+        "recent_form_summary": "Lethal winger/striker, provides pace and runs behind channels"
+      }
+    ]
+  }
+]
