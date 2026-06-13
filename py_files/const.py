@@ -1,9 +1,10 @@
 import numpy as np
+import os
 
-# ---- Change the following paths as per your system ---- #
-data_dir_path = '../data'
-project_dir_path = '.'
-# ----Not needed to be changed---- #
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+data_dir_path = os.path.join(BASE_DIR, '..', 'data')
+project_dir_path = os.path.join(BASE_DIR, '..')
 source_dir = 'source'
 
 features_keys = [
