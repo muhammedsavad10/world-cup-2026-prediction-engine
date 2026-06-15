@@ -69,26 +69,51 @@ The system includes multiple verification layers:
 ## Project Structure
 
 ```text
-data/
-├── results.csv
-├── fifa_ranking-2024-06-20.csv
-├── world_cup_2026_live_results.json
-├── world_cup_2026_baseline_probabilities.json
-
-py_files/
-├── app.py
-├── preprocess.py
-├── tournament_simulator.py
-├── live_results_manager.py
-├── probability_audit.py
-├── transparency_explainer.py
-```
+World-Cup-2026-Prediction/
+│
+├── data/
+│   ├── results.csv
+│   ├── fifa_ranking-2024-06-20.csv
+│   ├── world_cup_2026_live_results.json
+│   └── world_cup_2026_baseline_probabilities.json
+│
+├── py_files/
+│   ├── app.py
+│   ├── preprocess.py
+│   ├── tournament_simulator.py
+│   ├── live_results_manager.py
+│   ├── probability_audit.py
+│   └── transparency_explainer.py
+│
+├── screenshots/
+│   ├── head_to_head.png
+│   ├── simulator.png
+│   └── live_dashboard.png
+│
+├── README.md
+├── requirements.txt
+└── .gitignore
 
 ## Live Application
 
 Experience the application live:
 
 https://world-cup-2026-prediction.streamlit.app
+
+
+## Screenshots
+
+### Tournament Simulator
+
+![Tournament Simulator](screenshots/simulator.png)
+
+### Live Tournament Dashboard
+
+![Live Dashboard](screenshots/live_dashboard.png)
+
+### Head-to-Head Predictor
+
+![Head-to-Head Predictor](screenshots/head_to_head.png)
 
 ## Author
 
