@@ -83,7 +83,7 @@ def generate_match_analysis(team_a, team_b, prob_a, prob_b, rank_diff, form_diff
         if api_key:
             client = Groq(api_key=api_key)
         else:
-            return "Tactical analysis synthesis interrupted. Error: GROQ_API_KEY environment variable is not set."
+            return "AI_TACTICAL_ANALYSIS_UNAVAILABLE"
 
     # Look up teams in dataset
     info_a = get_team_info(team_a)
@@ -184,4 +184,7 @@ def generate_match_analysis(team_a, team_b, prob_a, prob_b, rank_diff, form_diff
         )
         return chat_completion.choices[0].message.content
     except Exception as e:
+        err_msg = str(e).lower()
+        if "api_key" in err_msg or "api key" in err_msg or "authentication" in err_msg or "unauthorized" in err_msg or "401" in err_msg:
+            return "AI_TACTICAL_ANALYSIS_UNAVAILABLE"
         return f"Tactical analysis synthesis interrupted. Error: {str(e)}"

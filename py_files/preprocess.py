@@ -20,8 +20,14 @@ def load_data():
     rankings['country_full'] = rankings['country_full'].replace({
         'Korea Republic': 'South Korea',
         'China PR': 'China',
-        'IR Iran': 'Iran'
+        'IR Iran': 'Iran',
+        'Congo DR': 'DR Congo',
+        'Cabo Verde': 'Cape Verde',
+        'United States': 'USA'
     })
+    rankings['country_full'] = rankings['country_full'].apply(
+        lambda x: 'Ivory Coast' if ('cote' in str(x).lower() or 'ivoire' in str(x).lower() or 'coast' in str(x).lower()) else x
+    )
     
     results['date'] = pd.to_datetime(results['date'])
     rankings['rank_date'] = pd.to_datetime(rankings['rank_date'])
@@ -71,13 +77,15 @@ def load_data():
     home_weighted_goals_list = []
     away_weighted_goals_list = []
     
-    for idx, row in results.iterrows():
-        home_team = row['home_team']
-        away_team = row['away_team']
-        home_score = row['home_score']
-        away_score = row['away_score']
-        home_rank = row['home_rank']
-        away_rank = row['away_rank']
+    target_date = pd.Timestamp('2026-06-01')
+    
+    for row in results.itertuples():
+        home_team = row.home_team
+        away_team = row.away_team
+        home_score = row.home_score
+        away_score = row.away_score
+        home_rank = row.home_rank
+        away_rank = row.away_rank
         
         # 1. Fetch rolling stats of home team (prior matches)
         home_hist = team_history.get(home_team, [])
@@ -97,7 +105,7 @@ def load_data():
         away_weighted_goals_list.append(a_goals)
         
         # 3. Calculate this match's stats to record in history
-        years_ago = max(0, (pd.to_datetime('2026-06-01') - row['date']).days / 365.25)
+        years_ago = max(0, (target_date - row.date).days / 365.25)
         decay_multiplier = 0.5 ** (years_ago / 2)
 
         w_opp_rank = max(0.0, min(5.0, 100.0 / away_rank))

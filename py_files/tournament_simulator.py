@@ -12,40 +12,73 @@ class TournamentSimulator:
         self.groups = groups
         self.model_name = "Logistic Regression"
         self.feature_generator_func = feature_generator_func
+        self.probabilistic = False
 
     def predictWinner(self, team1, team2, date, stage):
-        X = self.feature_generator_func(team1, team2)
-        prob = self.model.predict_proba([X])[0]
-        home_win_prob = prob[1]
-        if home_win_prob > 0.5:
-            return team1, home_win_prob
+        if not hasattr(self, 'prediction_cache'):
+            self.prediction_cache = {}
+        
+        cache_key = (team1, team2)
+        if cache_key in self.prediction_cache:
+            home_win_prob = self.prediction_cache[cache_key]
         else:
-            return team2, 1 - home_win_prob
+            X = self.feature_generator_func(team1, team2)
+            prob = self.model.predict_proba([X])[0]
+            home_win_prob = prob[1]
+            self.prediction_cache[cache_key] = home_win_prob
+            self.prediction_cache[(team2, team1)] = 1.0 - home_win_prob
+            
+        if self.probabilistic:
+            if np.random.rand() < home_win_prob:
+                return team1, home_win_prob
+            else:
+                return team2, 1.0 - home_win_prob
+        else:
+            if home_win_prob > 0.5:
+                return team1, home_win_prob
+            else:
+                return team2, 1.0 - home_win_prob
 
-    def playGroupStage(self, start_date):
+    def playGroupStage(self, start_date, completed_lookup=None):
         num_grps = 12
         group_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
         group_results = {}
         third_place_candidates = []
         
-        print(f"Groups for this tournament:\n{self.groups}\n\n")
-        print('Group Stage:')
-        
         for grp in range(num_grps):
             g_letter = group_letters[grp]
             teams = self.groups[grp]
-            team_stats = {team: {'wins': 0, 'prob_score': 0.0} for team in teams}
+            team_stats = {team: {'wins': 0.0, 'prob_score': 0.0} for team in teams}
             
             for i in range(0, len(teams)):
                 for j in range(i + 1, len(teams)):
                     dateOfMatch = start_date + datetime.timedelta(days=i * j)
-                    winner, win_prob = self.predictWinner(teams[i], teams[j], dateOfMatch, 'group_stage')
                     
-                    team_stats[winner]['wins'] += 1
-                    team_stats[winner]['prob_score'] += win_prob
-                    
-                    loser = teams[j] if winner == teams[i] else teams[i]
-                    team_stats[loser]['prob_score'] += (1 - win_prob)
+                    match_record = None
+                    if completed_lookup:
+                        match_record = completed_lookup.get((teams[i], teams[j]))
+                        
+                    if match_record is not None:
+                        winner = match_record.get("winner")
+                        h_score = int(match_record.get("home_score", 0))
+                        a_score = int(match_record.get("away_score", 0))
+                        
+                        if winner == "Draw" or winner is None or h_score == a_score:
+                            team_stats[teams[i]]['wins'] += 0.5
+                            team_stats[teams[j]]['wins'] += 0.5
+                            team_stats[teams[i]]['prob_score'] += 0.5
+                            team_stats[teams[j]]['prob_score'] += 0.5
+                        else:
+                            team_stats[winner]['wins'] += 1.0
+                            team_stats[winner]['prob_score'] += 1.0
+                            loser = teams[j] if winner == teams[i] else teams[i]
+                            team_stats[loser]['prob_score'] += 0.0
+                    else:
+                        winner, win_prob = self.predictWinner(teams[i], teams[j], dateOfMatch, 'group_stage')
+                        team_stats[winner]['wins'] += 1.0
+                        team_stats[winner]['prob_score'] += win_prob
+                        loser = teams[j] if winner == teams[i] else teams[i]
+                        team_stats[loser]['prob_score'] += (1.0 - win_prob)
 
             sorted_teams = sorted(team_stats.keys(), key=lambda x: (team_stats[x]['wins'], team_stats[x]['prob_score']), reverse=True)
             
@@ -65,8 +98,6 @@ class TournamentSimulator:
         # Sort the 12 third-place candidates to find the 8 best
         best_thirds = sorted(third_place_candidates, key=lambda x: (x['wins'], x['prob_score']), reverse=True)[:8]
         qualified_third_groups = sorted([t['group'] for t in best_thirds])
-        
-        print(f"\nTop 8 Third-Place Teams Advancing: {[t['team'] for t in best_thirds]} from groups {qualified_third_groups}\n")
         
         # Resolve Annex C mapping
         import os
@@ -113,8 +144,12 @@ class TournamentSimulator:
         print(f'\n{stage} winners: {winners}')
         return winners, dateOfMatch, labels, odds
 
-    def playKnockOuts(self):
-        group_results, advancing_thirds_mapping = self.playGroupStage(start_date=self.tournamentStartDate)
+    def playKnockOuts(self, group_results=None, advancing_thirds_mapping=None, completed_lookup=None):
+        if group_results is None or advancing_thirds_mapping is None:
+            group_results, advancing_thirds_mapping = self.playGroupStage(
+                start_date=self.tournamentStartDate, 
+                completed_lookup=completed_lookup
+            )
         
         knockout_schedule = {
             73: ("RU_A", "RU_B"),
@@ -205,7 +240,22 @@ class TournamentSimulator:
             else:
                 stage = 'final'
                 
-            winner, win_prob = self.predictWinner(team1, team2, dateOfMatch, stage)
+            if hasattr(self, 'recorded_matchups'):
+                self.recorded_matchups.append((stage, team1, team2))
+                
+            match_record = None
+            if completed_lookup:
+                match_record = completed_lookup.get(match_id)
+                
+            if match_record is not None:
+                winner = match_record.get("winner")
+                if winner not in (team1, team2):
+                    winner, win_prob = self.predictWinner(team1, team2, dateOfMatch, stage)
+                else:
+                    win_prob = 1.0
+            else:
+                winner, win_prob = self.predictWinner(team1, team2, dateOfMatch, stage)
+                
             loser = team2 if winner == team1 else team1
             
             match_winners[match_id] = winner
@@ -219,11 +269,151 @@ class TournamentSimulator:
             labels.append(f"{team1}({np.round(t1_prob,2)}) vs. {team2}({np.round(t2_prob,2)})")
             odds.append([t1_prob, t2_prob])
             
-        print(f"\nKnockout winners:")
-        for stg, wins in round_results.items():
-            print(f"{stg}: {wins}")
-            
         return round_results, labels, odds
+
+    def run_monte_carlo_simulation(self, completed_matches, num_runs=1000):
+        # 1. Build lookup tables
+        completed_group_lookup = {}
+        completed_ko_lookup = {}
+        
+        for m in completed_matches:
+            if m.get("stage") == "group_stage":
+                t1, t2 = m["home_team"], m["away_team"]
+                completed_group_lookup[(t1, t2)] = m
+                completed_group_lookup[(t2, t1)] = m
+            else:
+                match_num = m.get("match_number")
+                if match_num:
+                    completed_ko_lookup[int(match_num)] = m
+                    
+        # 2. Get all teams
+        all_teams = set()
+        for grp in self.groups:
+            for team in grp:
+                all_teams.add(team)
+                
+        metrics = {team: {
+            "group_qual": 0,
+            "r32": 0,
+            "r16": 0,
+            "qf": 0,
+            "sf": 0,
+            "finalist": 0,
+            "champion": 0
+        } for team in all_teams}
+        
+        # Detailed tracking structures
+        group_positions = {team: {1: 0, 2: 0, 3: 0, 4: 0} for team in all_teams}
+        matchup_frequencies = {team: {stage: {} for stage in ['round_of_32', 'round_of_16', 'quarter_final', 'semi_final', 'final']} for team in all_teams}
+        opponent_ranks_faced = {team: [] for team in all_teams}
+        
+        # Precompute team ranks to keep Monte Carlo lookup fast
+        team_ranks = {}
+        for team in all_teams:
+            try:
+                team_ranks[team] = self.feature_generator_func(team, "USA")[0]
+            except Exception:
+                team_ranks[team] = 50.0
+                
+        group_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
+        self.recorded_matchups = []
+        
+        # Enable probabilistic mode
+        self.probabilistic = True
+        
+        for _ in range(num_runs):
+            self.recorded_matchups.clear()
+            
+            # Run one simulation iteration
+            group_results, advancing_thirds_mapping = self.playGroupStage(
+                start_date=self.tournamentStartDate, 
+                completed_lookup=completed_group_lookup
+            )
+            
+            # Record group finishes (1st, 2nd, 3rd, 4th)
+            for grp_letter, res in group_results.items():
+                w = res['winner']
+                ru = res['runner_up']
+                tp = res['third_place']
+                
+                grp_idx = group_letters.index(grp_letter)
+                teams = self.groups[grp_idx]
+                fp = [t for t in teams if t not in (w, ru, tp)][0]
+                
+                group_positions[w][1] += 1
+                group_positions[ru][2] += 1
+                group_positions[tp][3] += 1
+                group_positions[fp][4] += 1
+                
+            # Record who qualified from group stage
+            qualified_teams = set()
+            for grp_letter, res in group_results.items():
+                qualified_teams.add(res['winner'])
+                qualified_teams.add(res['runner_up'])
+            for third_team in advancing_thirds_mapping.values():
+                qualified_teams.add(third_team)
+                
+            for team in qualified_teams:
+                metrics[team]["group_qual"] += 1
+                metrics[team]["r32"] += 1
+                
+            # Play Knockouts
+            round_results, labels, odds = self.playKnockOuts(
+                group_results=group_results,
+                advancing_thirds_mapping=advancing_thirds_mapping,
+                completed_lookup=completed_ko_lookup
+            )
+            
+            # Record progressions
+            for stage, winners in round_results.items():
+                for team in winners:
+                    if stage == 'round_of_16':
+                        metrics[team]["r16"] += 1
+                    elif stage == 'quarter_final':
+                        metrics[team]["qf"] += 1
+                    elif stage == 'semi_final':
+                        metrics[team]["sf"] += 1
+                    elif stage == 'final':
+                        metrics[team]["finalist"] += 1
+            
+            # Champion
+            champion = round_results['final'][0]
+            metrics[champion]["champion"] += 1
+            
+            # Record matchup frequencies and opponent ranks
+            for stage, t1, t2 in self.recorded_matchups:
+                if stage in matchup_frequencies[t1]:
+                    matchup_frequencies[t1][stage][t2] = matchup_frequencies[t1][stage].get(t2, 0) + 1
+                if stage in matchup_frequencies[t2]:
+                    matchup_frequencies[t2][stage][t1] = matchup_frequencies[t2][stage].get(t1, 0) + 1
+                
+                r1 = team_ranks.get(t1, 50.0)
+                r2 = team_ranks.get(t2, 50.0)
+                opponent_ranks_faced[t1].append(r2)
+                opponent_ranks_faced[t2].append(r1)
+            
+        # Disable probabilistic mode after run is complete
+        self.probabilistic = False
+        if hasattr(self, 'recorded_matchups'):
+            del self.recorded_matchups
+        
+        # 3. Calculate probabilities and package detailed stats
+        probabilities = {}
+        for team, counts in metrics.items():
+            probabilities[team] = {k: v / num_runs for k, v in counts.items()}
+            
+            # Inject nested metadata for path explanation engine
+            probabilities[team]["group_positions"] = {
+                pos: group_positions[team][pos] / num_runs for pos in [1, 2, 3, 4]
+            }
+            probabilities[team]["matchup_frequencies"] = {
+                stage: {
+                    opp: count / num_runs for opp, count in stage_matchups.items()
+                } for stage, stage_matchups in matchup_frequencies[team].items()
+            }
+            probabilities[team]["avg_opponent_rank"] = float(np.mean(opponent_ranks_faced[team])) if opponent_ranks_faced[team] else 50.0
+            
+        return probabilities
 
     def visualizeKnockOuts(self):
         model_name = ' '.join(model.capitalize() for model in self.model_name.split('_'))

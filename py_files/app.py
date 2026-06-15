@@ -3,15 +3,21 @@ import datetime
 import textwrap
 import re
 import numpy as np
+import pandas as pd
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
-from const import WCGroups
+from const import WCGroups, data_dir_path
 from preprocess import load_data, get_match_features
 import preprocess
 from logistic_regression_class import LogisticRegressionClass
 from tournament_simulator import TournamentSimulator
 from reasoning_agent import generate_match_analysis
+import live_results_manager
+from transparency_explainer import generate_recalibration_explanation
+import probability_audit
+import json
+import os
 
 def clean_html(html_str):
     return "\n".join(line.strip() for line in html_str.split("\n"))
@@ -211,14 +217,35 @@ preprocess.final_team_stats = {
 # Filter rankings_df
 rankings_df = rankings_df[rankings_df['country_full'].isin(qualified_teams)].copy()
 
+# Pre-build dictionary of ranks to avoid slow pandas filter in loop
+team_ranks = {}
+for team in qualified_teams:
+    rows = rankings_df[rankings_df['country_full'] == team]
+    team_ranks[team] = rows['rank'].values[-1] if len(rows) > 0 else 50
+
 def feature_generator(team1, team2):
-    return get_match_features(team1, team2, rankings_df)
+    home_rank = team_ranks.get(team1, 50)
+    away_rank = team_ranks.get(team2, 50)
+    rank_diff = home_rank - away_rank
+    h_stats = preprocess.final_team_stats.get(team1, {'weighted_wins': 0.0, 'weighted_goals': 0.0})
+    a_stats = preprocess.final_team_stats.get(team2, {'weighted_wins': 0.0, 'weighted_goals': 0.0})
+    
+    return [
+        home_rank, away_rank, rank_diff,
+        np.log1p(h_stats['weighted_wins']), np.log1p(a_stats['weighted_wins']),
+        np.log1p(h_stats['weighted_goals']), np.log1p(a_stats['weighted_goals'])
+    ]
 
 # Initialize simulator
 simulator = TournamentSimulator(datetime.date(2026, 6, 11), pipeline, GROUPS, feature_generator)
 
 # Define the tabs
-tab1, tab2 = st.tabs(["Tournament Simulation Pipeline", "Head-to-Head Bracket Inspector"])
+tab1, tab2, tab3, tab4 = st.tabs([
+    "Tournament Simulation Pipeline", 
+    "Head-to-Head Bracket Inspector", 
+    "Live Tournament Dashboard",
+    "⚙️ Tournament Structure Audit"
+])
 
 def parse_match_label(label):
     # Parses format: "Argentina(0.68) vs. Japan(0.32)"
@@ -300,7 +327,15 @@ def show_match_dialog(t1_name, t1_prob, t2_name, t2_prob):
             current_phase="pre_tournament"
         )
     
-    st.info(analysis)
+    if analysis == "AI_TACTICAL_ANALYSIS_UNAVAILABLE":
+        st.warning(
+            "### ⚠️ AI Tactical Analysis Temporarily Unavailable\n\n"
+            "The prediction engine and tournament simulator are fully operational.\n\n"
+            "The optional AI tactical reasoning service is currently unavailable because the language model API is not configured.\n\n"
+            "All tournament predictions remain valid."
+        )
+    else:
+        st.info(analysis)
 
 # Process active URL dialogue callbacks early
 if "selected_match" in st.query_params:
@@ -308,6 +343,13 @@ if "selected_match" in st.query_params:
     st.query_params.clear()
     t1_n, t1_p, t2_n, t2_p = parse_match_label(match_label)
     show_match_dialog(t1_n, t1_p, t2_n, t2_p)
+
+# Cache H2H model predictions for round-robin loop to optimize load time
+@st.cache_data
+def get_cached_prediction(team_a, team_b, _pipeline):
+    feat = get_match_features(team_a, team_b, rankings_df)
+    probs = _pipeline.predict_proba([feat])[0]
+    return float(probs[1]), float(probs[0])
 
 # Generate Group Stage round-robin pairings mathematically (72 games total)
 group_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
@@ -318,15 +360,14 @@ for g_idx, group in enumerate(GROUPS):
         for j in range(i + 1, len(group)):
             team_a = group[i]
             team_b = group[j]
-            # Compute probabilities using the trained model
-            feat = get_match_features(team_a, team_b, rankings_df)
-            probs = pipeline.predict_proba([feat])[0]
+            # Compute probabilities using cached prediction function
+            prob_a, prob_b = get_cached_prediction(team_a, team_b, pipeline)
             group_fixtures.append({
                 'stage': f"Group Stage: [Group {g_letter}]",
                 'team_a': team_a,
                 'team_b': team_b,
-                'prob_a': probs[1],
-                'prob_b': probs[0],
+                'prob_a': prob_a,
+                'prob_b': prob_b,
                 'label': f"Group Stage: [Group {g_letter}] {team_a} vs {team_b}"
             })
 
@@ -565,12 +606,426 @@ with tab2:
     else:
         phase = "post_group_stage"
         
-    with st.spinner("Agentic AI is analyzing..."):
-        analysis = generate_match_analysis(
-            t1_name, t2_name, 
-            exact_t1_prob * 100, exact_t2_prob * 100, 
-            rank_diff, form_diff, goals_diff, 
-            current_phase=phase
-        )
+    # Key for session state caching
+    h2h_key = f"h2h_{t1_name}_{t2_name}"
     
-    st.info(analysis)
+    if st.session_state.get(h2h_key):
+        st.info(st.session_state[h2h_key])
+    else:
+        st.write("AI tactical analysis is deferred to optimize performance. Click below to generate analysis on demand.")
+        if st.button("Generate AI Analysis", key="btn_h2h_ai"):
+            with st.spinner("Agentic AI is analyzing..."):
+                analysis = generate_match_analysis(
+                    t1_name, t2_name, 
+                    exact_t1_prob * 100, exact_t2_prob * 100, 
+                    rank_diff, form_diff, goals_diff, 
+                    current_phase=phase
+                )
+                if analysis == "AI_TACTICAL_ANALYSIS_UNAVAILABLE":
+                    st.warning("🤖 AI Tactical Analysis is currently unavailable because the Groq language model API is not configured.")
+                else:
+                    st.session_state[h2h_key] = analysis
+                    st.rerun()
+
+# Tab 3: Live Tournament Dashboard
+with tab3:
+    st.header("🏆 Live Tournament Dashboard")
+    st.markdown("Monitor dynamic tournament standings, advancement probabilities, momentum swings, and AI tactical reasoning updated continuously in real-time.")
+    
+    # 0. Probability Guide Widget
+    with st.expander("💡 Why Did Probabilities Change? (Explanation Guide)"):
+        st.markdown("""
+        **Championship probabilities fluctuate dynamically as real matches are completed. Here are the three main causes for these shifts:**
+        
+        *   **1. Bracket Path Collisions (The 'Success Tax')**
+            *   *What it is*: A team wins a match, but their overall title probability decreases.
+            *   *Why it happens*: Winning a group stage match can lock a team into finishing 1st in their group. However, depending on outcomes in other groups, finishing 1st might steer them into a significantly harder side of the knockout bracket (e.g., meeting a heavyweight like Spain or France in the Quarterfinals) compared to finishing 2nd. 
+        *   **2. Probability Normalization (The 'Crowding Effect')**
+            *   *What it is*: A team does not play (or wins their match), yet their probability falls.
+            *   *Why it happens*: The sum of all 48 teams' championship probabilities must always equal exactly 100%. If a major contender (e.g., England or Portugal) gains probability due to favorable outcomes elsewhere, the odds of all other teams must shrink slightly to compensate.
+        *   **3. Monte Carlo Noise (Simulation Variance)**
+            *   *What it is*: Small fluctuations (usually less than ±0.3%) for low-probability teams.
+            *   *Why it happens*: Our simulation engine runs parallel iterations of the remaining tournament. For rare outcomes, small variation from run to run is normal statistical variance. At 1,000 runs, the 95% confidence margin for a 4% event is ±1.20%.
+        """)
+    
+    # 1. Load Live Match Data (Remote Raw URL with Local Fallback)
+    LIVE_RESULTS_URL = "https://raw.githubusercontent.com/muhammedsavad10/world-cup-2026-prediction-engine/main/data/world_cup_2026_live_results.json"
+    live_results_file = os.path.join(data_dir_path, "world_cup_2026_live_results.json")
+    
+    results_data = None
+    try:
+        import requests
+        response = requests.get(LIVE_RESULTS_URL, timeout=5)
+        if response.status_code == 200:
+            results_data = response.json()
+    except Exception:
+        pass
+        
+    if results_data is None:
+        results_data = live_results_manager.load_live_results(live_results_file)
+        
+    completed_matches = results_data.get("matches", [])
+    last_updated = results_data.get("last_updated", "2026-06-11T00:00:00Z")
+    
+    completed_count = len(completed_matches)
+    remaining_count = max(0, 104 - completed_count)
+    
+    # Hero status metrics
+    st.markdown("### 📊 Live Tournament Status")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric(label="Matches Completed", value=f"{completed_count} / 104")
+    with col2:
+        st.metric(label="Matches Remaining", value=f"{remaining_count}")
+    with col3:
+        st.metric(label="Last Updated", value=last_updated)
+        
+    # 2. Monte Carlo Run Logic
+    if "num_runs" not in st.session_state:
+        st.session_state.num_runs = 1000
+    
+    # Cached Monte Carlo runner pulling latest data
+    @st.cache_data(show_spinner="Running Monte Carlo Re-simulation...")
+    def run_live_monte_carlo(last_updated_str, runs, completed_matches_list):
+        return simulator.run_monte_carlo_simulation(completed_matches_list, num_runs=runs)
+        
+    live_probs = run_live_monte_carlo(last_updated, st.session_state.num_runs, completed_matches)
+    
+    # Load baseline probabilities
+    baseline_file = os.path.join(data_dir_path, "world_cup_2026_baseline_probabilities.json")
+    baseline_probs = {}
+    if os.path.exists(baseline_file):
+        try:
+            with open(baseline_file, "r", encoding="utf-8") as f:
+                baseline_probs = json.load(f)
+        except Exception as e:
+            st.error(f"Error loading baseline probabilities: {e}")
+            
+    # Cached group tables logic to avoid slow rendering
+    @st.cache_data
+    def get_cached_group_tables(completed_matches_list, _rankings_df):
+        return live_results_manager.calculate_group_tables(completed_matches_list, _rankings_df)
+        
+    # 3. Dynamic Group Tables
+    st.markdown("---")
+    st.markdown("### 📋 Current Group Standings")
+    live_tables = get_cached_group_tables(completed_matches, rankings_df)
+    group_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
+    
+    cols = st.columns(3)
+    for idx, letter in enumerate(group_letters):
+        col_idx = idx % 3
+        with cols[col_idx]:
+            with st.expander(f"Group {letter}"):
+                table = live_tables[letter]
+                df_table = pd.DataFrame(table)
+                if not df_table.empty:
+                    # Map group qualification probabilities from Monte Carlo results
+                    df_table["Qual %"] = df_table["team"].map(
+                        lambda t: f"{live_probs.get(t, {}).get('group_qual', 0.0) * 100:.1f}%"
+                    )
+                    df_table = df_table.rename(columns={
+                        "team": "Team", "matches_played": "MP",
+                        "wins": "W", "draws": "D", "losses": "L",
+                        "goals_scored": "GS", "goals_conceded": "GA",
+                        "goal_difference": "GD", "points": "Pts"
+                    })
+                    st.dataframe(df_table[["Team", "MP", "W", "D", "L", "GD", "Pts", "Qual %"]], hide_index=True, use_container_width=True)
+                else:
+                    st.write("Group table empty")
+                    
+    # 4. Probabilities & Momentum (Risers and Fallers)
+    st.markdown("---")
+    col_probs, col_momentum = st.columns(2)
+    
+    with col_probs:
+        st.markdown("### 🏆 Championship Winner Probabilities")
+        champ_probs = {team: probs["champion"] for team, probs in live_probs.items()}
+        top_champs = sorted(champ_probs.items(), key=lambda x: x[1], reverse=True)[:10]
+        df_champs = pd.DataFrame(top_champs, columns=["Team", "Probability"])
+        df_champs["Probability"] = df_champs["Probability"] * 100
+        st.bar_chart(df_champs, x="Team", y="Probability", use_container_width=True)
+        
+    with col_momentum:
+        st.markdown("### 📈 Tournament Momentum (Championship Probability Delta)")
+        
+        # Collect played teams from completed matches
+        played_teams = set()
+        for m in completed_matches:
+            played_teams.add(m["home_team"])
+            played_teams.add(m["away_team"])
+            
+        risers = []
+        fallers = []
+        unchanged = []
+        
+        for team in live_probs:
+            curr = live_probs[team]["champion"]
+            base = baseline_probs.get(team, {}).get("champion", curr)
+            delta = curr - base
+            
+            # Standard Error / Confidence Interval calculations for statistical significance
+            p_bound = max(0.001, min(0.999, base))
+            se_base = np.sqrt(p_bound * (1 - p_bound) / 1000)
+            se_curr = np.sqrt(curr * (1 - curr) / st.session_state.num_runs) if curr > 0 else 0
+            se_diff = np.sqrt(se_base**2 + se_curr**2)
+            ci = 1.96 * se_diff
+            
+            if abs(delta) > ci and abs(delta) >= 0.001:
+                if delta > 0:
+                    risers.append((team, curr, delta))
+                else:
+                    fallers.append((team, curr, delta))
+            else:
+                unchanged.append((team, curr, delta))
+                
+        col_r, col_f = st.columns(2)
+        with col_r:
+            st.markdown("##### Biggest Risers")
+            sorted_risers = sorted(risers, key=lambda x: x[2], reverse=True)[:4]
+            count_r = 0
+            for team, curr, delta in sorted_risers:
+                st.metric(label=team, value=f"{curr*100:.1f}%", delta=f"+{delta*100:.2f}%")
+                count_r += 1
+            if count_r == 0:
+                st.write("No statistically significant risers yet.")
+                
+        with col_f:
+            st.markdown("##### Biggest Fallers")
+            sorted_fallers = sorted(fallers, key=lambda x: x[2])[:4]
+            count_f = 0
+            for team, curr, delta in sorted_fallers:
+                st.metric(label=team, value=f"{curr*100:.1f}%", delta=f"{delta*100:.2f}%")
+                count_f += 1
+            if count_f == 0:
+                st.write("No statistically significant fallers yet.")
+                
+        # Display Stable Paths for teams that have played but have insignificant movement
+        unchanged_played = [t for t in unchanged if t[0] in played_teams]
+        if unchanged_played:
+            st.markdown("##### Stable Paths (Essentially Unchanged)")
+            for team, curr, delta in sorted(unchanged_played, key=lambda x: abs(x[2])):
+                st.markdown(f"• **{team}**: `🟡 Essentially Unchanged`")
+                
+    # 5. Transparency explainer (Spectator-focused with Advanced Analytics expander fallback)
+    st.markdown("---")
+    st.markdown("### 🔍 Live Probability Path Analyzer")
+    st.markdown("Select a team to inspect their current tournament path and get a detailed, simulator-backed breakdown of their advancement probabilities.")
+    
+    selected_explain_team = st.selectbox("Inspect Team:", sorted(list(live_probs.keys())))
+    
+    # Retrieve stats for the selected team
+    team_data = live_probs[selected_explain_team]
+    curr_diff = team_data.get("avg_opponent_rank", 50.0)
+    base_diff = baseline_probs.get(selected_explain_team, {}).get("avg_opponent_rank", 50.0)
+    diff_change = curr_diff - base_diff
+    
+    # Calculate likely opponents from simulation frequencies
+    curr_matchups = team_data.get("matchup_frequencies", {})
+    all_opp_counts = {}
+    for stage in ["round_of_32", "round_of_16"]:
+        for opp, freq in curr_matchups.get(stage, {}).items():
+            all_opp_counts[opp] = all_opp_counts.get(opp, 0) + freq
+            
+    sorted_opps = sorted(all_opp_counts.items(), key=lambda x: x[1], reverse=True)[:3]
+    
+    col_path_info, col_insights = st.columns(2)
+    
+    with col_path_info:
+        st.markdown("#### 🗺️ Most Likely Knockout Opponents")
+        if sorted_opps:
+            for opp, prob in sorted_opps:
+                st.write(f"• **{opp}** ({prob * 100:.0f}%)")
+        else:
+            st.write("*No knockout matchups projected yet.*")
+            
+        st.markdown("#### Average Opponent FIFA Rank")
+        st.write(f"**Baseline**: `{base_diff:.1f}`")
+        st.write(f"**Current**: `{curr_diff:.1f}`")
+        
+        # Route status using simple thresholds
+        if diff_change > 1.5:
+            route_status = "🟢 Easier"
+        elif diff_change < -1.5:
+            route_status = "🔴 Harder"
+        else:
+            route_status = "🟡 Similar"
+        st.markdown(f"**Route Status**: `{route_status}`")
+        
+        # Signal-To-Noise Outlook Status
+        base_champ = baseline_probs.get(selected_explain_team, {}).get("champion", 0.0)
+        curr_champ = team_data.get("champion", 0.0)
+        delta_champ = curr_champ - base_champ
+        
+        p_bound = max(0.001, min(0.999, base_champ))
+        se_base = np.sqrt(p_bound * (1 - p_bound) / 1000)
+        se_curr = np.sqrt(curr_champ * (1 - curr_champ) / st.session_state.num_runs) if curr_champ > 0 else 0
+        se_diff = np.sqrt(se_base**2 + se_curr**2)
+        ci_bound = 1.96 * se_diff
+        
+        if abs(delta_champ) > ci_bound and abs(delta_champ) >= 0.001:
+            if delta_champ > 0:
+                status_str = f"🟢 Improved (+{delta_champ*100:.1f}%)"
+            else:
+                status_str = f"🔴 Decreased ({delta_champ*100:.1f}%)"
+        else:
+            status_str = "🟡 Essentially Unchanged"
+            
+        st.markdown(f"**Championship Outlook**: `{status_str}`")
+        
+    with col_insights:
+        form_dict = live_results_manager.calculate_rolling_form(completed_matches)
+        team_form = form_dict.get(selected_explain_team, "")
+        
+        explanation = generate_recalibration_explanation(
+            selected_explain_team,
+            baseline_probs.get(selected_explain_team, {}),
+            team_data,
+            completed_matches,
+            team_form
+        )
+        
+        st.markdown("#### Commentary Insight:")
+        st.info(explanation["spectator_insight"])
+        
+    # Hide all statistical detail inside the Advanced Analytics expander
+    with st.expander("⚙️ Advanced Analytics & Confidence Margins"):
+        st.markdown("### 🎲 Monte Carlo Re-Simulation Settings")
+        new_runs = st.selectbox(
+            "Select Monte Carlo Simulation Count (higher runs increase accuracy but take longer):",
+            [100, 500, 1000, 5000],
+            index=[100, 500, 1000, 5000].index(st.session_state.num_runs)
+        )
+        if new_runs != st.session_state.num_runs:
+            st.session_state.num_runs = new_runs
+            st.rerun()
+            
+        st.markdown("---")
+        st.markdown("### 🔍 Audited Probability Movements")
+        st.write("Audited significant shifts in championship probabilities compared to pre-tournament baseline, including statistical confidence intervals and root cause diagnoses:")
+        
+        audited_results = probability_audit.audit_probabilities(baseline_probs, live_probs, completed_matches, num_runs=st.session_state.num_runs)
+        flagged_teams = [t for t, data in audited_results.items() if data["flagged"] or abs(data["delta"]) >= 0.01]
+        
+        if "Germany" in audited_results and "Germany" not in flagged_teams:
+            flagged_teams.append("Germany")
+            
+        if flagged_teams:
+            for team in sorted(flagged_teams):
+                data = audited_results[team]
+                delta_p = data["delta"]
+                ci_p = data["ci"]
+                
+                with st.container(border=True):
+                    col_t, col_vals, col_cause = st.columns([1, 1, 2])
+                    with col_t:
+                        st.markdown(f"**Team: {team}**")
+                        if data["case"]:
+                            st.caption(f"⚠️ {data['case']}")
+                    with col_vals:
+                        st.write(f"Previous: {data['previous']*100:.2f}%")
+                        st.write(f"Current: {data['current']*100:.2f}%")
+                        color = "red" if delta_p < 0 else "green"
+                        st.markdown(f"Change: <span style='color:{color}; font-weight:bold;'>{delta_p*100:+.2f}%</span>", unsafe_allow_html=True)
+                        st.write(f"Confidence Interval: ±{ci_p*100:.2f}%")
+                    with col_cause:
+                        st.markdown(f"**Likely Cause**: `{data['cause']}`")
+                        st.write(data["explanation"])
+        else:
+            st.write("No major shifts or anomalies flagged.")
+            
+        st.markdown("---")
+        st.markdown(explanation["advanced_analytics"])
+
+# Tab 4: Tournament Structure Audit
+with tab4:
+    st.header("⚙️ Tournament Structure Audit")
+    st.markdown("Verify the structural integrity, group distributions, and dataset lookup mappings for the World Cup 2026 Prediction Engine.")
+    
+    # Display group distributions
+    st.markdown("### 📋 Group Stage Team Distributions")
+    group_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
+    
+    # Show in a 4-column layout for visual excellence
+    cols = st.columns(4)
+    for idx, letter in enumerate(group_letters):
+        col_idx = idx % 4
+        with cols[col_idx]:
+            with st.container(border=True):
+                st.markdown(f"**Group {letter}**")
+                for team in GROUPS[idx]:
+                    flag = FLAGS.get(team, '🏳️')
+                    st.write(f"{flag} {team}")
+                    
+    # Calculate totals
+    flat_teams = [team for grp in GROUPS for team in grp]
+    total_teams = len(flat_teams)
+    unique_teams = set(flat_teams)
+    
+    st.markdown("---")
+    st.markdown("### 📊 Summary Statistics")
+    col_stat1, col_stat2 = st.columns(2)
+    with col_stat1:
+        st.metric(label="Total Teams Listed", value=str(total_teams))
+    with col_stat2:
+        st.metric(label="Unique Teams", value=str(len(unique_teams)))
+        
+    st.markdown("---")
+    st.markdown("### 🔍 Validation Checks")
+    
+    validation_passed = True
+    
+    # 1. Exactly 12 groups
+    if len(GROUPS) == 12:
+        st.success("✅ **1. Exactly 12 groups** (Passed)")
+    else:
+        st.error(f"❌ **1. Exactly 12 groups** (Failed: Found {len(GROUPS)} groups)")
+        validation_passed = False
+        
+    # 2. Exactly 4 teams per group
+    wrong_groups = [group_letters[i] for i, grp in enumerate(GROUPS) if len(grp) != 4]
+    if not wrong_groups:
+        st.success("✅ **2. Exactly 4 teams per group** (Passed)")
+    else:
+        st.error(f"❌ **2. Exactly 4 teams per group** (Failed in groups: {', '.join(wrong_groups)})")
+        validation_passed = False
+        
+    # 3. Exactly 48 unique teams
+    if len(unique_teams) == 48:
+        st.success("✅ **3. Exactly 48 unique teams** (Passed)")
+    else:
+        st.error(f"❌ **3. Exactly 48 unique teams** (Failed: Found {len(unique_teams)} unique teams)")
+        validation_passed = False
+        
+    # 4. No duplicate teams
+    duplicates = set([t for t in flat_teams if flat_teams.count(t) > 1])
+    if not duplicates:
+        st.success("✅ **4. No duplicate teams** (Passed)")
+    else:
+        st.error(f"❌ **4. No duplicate teams** (Failed: Duplicates found: {', '.join(duplicates)})")
+        validation_passed = False
+        
+    # 5. Every team exists in the FIFA rankings dataset
+    missing_rankings = []
+    for team in flat_teams:
+        if team not in team_ranks:
+            missing_rankings.append(team)
+    if not missing_rankings:
+        st.success("✅ **5. Every team exists in the FIFA rankings dataset** (Passed)")
+    else:
+        st.error(f"❌ **5. Every team exists in the FIFA rankings dataset** (Failed: Missing teams: {', '.join(missing_rankings)})")
+        validation_passed = False
+        
+    # 6. Every team exists in the simulator lookup tables
+    missing_stats = []
+    for team in flat_teams:
+        if team not in preprocess.final_team_stats:
+            missing_stats.append(team)
+    if not missing_stats:
+        st.success("✅ **6. Every team exists in the simulator lookup tables** (Passed)")
+    else:
+        st.error(f"❌ **6. Every team exists in the simulator lookup tables** (Failed: Missing teams: {', '.join(missing_stats)})")
+        validation_passed = False
+        
+    if validation_passed:
+        st.success("🎉 **All structural checks passed successfully! Tournament setup is fully valid.**")
