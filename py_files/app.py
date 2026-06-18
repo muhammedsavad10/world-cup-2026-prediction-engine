@@ -197,6 +197,11 @@ def load_model_and_data():
         ('classifier', base_model)
     ])
     pipeline.fit(X, y)
+    
+    # Apply 60% Calibration to Historical Goals Coefficients (index 5 & 6)
+    pipeline.named_steps['classifier'].coef_[0][5] *= 0.60
+    pipeline.named_steps['classifier'].coef_[0][6] *= 0.60
+    
     return pipeline, rankings_df
 
 with st.spinner("Loading tournament stats and compiling Logistic Regression model..."):
@@ -238,7 +243,8 @@ def feature_generator(team1, team2):
 
 # Initialize simulator
 simulator = TournamentSimulator(datetime.date(2026, 6, 11), pipeline, GROUPS, feature_generator)
-simulator.gamma = 0.03
+simulator.gamma = 0.15
+simulator.prob_cap = 0.12
 
 # Define the tabs
 tab1, tab2, tab3, tab4 = st.tabs([

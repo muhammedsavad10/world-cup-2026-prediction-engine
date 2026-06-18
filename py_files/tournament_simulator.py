@@ -15,7 +15,8 @@ class TournamentSimulator:
         self.probabilistic = False
         self.avg_form = {}
         self.match_counts = {}
-        self.gamma = 0.03
+        self.gamma = 0.15
+        self.prob_cap = 0.12
 
     def predictWinner(self, team1, team2, date, stage):
         if not hasattr(self, 'prediction_cache'):
@@ -58,9 +59,10 @@ class TournamentSimulator:
                 # Convert back to probability
                 p_adjusted_uncapped = 1.0 / (1.0 + np.exp(-logit_adjusted))
                 
-                # Apply hard win-probability adjustment cap of +/- 5%
+                # Apply hard win-probability adjustment cap dynamically
                 prob_change = p_adjusted_uncapped - home_win_prob
-                prob_change_capped = max(-0.05, min(0.05, prob_change))
+                cap = getattr(self, 'prob_cap', 0.12)
+                prob_change_capped = max(-cap, min(cap, prob_change))
                 
                 home_win_prob = home_win_prob + prob_change_capped
                 home_win_prob = max(0.01, min(0.99, home_win_prob))
