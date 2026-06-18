@@ -9,13 +9,13 @@ final_team_stats = {}
 
 def load_data():
     global final_team_stats
-    results = pd.read_csv(osp.join(data_dir_path, 'results.csv'))
-    rankings = pd.read_csv(osp.join(data_dir_path, 'fifa_ranking-2024-06-20.csv'))
+    results = pd.read_csv(osp.join(data_dir_path, 'results.csv'), encoding='utf-8')
+    rankings = pd.read_csv(osp.join(data_dir_path, 'fifa_ranking-2024-06-20.csv'), encoding='utf-8')
     
     # Standardize country names to match WCGroups and each other
-    results['home_team'] = results['home_team'].replace({'United States': 'USA', 'Czech Republic': 'Czechia'})
-    results['away_team'] = results['away_team'].replace({'United States': 'USA', 'Czech Republic': 'Czechia'})
-    results['country'] = results['country'].replace({'United States': 'USA', 'Czech Republic': 'Czechia'})
+    results['home_team'] = results['home_team'].replace({'United States': 'USA', 'Czech Republic': 'Czechia', 'Curaçao': 'Curacao'})
+    results['away_team'] = results['away_team'].replace({'United States': 'USA', 'Czech Republic': 'Czechia', 'Curaçao': 'Curacao'})
+    results['country'] = results['country'].replace({'United States': 'USA', 'Czech Republic': 'Czechia', 'Curaçao': 'Curacao'})
 
     rankings['country_full'] = rankings['country_full'].replace({
         'Korea Republic': 'South Korea',
@@ -212,7 +212,7 @@ if __name__ == '__main__':
     import pandas as pd
     from const import data_dir_path
     
-    match_results_df = pd.read_csv(osp.join(data_dir_path, 'results.csv'))
+    match_results_df = pd.read_csv(osp.join(data_dir_path, 'results.csv'), encoding='utf-8')
     match_results_df['date'] = pd.to_datetime(match_results_df['date'])
     
     # Strict Purge for the diagnostic print

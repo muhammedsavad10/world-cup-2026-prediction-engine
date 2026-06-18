@@ -648,21 +648,27 @@ with tab3:
             *   *Why it happens*: Our simulation engine runs parallel iterations of the remaining tournament. For rare outcomes, small variation from run to run is normal statistical variance. At 1,000 runs, the 95% confidence margin for a 4% event is ±1.20%.
         """)
     
-    # 1. Load Live Match Data (Remote Raw URL with Local Fallback)
+    # 1. Load Live Match Data (Prioritize the source containing more completed matches)
     LIVE_RESULTS_URL = "https://raw.githubusercontent.com/muhammedsavad10/world-cup-2026-prediction-engine/main/data/world_cup_2026_live_results.json"
     live_results_file = os.path.join(data_dir_path, "world_cup_2026_live_results.json")
     
-    results_data = None
+    local_data = live_results_manager.load_live_results(live_results_file)
+    remote_data = None
     try:
         import requests
-        response = requests.get(LIVE_RESULTS_URL, timeout=5)
+        response = requests.get(LIVE_RESULTS_URL, timeout=3)
         if response.status_code == 200:
-            results_data = response.json()
+            remote_data = response.json()
     except Exception:
         pass
         
-    if results_data is None:
-        results_data = live_results_manager.load_live_results(live_results_file)
+    local_matches = local_data.get("matches", [])
+    remote_matches = remote_data.get("matches", []) if remote_data else []
+    
+    if len(local_matches) >= len(remote_matches):
+        results_data = local_data
+    else:
+        results_data = remote_data
         
     completed_matches = results_data.get("matches", [])
     last_updated = results_data.get("last_updated", "2026-06-11T00:00:00Z")

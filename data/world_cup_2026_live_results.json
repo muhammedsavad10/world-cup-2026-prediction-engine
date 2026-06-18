@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-15T11:39:01+05:30",
+  "last_updated": "2026-06-18T12:45:22+05:30",
   "matches": [
     {
       "match_number": 1,
@@ -131,6 +131,138 @@
       "away_score": 1,
       "winner": "Sweden",
       "group": "F",
+      "stage": "group_stage"
+    },
+    {
+      "match_number": 13,
+      "date": "2026-06-15",
+      "home_team": "Belgium",
+      "away_team": "Egypt",
+      "home_score": 1,
+      "away_score": 1,
+      "winner": null,
+      "group": "G",
+      "stage": "group_stage"
+    },
+    {
+      "match_number": 14,
+      "date": "2026-06-15",
+      "home_team": "Iran",
+      "away_team": "New Zealand",
+      "home_score": 2,
+      "away_score": 2,
+      "winner": null,
+      "group": "G",
+      "stage": "group_stage"
+    },
+    {
+      "match_number": 15,
+      "date": "2026-06-15",
+      "home_team": "Spain",
+      "away_team": "Cape Verde",
+      "home_score": 0,
+      "away_score": 0,
+      "winner": null,
+      "group": "H",
+      "stage": "group_stage"
+    },
+    {
+      "match_number": 16,
+      "date": "2026-06-15",
+      "home_team": "Saudi Arabia",
+      "away_team": "Uruguay",
+      "home_score": 1,
+      "away_score": 1,
+      "winner": null,
+      "group": "H",
+      "stage": "group_stage"
+    },
+    {
+      "match_number": 17,
+      "date": "2026-06-16",
+      "home_team": "France",
+      "away_team": "Senegal",
+      "home_score": 3,
+      "away_score": 1,
+      "winner": "France",
+      "group": "I",
+      "stage": "group_stage"
+    },
+    {
+      "match_number": 18,
+      "date": "2026-06-16",
+      "home_team": "Norway",
+      "away_team": "Iraq",
+      "home_score": 4,
+      "away_score": 1,
+      "winner": "Norway",
+      "group": "I",
+      "stage": "group_stage"
+    },
+    {
+      "match_number": 19,
+      "date": "2026-06-16",
+      "home_team": "Argentina",
+      "away_team": "Algeria",
+      "home_score": 3,
+      "away_score": 0,
+      "winner": "Argentina",
+      "group": "J",
+      "stage": "group_stage"
+    },
+    {
+      "match_number": 20,
+      "date": "2026-06-16",
+      "home_team": "Austria",
+      "away_team": "Jordan",
+      "home_score": 3,
+      "away_score": 1,
+      "winner": "Austria",
+      "group": "J",
+      "stage": "group_stage"
+    },
+    {
+      "match_number": 21,
+      "date": "2026-06-17",
+      "home_team": "Portugal",
+      "away_team": "DR Congo",
+      "home_score": 1,
+      "away_score": 1,
+      "winner": null,
+      "group": "K",
+      "stage": "group_stage"
+    },
+    {
+      "match_number": 22,
+      "date": "2026-06-17",
+      "home_team": "Uzbekistan",
+      "away_team": "Colombia",
+      "home_score": 1,
+      "away_score": 3,
+      "winner": "Colombia",
+      "group": "K",
+      "stage": "group_stage"
+    },
+    {
+      "match_number": 23,
+      "date": "2026-06-17",
+      "home_team": "England",
+      "away_team": "Croatia",
+      "home_score": 4,
+      "away_score": 2,
+      "winner": "England",
+      "group": "L",
+      "stage": "group_stage"
+    },
+    {
+      "match_number": 24,
+      "date": "2026-06-17",
+      "home_team": "Ghana",
+      "away_team": "Panama",
+      "home_score": 1,
+      "away_score": 0,
+      "winner": "Ghana",
+      "group": "L",
       "stage": "group_stage"
     }
   ]

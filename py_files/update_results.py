@@ -14,6 +14,7 @@ WCGroups_flat = {
     'Belgium', 'Egypt', 'Iran', 'New Zealand',
     'Spain', 'Uruguay', 'Saudi Arabia', 'Cape Verde',
     'France', 'Senegal', 'Norway', 'Iraq',
+    'Argentina', 'Algeria', 'Austria', 'Jordan',
     'Portugal', 'Colombia', 'Uzbekistan', 'DR Congo',
     'England', 'Croatia', 'Ghana', 'Panama'
 }
