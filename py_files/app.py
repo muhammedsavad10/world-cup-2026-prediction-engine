@@ -238,6 +238,7 @@ def feature_generator(team1, team2):
 
 # Initialize simulator
 simulator = TournamentSimulator(datetime.date(2026, 6, 11), pipeline, GROUPS, feature_generator)
+simulator.gamma = 0.03
 
 # Define the tabs
 tab1, tab2, tab3, tab4 = st.tabs([

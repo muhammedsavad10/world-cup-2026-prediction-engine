@@ -13,6 +13,9 @@ class TournamentSimulator:
         self.model_name = "Logistic Regression"
         self.feature_generator_func = feature_generator_func
         self.probabilistic = False
+        self.avg_form = {}
+        self.match_counts = {}
+        self.gamma = 0.03
 
     def predictWinner(self, team1, team2, date, stage):
         if not hasattr(self, 'prediction_cache'):
@@ -25,6 +28,43 @@ class TournamentSimulator:
             X = self.feature_generator_func(team1, team2)
             prob = self.model.predict_proba([X])[0]
             home_win_prob = prob[1]
+            
+            # Apply Dynamic Tournament Form Layer using log-odds (logit) scaling
+            if hasattr(self, 'avg_form') and self.avg_form and hasattr(self, 'match_counts') and self.match_counts:
+                n1 = self.match_counts.get(team1, 0)
+                n2 = self.match_counts.get(team2, 0)
+                
+                def get_weight(n):
+                    if n <= 0: return 0.0
+                    elif n == 1: return 0.25
+                    elif n == 2: return 0.60
+                    else: return 1.00
+                    
+                w1 = get_weight(n1)
+                w2 = get_weight(n2)
+                
+                f1 = self.avg_form.get(team1, 0.0) * w1
+                f2 = self.avg_form.get(team2, 0.0) * w2
+                
+                # Convert baseline probability to logit (clip to avoid division by zero / log(0))
+                p_base = max(0.0001, min(0.9999, home_win_prob))
+                logit_base = np.log(p_base / (1.0 - p_base))
+                
+                # Apply gamma and scaling in log-odds space
+                gamma = getattr(self, 'gamma', 0.03)
+                logit_adj = gamma * (f1 - f2)
+                logit_adjusted = logit_base + logit_adj
+                
+                # Convert back to probability
+                p_adjusted_uncapped = 1.0 / (1.0 + np.exp(-logit_adjusted))
+                
+                # Apply hard win-probability adjustment cap of +/- 5%
+                prob_change = p_adjusted_uncapped - home_win_prob
+                prob_change_capped = max(-0.05, min(0.05, prob_change))
+                
+                home_win_prob = home_win_prob + prob_change_capped
+                home_win_prob = max(0.01, min(0.99, home_win_prob))
+            
             self.prediction_cache[cache_key] = home_win_prob
             self.prediction_cache[(team2, team1)] = 1.0 - home_win_prob
             
@@ -272,6 +312,9 @@ class TournamentSimulator:
         return round_results, labels, odds
 
     def run_monte_carlo_simulation(self, completed_matches, num_runs=1000):
+        # Clear prediction cache to ensure correct recalibration with latest completed matches and gamma settings
+        self.prediction_cache = {}
+        
         # 1. Build lookup tables
         completed_group_lookup = {}
         completed_ko_lookup = {}
@@ -292,6 +335,47 @@ class TournamentSimulator:
             for team in grp:
                 all_teams.add(team)
                 
+        # Compute Dynamic Form Factors & Match Counts from completed matches
+        raw_deltas = {}
+        self.match_counts = {team: 0 for team in all_teams}
+        
+        for m in completed_matches:
+            t1, t2 = m.get("home_team"), m.get("away_team")
+            if not t1 or not t2 or t1 not in all_teams or t2 not in all_teams:
+                continue
+                
+            h_score = int(m.get("home_score", 0))
+            a_score = int(m.get("away_score", 0))
+            winner = m.get("winner")
+            
+            # Predict baseline (uncapped, unadjusted raw ML probability)
+            try:
+                X = self.feature_generator_func(t1, t2)
+                p_home = self.model.predict_proba([X])[0][1]
+            except Exception:
+                p_home = 0.5
+                
+            E_home = 2.0 * p_home + 1.0
+            E_away = 3.0 - E_home
+            
+            if winner == t1 or h_score > a_score:
+                A_home, A_away = 3.0, 0.0
+            elif winner == t2 or a_score > h_score:
+                A_home, A_away = 0.0, 3.0
+            else:
+                A_home, A_away = 1.0, 1.0
+                
+            raw_deltas.setdefault(t1, []).append(A_home - E_home)
+            raw_deltas.setdefault(t2, []).append(A_away - E_away)
+            
+            self.match_counts[t1] += 1
+            self.match_counts[t2] += 1
+            
+        self.avg_form = {}
+        for team in all_teams:
+            deltas = raw_deltas.get(team, [])
+            self.avg_form[team] = float(np.mean(deltas)) if deltas else 0.0
+            
         metrics = {team: {
             "group_qual": 0,
             "r32": 0,
