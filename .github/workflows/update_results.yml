@@ -2,9 +2,12 @@ name: Update World Cup Results
 
 on:
   schedule:
-    - cron: '0 */2 * * *'
-
+    - cron: '0 */6 * * *'
   workflow_dispatch:
+
+concurrency:
+  group: update-pipeline
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -16,27 +19,38 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: 'pip'
 
       - name: Install Dependencies
         run: |
-          pip install requests pandas
+          pip install --upgrade pip
+          pip install requests pandas numpy scikit-learn networkx matplotlib
 
       - name: Run Update Script
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: |
           python py_files/update_results.py
 
-      - name: Commit Changes
+      - name: Commit & Push Changes
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "actions@github.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add data/world_cup_2026_live_results.json
+          # Stage results and precomputed probabilities
+          git add data/world_cup_2026_live_results.json data/world_cup_2026_live_probabilities.json
 
-          git diff --staged --quiet || git commit -m "Auto update World Cup results"
-
-          git push
+          # Commit and push only if staged changes exist to prevent empty commit pollution
+          git diff --staged --quiet || (
+            git commit -m "Auto update World Cup results and probabilities [skip ci]"
+            git pull --rebase origin main
+            git push
+          )

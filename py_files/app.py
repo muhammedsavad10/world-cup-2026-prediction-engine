@@ -4,13 +4,11 @@ import textwrap
 import re
 import numpy as np
 import pandas as pd
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
+import math
 
 from const import WCGroups, data_dir_path
 from preprocess import load_data, get_match_features
 import preprocess
-from logistic_regression_class import LogisticRegressionClass
 from tournament_simulator import TournamentSimulator
 from reasoning_agent import generate_match_analysis
 import live_results_manager
@@ -24,6 +22,13 @@ def clean_html(html_str):
 
 # Set wide mode config first
 st.set_page_config(layout="wide", page_title="2026 FIFA World Cup AI Predictor")
+
+# Detect whether the app is running locally or in production
+IS_LOCAL_DEV = os.path.abspath(__file__).startswith("c:\\Users\\Muhammed Savad T M") or os.environ.get("STREAMLIT_DEV") == "True"
+
+# Initialize centralized session state variables early to prevent AttributeError
+if "num_runs" not in st.session_state:
+    st.session_state.num_runs = 10000 if not IS_LOCAL_DEV else 1000
 
 # Inject stadium background and exact custom layout CSS at the top of the app
 st.markdown("""
@@ -184,24 +189,37 @@ FLAGS = {
     'DR Congo': '🇨🇩', 'Ghana': '🇬🇭'
 }
 
-# Cache data loading and pipeline training
+# Model Wrapper for JSON-based manual evaluation
+class JSONLogisticRegressionModel:
+    def __init__(self, model_data):
+        self.model_data = model_data
+        
+    def predict_proba(self, X_list):
+        mean = self.model_data["scaler"]["mean"]
+        scale = self.model_data["scaler"]["scale"]
+        coef = self.model_data["classifier"]["coef"]
+        intercept = self.model_data["classifier"]["intercept"]
+        
+        results = []
+        for X in X_list:
+            X_scaled = [(X[i] - mean[i]) / scale[i] for i in range(7)]
+            z = sum(X_scaled[i] * coef[i] for i in range(7)) + intercept
+            prob_home = 1.0 / (1.0 + math.exp(-z))
+            prob_away = 1.0 - prob_home
+            results.append([prob_away, prob_home])
+        return np.array(results)
+
+# Cache data loading and JSON model weights loading
 @st.cache_resource
 def load_model_and_data():
     X, y, rankings_df = load_data()
-    model_class = LogisticRegressionClass()
-    base_model = model_class.get_model()
     
-    # Scale features using StandardScaler
-    pipeline = Pipeline([
-        ('scaler', StandardScaler()),
-        ('classifier', base_model)
-    ])
-    pipeline.fit(X, y)
-    
-    # Apply 60% Calibration to Historical Goals Coefficients (index 5 & 6)
-    pipeline.named_steps['classifier'].coef_[0][5] *= 0.60
-    pipeline.named_steps['classifier'].coef_[0][6] *= 0.60
-    
+    # Load JSON model coefficients
+    model_json_path = os.path.join(data_dir_path, "logistic_regression_model.json")
+    with open(model_json_path, "r", encoding="utf-8") as f:
+        model_data = json.load(f)
+        
+    pipeline = JSONLogisticRegressionModel(model_data)
     return pipeline, rankings_df
 
 with st.spinner("Loading tournament stats and compiling Logistic Regression model..."):
@@ -693,16 +711,43 @@ with tab3:
     with col3:
         st.metric(label="Last Updated", value=last_updated)
         
-    # 2. Monte Carlo Run Logic
-    if "num_runs" not in st.session_state:
-        st.session_state.num_runs = 1000
+    # 2. Invariant Standings & Probabilities Load
+    # (IS_LOCAL_DEV is initialized globally at the top of the file)
     
-    # Cached Monte Carlo runner pulling latest data
-    @st.cache_data(show_spinner="Running Monte Carlo Re-simulation...")
-    def run_live_monte_carlo(last_updated_str, runs, completed_matches_list):
-        return simulator.run_monte_carlo_simulation(completed_matches_list, num_runs=runs)
-        
-    live_probs = run_live_monte_carlo(last_updated, st.session_state.num_runs, completed_matches)
+    @st.cache_data
+    def load_precomputed_probabilities_static(last_updated_str):
+        probs_file = os.path.join(data_dir_path, "world_cup_2026_live_probabilities.json")
+        if not os.path.exists(probs_file):
+            return None, "File not found"
+        try:
+            with open(probs_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                if "probabilities" in data and isinstance(data["probabilities"], dict):
+                    return data["probabilities"], None
+                return None, "Invalid schema structure"
+        except Exception as e:
+            return None, str(e)
+
+    probs_dict, load_error = load_precomputed_probabilities_static(last_updated)
+    
+    if probs_dict is not None:
+        live_probs = probs_dict
+    else:
+        if not IS_LOCAL_DEV:
+            # Production: strictly read-only fallback to system maintenance banner
+            st.error("### 🛠️ Live Prediction System Maintenance\n\n"
+                     "The prediction engine is currently updating results or undergoing scheduled maintenance.\n\n"
+                     "All tournament dashboard visuals are temporarily paused. Please check back in a few minutes.")
+            st.stop()
+        else:
+            # Local dev: fallback simulation on the fly
+            st.warning(f"⚠️ Probabilities JSON is missing or corrupted ({load_error}). Running fallback simulation locally...")
+            try:
+                np.random.seed(42)
+                live_probs = simulator.run_monte_carlo_simulation(completed_matches, num_runs=1000)
+            except Exception as sim_err:
+                st.error(f"Failed to execute local fallback simulation: {sim_err}")
+                st.stop()
     
     # Load baseline probabilities
     baseline_file = os.path.join(data_dir_path, "world_cup_2026_baseline_probabilities.json")
@@ -904,14 +949,26 @@ with tab3:
     # Hide all statistical detail inside the Advanced Analytics expander
     with st.expander("⚙️ Advanced Analytics & Confidence Margins"):
         st.markdown("### 🎲 Monte Carlo Re-Simulation Settings")
-        new_runs = st.selectbox(
-            "Select Monte Carlo Simulation Count (higher runs increase accuracy but take longer):",
-            [100, 500, 1000, 5000],
-            index=[100, 500, 1000, 5000].index(st.session_state.num_runs)
-        )
-        if new_runs != st.session_state.num_runs:
-            st.session_state.num_runs = new_runs
-            st.rerun()
+        if not IS_LOCAL_DEV:
+            st.selectbox(
+                "Select Monte Carlo Simulation Count (Locked to precomputed in production):",
+                [10000],
+                index=0,
+                disabled=True
+            )
+            # Ensure num_runs is set to 10000
+            st.session_state.num_runs = 10000
+        else:
+            if "num_runs" not in st.session_state:
+                st.session_state.num_runs = 1000
+            new_runs = st.selectbox(
+                "Select Monte Carlo Simulation Count (higher runs increase accuracy but take longer):",
+                [100, 500, 1000, 5000, 10000],
+                index=[100, 500, 1000, 5000, 10000].index(st.session_state.num_runs)
+            )
+            if new_runs != st.session_state.num_runs:
+                st.session_state.num_runs = new_runs
+                st.rerun()
             
         st.markdown("---")
         st.markdown("### 🔍 Audited Probability Movements")
