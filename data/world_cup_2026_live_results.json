@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-21T00:29:21+05:30",
+  "last_updated": "2026-06-21T00:50:15+05:30",
   "matches": [
     {
       "away_score": 0,
@@ -264,6 +264,105 @@
       "match_number": 24,
       "stage": "group_stage",
       "winner": "Ghana"
+    },
+    {
+      "away_score": 1,
+      "away_team": "South Africa",
+      "date": "2026-06-18",
+      "group": "A",
+      "home_score": 1,
+      "home_team": "Czechia",
+      "match_number": 25,
+      "stage": "group_stage",
+      "winner": null
+    },
+    {
+      "away_score": 1,
+      "away_team": "Bosnia and Herzegovina",
+      "date": "2026-06-18",
+      "group": "B",
+      "home_score": 4,
+      "home_team": "Switzerland",
+      "match_number": 26,
+      "stage": "group_stage",
+      "winner": "Switzerland"
+    },
+    {
+      "away_score": 0,
+      "away_team": "Qatar",
+      "date": "2026-06-18",
+      "group": "B",
+      "home_score": 6,
+      "home_team": "Canada",
+      "match_number": 27,
+      "stage": "group_stage",
+      "winner": "Canada"
+    },
+    {
+      "away_score": 0,
+      "away_team": "South Korea",
+      "date": "2026-06-18",
+      "group": "A",
+      "home_score": 1,
+      "home_team": "Mexico",
+      "match_number": 28,
+      "stage": "group_stage",
+      "winner": "Mexico"
+    },
+    {
+      "away_score": 0,
+      "away_team": "Australia",
+      "date": "2026-06-19",
+      "group": "D",
+      "home_score": 2,
+      "home_team": "USA",
+      "match_number": 29,
+      "stage": "group_stage",
+      "winner": "USA"
+    },
+    {
+      "away_score": 1,
+      "away_team": "Morocco",
+      "date": "2026-06-19",
+      "group": "C",
+      "home_score": 0,
+      "home_team": "Scotland",
+      "match_number": 30,
+      "stage": "group_stage",
+      "winner": "Morocco"
+    },
+    {
+      "away_score": 0,
+      "away_team": "Haiti",
+      "date": "2026-06-19",
+      "group": "C",
+      "home_score": 3,
+      "home_team": "Brazil",
+      "match_number": 31,
+      "stage": "group_stage",
+      "winner": "Brazil"
+    },
+    {
+      "away_score": 1,
+      "away_team": "Paraguay",
+      "date": "2026-06-19",
+      "group": "D",
+      "home_score": 0,
+      "home_team": "Turkey",
+      "match_number": 32,
+      "stage": "group_stage",
+      "winner": "Paraguay"
+    },
+    {
+      "away_score": 1,
+      "away_team": "Sweden",
+      "date": "2026-06-20",
+      "group": "F",
+      "home_score": 5,
+      "home_team": "Netherlands",
+      "match_number": 33,
+      "stage": "group_stage",
+      "winner": "Netherlands"
     }
   ]
 }
