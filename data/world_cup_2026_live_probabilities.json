@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-06-22T11:00:38+05:30",
+    "generated_at": "2026-06-22T11:09:58+05:30",
     "model_version": "1.0.0",
     "schema_version": "1.1.0",
     "seed": 42,
@@ -10,7 +10,7 @@
     "Algeria": {
       "avg_opponent_rank": 16.76097,
       "champion": 0.0006,
-      "finalist": 0.0006,
+      "finalist": 0.0016,
       "group_positions": {
         "1": 0.0,
         "2": 0.1653,
@@ -134,7 +134,7 @@
     "Argentina": {
       "avg_opponent_rank": 25.5491,
       "champion": 0.0861,
-      "finalist": 0.0861,
+      "finalist": 0.1625,
       "group_positions": {
         "1": 0.7838,
         "2": 0.1845,
@@ -316,7 +316,7 @@
     "Australia": {
       "avg_opponent_rank": 15.0799,
       "champion": 0.0094,
-      "finalist": 0.0094,
+      "finalist": 0.026,
       "group_positions": {
         "1": 0.0,
         "2": 0.6392,
@@ -468,7 +468,7 @@
     "Austria": {
       "avg_opponent_rank": 20.17241,
       "champion": 0.0104,
-      "finalist": 0.0104,
+      "finalist": 0.0258,
       "group_positions": {
         "1": 0.2162,
         "2": 0.6139,
@@ -642,7 +642,7 @@
     "Belgium": {
       "avg_opponent_rank": 22.92352,
       "champion": 0.0551,
-      "finalist": 0.0551,
+      "finalist": 0.1066,
       "group_positions": {
         "1": 0.5446,
         "2": 0.3838,
@@ -809,7 +809,7 @@
     "Bosnia and Herzegovina": {
       "avg_opponent_rank": 12.50891,
       "champion": 0.0001,
-      "finalist": 0.0001,
+      "finalist": 0.0003,
       "group_positions": {
         "1": 0.0,
         "2": 0.0,
@@ -879,7 +879,7 @@
     "Brazil": {
       "avg_opponent_rank": 16.24163,
       "champion": 0.0455,
-      "finalist": 0.0455,
+      "finalist": 0.0871,
       "group_positions": {
         "1": 0.0762,
         "2": 0.6146,
@@ -1045,7 +1045,7 @@
     "Canada": {
       "avg_opponent_rank": 23.556,
       "champion": 0.0019,
-      "finalist": 0.0019,
+      "finalist": 0.0102,
       "group_positions": {
         "1": 0.2986,
         "2": 0.7014,
@@ -1191,7 +1191,7 @@
     "Cape Verde": {
       "avg_opponent_rank": 13.76481,
       "champion": 0.0002,
-      "finalist": 0.0002,
+      "finalist": 0.002,
       "group_positions": {
         "1": 0.1458,
         "2": 0.3608,
@@ -1321,7 +1321,7 @@
     "Colombia": {
       "avg_opponent_rank": 21.68336,
       "champion": 0.0506,
-      "finalist": 0.0506,
+      "finalist": 0.1051,
       "group_positions": {
         "1": 0.456,
         "2": 0.4396,
@@ -1488,7 +1488,7 @@
     "Croatia": {
       "avg_opponent_rank": 16.69927,
       "champion": 0.0336,
-      "finalist": 0.0336,
+      "finalist": 0.0708,
       "group_positions": {
         "1": 0.0185,
         "2": 0.7578,
@@ -1721,7 +1721,7 @@
     "Czechia": {
       "avg_opponent_rank": 19.82789,
       "champion": 0.002,
-      "finalist": 0.002,
+      "finalist": 0.0081,
       "group_positions": {
         "1": 0.0,
         "2": 0.1124,
@@ -1839,7 +1839,7 @@
     "DR Congo": {
       "avg_opponent_rank": 13.57885,
       "champion": 0.0004,
-      "finalist": 0.0004,
+      "finalist": 0.0019,
       "group_positions": {
         "1": 0.0501,
         "2": 0.1155,
@@ -1965,7 +1965,7 @@
     "Ecuador": {
       "avg_opponent_rank": 16.85579,
       "champion": 0.0009,
-      "finalist": 0.0009,
+      "finalist": 0.0033,
       "group_positions": {
         "1": 0.0,
         "2": 0.0559,
@@ -2104,7 +2104,7 @@
     "Egypt": {
       "avg_opponent_rank": 25.03529,
       "champion": 0.0024,
-      "finalist": 0.0024,
+      "finalist": 0.0113,
       "group_positions": {
         "1": 0.4126,
         "2": 0.0428,
@@ -2272,7 +2272,7 @@
     "England": {
       "avg_opponent_rank": 26.31739,
       "champion": 0.0748,
-      "finalist": 0.0748,
+      "finalist": 0.1456,
       "group_positions": {
         "1": 0.9552,
         "2": 0.0191,
@@ -2439,7 +2439,7 @@
     "France": {
       "avg_opponent_rank": 20.10309,
       "champion": 0.1157,
-      "finalist": 0.1157,
+      "finalist": 0.1854,
       "group_positions": {
         "1": 0.8659,
         "2": 0.1151,
@@ -2626,7 +2626,7 @@
     "Germany": {
       "avg_opponent_rank": 22.47765,
       "champion": 0.0464,
-      "finalist": 0.0464,
+      "finalist": 0.0844,
       "group_positions": {
         "1": 1.0,
         "2": 0.0,
@@ -2745,7 +2745,7 @@
     "Ghana": {
       "avg_opponent_rank": 16.75437,
       "champion": 0.0,
-      "finalist": 0.0,
+      "finalist": 0.0001,
       "group_positions": {
         "1": 0.0263,
         "2": 0.1732,
@@ -2869,7 +2869,7 @@
     "Iran": {
       "avg_opponent_rank": 24.37036,
       "champion": 0.0076,
-      "finalist": 0.0076,
+      "finalist": 0.0208,
       "group_positions": {
         "1": 0.0428,
         "2": 0.5446,
@@ -3104,7 +3104,7 @@
     "Ivory Coast": {
       "avg_opponent_rank": 23.80816,
       "champion": 0.0024,
-      "finalist": 0.0024,
+      "finalist": 0.0095,
       "group_positions": {
         "1": 0.0,
         "2": 0.7737,
@@ -3258,7 +3258,7 @@
     "Japan": {
       "avg_opponent_rank": 15.74825,
       "champion": 0.026,
-      "finalist": 0.026,
+      "finalist": 0.0625,
       "group_positions": {
         "1": 0.1311,
         "2": 0.4399,
@@ -3417,7 +3417,7 @@
     "Jordan": {
       "avg_opponent_rank": 17.39923,
       "champion": 0.0,
-      "finalist": 0.0,
+      "finalist": 0.0002,
       "group_positions": {
         "1": 0.0,
         "2": 0.0363,
@@ -3500,7 +3500,7 @@
     "Mexico": {
       "avg_opponent_rank": 24.51494,
       "champion": 0.0199,
-      "finalist": 0.0199,
+      "finalist": 0.0521,
       "group_positions": {
         "1": 1.0,
         "2": 0.0,
@@ -3628,7 +3628,7 @@
     "Morocco": {
       "avg_opponent_rank": 19.7962,
       "champion": 0.0376,
-      "finalist": 0.0376,
+      "finalist": 0.0891,
       "group_positions": {
         "1": 0.8889,
         "2": 0.1111,
@@ -3759,7 +3759,7 @@
     "Netherlands": {
       "avg_opponent_rank": 17.96019,
       "champion": 0.0695,
-      "finalist": 0.0695,
+      "finalist": 0.1235,
       "group_positions": {
         "1": 0.7717,
         "2": 0.2283,
@@ -3951,7 +3951,7 @@
     "Norway": {
       "avg_opponent_rank": 24.02043,
       "champion": 0.0099,
-      "finalist": 0.0099,
+      "finalist": 0.033,
       "group_positions": {
         "1": 0.1341,
         "2": 0.5549,
@@ -4139,7 +4139,7 @@
     "Panama": {
       "avg_opponent_rank": 17.60321,
       "champion": 0.0001,
-      "finalist": 0.0001,
+      "finalist": 0.0002,
       "group_positions": {
         "1": 0.0,
         "2": 0.0499,
@@ -4205,7 +4205,7 @@
     "Paraguay": {
       "avg_opponent_rank": 15.20556,
       "champion": 0.0013,
-      "finalist": 0.0013,
+      "finalist": 0.005,
       "group_positions": {
         "1": 0.0,
         "2": 0.3608,
@@ -4335,7 +4335,7 @@
     "Portugal": {
       "avg_opponent_rank": 21.41154,
       "champion": 0.0878,
-      "finalist": 0.0878,
+      "finalist": 0.1583,
       "group_positions": {
         "1": 0.4855,
         "2": 0.384,
@@ -4503,7 +4503,7 @@
     "Qatar": {
       "avg_opponent_rank": 12.8427,
       "champion": 0.0006,
-      "finalist": 0.0006,
+      "finalist": 0.003,
       "group_positions": {
         "1": 0.0,
         "2": 0.0,
@@ -4592,7 +4592,7 @@
     "Saudi Arabia": {
       "avg_opponent_rank": 10.86885,
       "champion": 0.0,
-      "finalist": 0.0,
+      "finalist": 0.0006,
       "group_positions": {
         "1": 0.0,
         "2": 0.3506,
@@ -4710,7 +4710,7 @@
     "Scotland": {
       "avg_opponent_rank": 15.1435,
       "champion": 0.0039,
-      "finalist": 0.0039,
+      "finalist": 0.0111,
       "group_positions": {
         "1": 0.0349,
         "2": 0.2743,
@@ -4849,7 +4849,7 @@
     "Senegal": {
       "avg_opponent_rank": 25.07935,
       "champion": 0.0051,
-      "finalist": 0.0051,
+      "finalist": 0.0161,
       "group_positions": {
         "1": 0.0,
         "2": 0.3117,
@@ -5002,7 +5002,7 @@
     "South Africa": {
       "avg_opponent_rank": 26.27199,
       "champion": 0.0,
-      "finalist": 0.0,
+      "finalist": 0.0004,
       "group_positions": {
         "1": 0.0,
         "2": 0.1774,
@@ -5085,7 +5085,7 @@
     "South Korea": {
       "avg_opponent_rank": 24.97693,
       "champion": 0.006,
-      "finalist": 0.006,
+      "finalist": 0.0161,
       "group_positions": {
         "1": 0.0,
         "2": 0.7102,
@@ -5210,7 +5210,7 @@
     "Spain": {
       "avg_opponent_rank": 16.93512,
       "champion": 0.0978,
-      "finalist": 0.0978,
+      "finalist": 0.1623,
       "group_positions": {
         "1": 0.7114,
         "2": 0.1428,
@@ -5394,7 +5394,7 @@
     "Sweden": {
       "avg_opponent_rank": 14.95528,
       "champion": 0.0125,
-      "finalist": 0.0125,
+      "finalist": 0.0297,
       "group_positions": {
         "1": 0.0972,
         "2": 0.3318,
@@ -5546,7 +5546,7 @@
     "Switzerland": {
       "avg_opponent_rank": 21.25076,
       "champion": 0.0305,
-      "finalist": 0.0305,
+      "finalist": 0.068,
       "group_positions": {
         "1": 0.7014,
         "2": 0.2986,
@@ -5747,7 +5747,7 @@
     "USA": {
       "avg_opponent_rank": 29.46824,
       "champion": 0.0393,
-      "finalist": 0.0393,
+      "finalist": 0.0841,
       "group_positions": {
         "1": 1.0,
         "2": 0.0,
@@ -5861,7 +5861,7 @@
     "Uruguay": {
       "avg_opponent_rank": 15.6972,
       "champion": 0.0061,
-      "finalist": 0.0061,
+      "finalist": 0.0161,
       "group_positions": {
         "1": 0.1428,
         "2": 0.1458,
@@ -6017,7 +6017,7 @@
     "Uzbekistan": {
       "avg_opponent_rank": 20.31144,
       "champion": 0.0,
-      "finalist": 0.0,
+      "finalist": 0.0002,
       "group_positions": {
         "1": 0.0084,
         "2": 0.0609,

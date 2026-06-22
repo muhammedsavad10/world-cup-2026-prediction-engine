@@ -815,11 +815,28 @@ with tab3:
     with col_momentum:
         st.markdown("### 📈 Tournament Momentum (Championship Probability Delta)")
         
-        # Collect played teams from completed matches
+        # Collect played teams and their last match outcomes
         played_teams = set()
+        last_results = {}
         for m in completed_matches:
-            played_teams.add(m["home_team"])
-            played_teams.add(m["away_team"])
+            t1 = m["home_team"]
+            t2 = m["away_team"]
+            played_teams.add(t1)
+            played_teams.add(t2)
+            
+            winner = m.get("winner")
+            h_score = m.get("home_score")
+            a_score = m.get("away_score")
+            
+            if winner == "Draw" or winner is None or h_score == a_score:
+                last_results[t1] = 'draw'
+                last_results[t2] = 'draw'
+            elif winner == t1:
+                last_results[t1] = 'win'
+                last_results[t2] = 'loss'
+            elif winner == t2:
+                last_results[t1] = 'loss'
+                last_results[t2] = 'win'
             
         risers = []
         fallers = []
@@ -838,10 +855,17 @@ with tab3:
             ci = 1.96 * se_diff
             
             if abs(delta) > ci and abs(delta) >= 0.001:
+                last_res = last_results.get(team)
                 if delta > 0:
-                    risers.append((team, curr, delta))
+                    if last_res != 'loss':
+                        risers.append((team, curr, delta))
+                    else:
+                        unchanged.append((team, curr, delta))
                 else:
-                    fallers.append((team, curr, delta))
+                    if last_res != 'win':
+                        fallers.append((team, curr, delta))
+                    else:
+                        unchanged.append((team, curr, delta))
             else:
                 unchanged.append((team, curr, delta))
                 

@@ -459,8 +459,9 @@ class TournamentSimulator:
                         metrics[team]["qf"] += 1
                     elif stage == 'semi_final':
                         metrics[team]["sf"] += 1
-                    elif stage == 'final':
                         metrics[team]["finalist"] += 1
+                    elif stage == 'final':
+                        pass
             
             # Champion
             champion = round_results['final'][0]
