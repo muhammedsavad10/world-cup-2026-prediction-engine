@@ -698,6 +698,14 @@ with tab3:
     completed_matches = results_data.get("matches", [])
     last_updated = results_data.get("last_updated", "2026-06-11T00:00:00Z")
     
+    last_updated_display = last_updated[:10]
+    try:
+        clean_ts = last_updated.replace("Z", "+00:00")
+        dt = datetime.datetime.fromisoformat(clean_ts)
+        last_updated_display = dt.strftime("%B %d, %Y")
+    except Exception:
+        pass
+        
     completed_count = len(completed_matches)
     remaining_count = max(0, 104 - completed_count)
     
@@ -709,7 +717,7 @@ with tab3:
     with col2:
         st.metric(label="Matches Remaining", value=f"{remaining_count}")
     with col3:
-        st.metric(label="Last Updated", value=last_updated)
+        st.metric(label="Last Updated", value=last_updated_display)
         
     # 2. Invariant Standings & Probabilities Load
     # (IS_LOCAL_DEV is initialized globally at the top of the file)
