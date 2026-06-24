@@ -849,7 +849,7 @@ with tab3:
             
             # Standard Error / Confidence Interval calculations for statistical significance
             p_bound = max(0.001, min(0.999, base))
-            se_base = np.sqrt(p_bound * (1 - p_bound) / 1000)
+            se_base = np.sqrt(p_bound * (1 - p_bound) / 10000)
             se_curr = np.sqrt(curr * (1 - curr) / st.session_state.num_runs) if curr > 0 else 0
             se_diff = np.sqrt(se_base**2 + se_curr**2)
             ci = 1.96 * se_diff
@@ -948,7 +948,7 @@ with tab3:
         delta_champ = curr_champ - base_champ
         
         p_bound = max(0.001, min(0.999, base_champ))
-        se_base = np.sqrt(p_bound * (1 - p_bound) / 1000)
+        se_base = np.sqrt(p_bound * (1 - p_bound) / 10000)
         se_curr = np.sqrt(curr_champ * (1 - curr_champ) / st.session_state.num_runs) if curr_champ > 0 else 0
         se_diff = np.sqrt(se_base**2 + se_curr**2)
         ci_bound = 1.96 * se_diff
@@ -972,7 +972,8 @@ with tab3:
             baseline_probs.get(selected_explain_team, {}),
             team_data,
             completed_matches,
-            team_form
+            team_form,
+            num_runs=st.session_state.num_runs
         )
         
         st.markdown("#### Commentary Insight:")

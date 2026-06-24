@@ -18,7 +18,7 @@ team_group_map = {
 def approx_cdf(z):
     return 0.5 * (1 + np.sign(z) * np.sqrt(1 - np.exp(-2 * z**2 / np.pi)))
 
-def generate_recalibration_explanation(team_name, baseline_prob, current_prob, completed_matches, rolling_form):
+def generate_recalibration_explanation(team_name, baseline_prob, current_prob, completed_matches, rolling_form, num_runs=10000):
     """
     Generates structured, data-driven recalibration commentary.
     Returns a dictionary:
@@ -46,8 +46,8 @@ def generate_recalibration_explanation(team_name, baseline_prob, current_prob, c
     diff_change = curr_diff - base_diff # Positive is easier (weaker rank number)
     
     # Statistical validation checks (Z-test)
-    N_base = 1000
-    N_curr = 1000
+    N_base = 10000
+    N_curr = num_runs
     se_base = np.sqrt(base_champ * (1 - base_champ) / N_base) if base_champ > 0 else 0
     se_curr = np.sqrt(curr_champ * (1 - curr_champ) / N_curr) if curr_champ > 0 else 0
     se_diff = np.sqrt(se_base**2 + se_curr**2)

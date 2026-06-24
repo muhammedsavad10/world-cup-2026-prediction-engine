@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-22T11:09:41+05:30",
+  "last_updated": "2026-06-24T09:33:32+05:30",
   "matches": [
     {
       "away_score": 0,
@@ -440,6 +440,94 @@
       "match_number": 40,
       "stage": "group_stage",
       "winner": "Egypt"
+    },
+    {
+      "away_score": 0,
+      "away_team": "Iraq",
+      "date": "2026-06-22",
+      "group": "I",
+      "home_score": 3,
+      "home_team": "France",
+      "match_number": 41,
+      "stage": "group_stage",
+      "winner": "France"
+    },
+    {
+      "away_score": 2,
+      "away_team": "Senegal",
+      "date": "2026-06-22",
+      "group": "I",
+      "home_score": 3,
+      "home_team": "Norway",
+      "match_number": 42,
+      "stage": "group_stage",
+      "winner": "Norway"
+    },
+    {
+      "away_score": 0,
+      "away_team": "Austria",
+      "date": "2026-06-22",
+      "group": "J",
+      "home_score": 2,
+      "home_team": "Argentina",
+      "match_number": 43,
+      "stage": "group_stage",
+      "winner": "Argentina"
+    },
+    {
+      "away_score": 2,
+      "away_team": "Algeria",
+      "date": "2026-06-22",
+      "group": "J",
+      "home_score": 1,
+      "home_team": "Jordan",
+      "match_number": 44,
+      "stage": "group_stage",
+      "winner": "Algeria"
+    },
+    {
+      "away_score": 0,
+      "away_team": "Uzbekistan",
+      "date": "2026-06-23",
+      "group": "K",
+      "home_score": 5,
+      "home_team": "Portugal",
+      "match_number": 45,
+      "stage": "group_stage",
+      "winner": "Portugal"
+    },
+    {
+      "away_score": 0,
+      "away_team": "DR Congo",
+      "date": "2026-06-23",
+      "group": "K",
+      "home_score": 1,
+      "home_team": "Colombia",
+      "match_number": 46,
+      "stage": "group_stage",
+      "winner": "Colombia"
+    },
+    {
+      "away_score": 0,
+      "away_team": "Ghana",
+      "date": "2026-06-23",
+      "group": "L",
+      "home_score": 0,
+      "home_team": "England",
+      "match_number": 47,
+      "stage": "group_stage",
+      "winner": null
+    },
+    {
+      "away_score": 1,
+      "away_team": "Croatia",
+      "date": "2026-06-23",
+      "group": "L",
+      "home_score": 0,
+      "home_team": "Panama",
+      "match_number": 48,
+      "stage": "group_stage",
+      "winner": "Croatia"
     }
   ]
 }
