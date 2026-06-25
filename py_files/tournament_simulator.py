@@ -90,7 +90,7 @@ class TournamentSimulator:
         for grp in range(num_grps):
             g_letter = group_letters[grp]
             teams = self.groups[grp]
-            team_stats = {team: {'wins': 0.0, 'prob_score': 0.0} for team in teams}
+            team_stats = {team: {'wins': 0.0, 'prob_score': 0.0, 'goal_diff': 0.0, 'goals_scored': 0.0} for team in teams}
             
             for i in range(0, len(teams)):
                 for j in range(i + 1, len(teams)):
@@ -104,6 +104,19 @@ class TournamentSimulator:
                         winner = match_record.get("winner")
                         h_score = int(match_record.get("home_score", 0))
                         a_score = int(match_record.get("away_score", 0))
+                        
+                        # Accumulate actual goals and goal difference
+                        home_team = match_record.get("home_team")
+                        if home_team == teams[i]:
+                            team_stats[teams[i]]['goals_scored'] += h_score
+                            team_stats[teams[j]]['goals_scored'] += a_score
+                            team_stats[teams[i]]['goal_diff'] += (h_score - a_score)
+                            team_stats[teams[j]]['goal_diff'] += (a_score - h_score)
+                        else:
+                            team_stats[teams[i]]['goals_scored'] += a_score
+                            team_stats[teams[j]]['goals_scored'] += h_score
+                            team_stats[teams[i]]['goal_diff'] += (a_score - h_score)
+                            team_stats[teams[j]]['goal_diff'] += (h_score - a_score)
                         
                         if winner == "Draw" or winner is None or h_score == a_score:
                             team_stats[teams[i]]['wins'] += 0.5
@@ -122,7 +135,12 @@ class TournamentSimulator:
                         loser = teams[j] if winner == teams[i] else teams[i]
                         team_stats[loser]['prob_score'] += (1.0 - win_prob)
 
-            sorted_teams = sorted(team_stats.keys(), key=lambda x: (team_stats[x]['wins'], team_stats[x]['prob_score']), reverse=True)
+            sorted_teams = sorted(team_stats.keys(), key=lambda x: (
+                team_stats[x]['wins'],
+                team_stats[x]['goal_diff'],
+                team_stats[x]['goals_scored'],
+                team_stats[x]['prob_score']
+            ), reverse=True)
             
             group_results[g_letter] = {
                 'winner': sorted_teams[0],
@@ -134,11 +152,18 @@ class TournamentSimulator:
                 'team': sorted_teams[2],
                 'group': g_letter,
                 'wins': team_stats[sorted_teams[2]]['wins'],
+                'goal_diff': team_stats[sorted_teams[2]]['goal_diff'],
+                'goals_scored': team_stats[sorted_teams[2]]['goals_scored'],
                 'prob_score': team_stats[sorted_teams[2]]['prob_score']
             })
 
         # Sort the 12 third-place candidates to find the 8 best
-        best_thirds = sorted(third_place_candidates, key=lambda x: (x['wins'], x['prob_score']), reverse=True)[:8]
+        best_thirds = sorted(third_place_candidates, key=lambda x: (
+            x['wins'],
+            x['goal_diff'],
+            x['goals_scored'],
+            x['prob_score']
+        ), reverse=True)[:8]
         qualified_third_groups = sorted([t['group'] for t in best_thirds])
         
         # Resolve Annex C mapping
