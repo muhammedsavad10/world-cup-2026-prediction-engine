@@ -377,6 +377,69 @@ def get_winner_and_loser(label):
     return loser_flag, loser_name, winner_name, winner_flag
 
 @st.dialog("Match Tactical Analytics Breakdown")
+def render_completed_match_evidence(context, state):
+    if state == MatchState.COMPLETED:
+        from reasoning_agent import build_evidence_summary
+        quality, completeness_str, _, checklist = build_evidence_summary(context)
+        checklist_html = checklist.replace('\n', '<br>')
+        
+        # 1. Render badges
+        col1, col2 = st.columns(2)
+        with col1:
+            quality_colors = {"High": "#28a745", "Medium": "#ffc107", "Basic": "#17a2b8"}
+            color = quality_colors.get(quality, "#6c757d")
+            st.markdown(f"""
+            <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; text-align: center; border-left: 5px solid {color};">
+                <span style="font-size: 0.85em; color: #CBD5E0; text-transform: uppercase;">Evidence Quality</span><br>
+                <strong style="font-size: 1.25em; color: {color};">{quality}</strong>
+            </div>
+            """, unsafe_allow_html=True)
+        with col2:
+            st.markdown(f"""
+            <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; text-align: center; border-left: 5px solid #FFD700;">
+                <span style="font-size: 0.85em; color: #CBD5E0; text-transform: uppercase;">Evidence Completeness</span><br>
+                <strong style="font-size: 1.25em; color: #FFD700;">{completeness_str}</strong>
+            </div>
+            """, unsafe_allow_html=True)
+            
+        st.markdown("<br>", unsafe_allow_html=True)
+        
+        # 2. Render Verified Facts Card or Checklist
+        if quality == "Basic":
+            st.markdown(f"""
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1); text-align: left;">
+                <strong style="color: #FFD700; display: block; margin-bottom: 8px; font-size: 1.1em;">📋 Available Evidence Checklist</strong>
+                {checklist_html}
+                <p style="color: #FF8C00; font-size: 0.9em; margin-top: 10px; font-style: italic;">
+                    ⚠️ Detailed player-level statistics and match events are currently unavailable for this fixture.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            events_html = ""
+            if context.match_events:
+                events_html += "<strong style='color: #FFD700; display: block; margin-top: 10px; font-size: 1.05em;'>⚽ Match Events</strong>"
+                for goal in context.match_events.get("goals", []):
+                    events_html += f"• Goal: <b>{goal.get('player')}</b> at {goal.get('minute')}'<br>"
+                for card in context.match_events.get("cards", []):
+                    events_html += f"• Card: <b>{card.get('player')}</b> ({card.get('card')} card) at {card.get('minute')}'<br>"
+                for sub in context.match_events.get("substitutions", []):
+                    events_html += f"• Sub: <b>{sub.get('player_in')}</b> replaced <b>{sub.get('player_out')}</b> at {sub.get('minute')}'<br>"
+            
+            stats_html = ""
+            if context.verified_statistics:
+                stats_html += "<strong style='color: #FFD700; display: block; margin-top: 10px; font-size: 1.05em;'>📊 Verified Statistics</strong>"
+                for k, v in context.verified_statistics.items():
+                    stats_html += f"• {k.capitalize()}: <b>{v}</b><br>"
+                    
+            st.markdown(f"""
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(255,215,0,0.2); text-align: left;">
+                <h5 style="color: #FFD700; margin: 0 0 10px 0; text-align: left; font-size: 1.1em;">✅ Verified Match Facts</h5>
+                {events_html}
+                {stats_html}
+            </div>
+            """, unsafe_allow_html=True)
+
 def show_match_dialog(t1_name, t1_prob, t2_name, t2_prob):
     t1_flag = FLAGS.get(t1_name, '🏳️')
     t2_flag = FLAGS.get(t2_name, '🏳️')
@@ -537,7 +600,9 @@ def show_match_dialog(t1_name, t1_prob, t2_name, t2_prob):
                 team_a_news=team_a_news,
                 team_b_news=team_b_news,
                 forecast_date=last_updated[:10],
-                live_results_version=f"Matchday {len(completed_matches)}"
+                live_results_version=f"Matchday {len(completed_matches)}",
+                match_events=match_record.get("match_events") if match_record else None,
+                verified_statistics=match_record.get("verified_statistics") if match_record else None
             )
             analysis = generate_match_analysis(context)
     
@@ -549,6 +614,7 @@ def show_match_dialog(t1_name, t1_prob, t2_name, t2_prob):
             "All tournament predictions remain valid."
         )
     else:
+        render_completed_match_evidence(context, state)
         st.info(analysis)
 
 # Process active URL dialogue callbacks early
@@ -929,9 +995,43 @@ with tab2:
     # Key for session state caching
     h2h_key = f"h2h_{t1_name}_{t2_name}"
     
+    # Construct base context if match is completed to enable facts rendering
+    context = None
+    if state == MatchState.COMPLETED:
+        probabilities_impact = {
+            "team_a_baseline_champ": baseline_probs.get(t1_name, {}).get("champion", 0.0) * 100,
+            "team_a_current_champ": live_probs.get(t1_name, {}).get("champion", 0.0) * 100,
+            "team_b_baseline_champ": baseline_probs.get(t2_name, {}).get("champion", 0.0) * 100,
+            "team_b_current_champ": live_probs.get(t2_name, {}).get("champion", 0.0) * 100,
+            "team_a_baseline_qual": baseline_probs.get(t1_name, {}).get("group_qual", 0.0) * 100,
+            "team_a_current_qual": live_probs.get(t1_name, {}).get("group_qual", 0.0) * 100,
+            "team_b_baseline_qual": baseline_probs.get(t2_name, {}).get("group_qual", 0.0) * 100,
+            "team_b_current_qual": live_probs.get(t2_name, {}).get("group_qual", 0.0) * 100
+        }
+        context = MatchAnalysisContext(
+            team_a=t1_name,
+            team_b=t2_name,
+            prob_a=t1_prob * 100,
+            prob_b=t2_prob * 100,
+            rank_diff=rank_diff,
+            form_diff=form_diff,
+            goals_diff=goals_diff,
+            current_phase=phase,
+            match_record=match_record,
+            probabilities_impact=probabilities_impact,
+            team_a_news="",
+            team_b_news="",
+            forecast_date=last_updated[:10],
+            live_results_version=f"Matchday {len(completed_matches)}",
+            match_events=match_record.get("match_events") if match_record else None,
+            verified_statistics=match_record.get("verified_statistics") if match_record else None
+        )
+    
     if state == MatchState.UNKNOWN:
         st.info("AI reasoning is paused for this fixture.")
     elif st.session_state.get(h2h_key):
+        if state == MatchState.COMPLETED and context:
+            render_completed_match_evidence(context, state)
         st.info(st.session_state[h2h_key])
     else:
         st.write("AI tactical analysis is deferred to optimize performance. Click below to generate analysis on demand.")
@@ -960,22 +1060,28 @@ with tab2:
                 team_a_news = fetch_live_team_news(t1_name)
                 team_b_news = fetch_live_team_news(t2_name)
                 
-                context = MatchAnalysisContext(
-                    team_a=t1_name,
-                    team_b=t2_name,
-                    prob_a=prob_a_input,
-                    prob_b=prob_b_input,
-                    rank_diff=rank_diff,
-                    form_diff=form_diff,
-                    goals_diff=goals_diff,
-                    current_phase=phase,
-                    match_record=match_record,
-                    probabilities_impact=probabilities_impact,
-                    team_a_news=team_a_news,
-                    team_b_news=team_b_news,
-                    forecast_date=last_updated[:10],
-                    live_results_version=f"Matchday {len(completed_matches)}"
-                )
+                if not context:
+                    context = MatchAnalysisContext(
+                        team_a=t1_name,
+                        team_b=t2_name,
+                        prob_a=prob_a_input,
+                        prob_b=prob_b_input,
+                        rank_diff=rank_diff,
+                        form_diff=form_diff,
+                        goals_diff=goals_diff,
+                        current_phase=phase,
+                        match_record=match_record,
+                        probabilities_impact=probabilities_impact,
+                        team_a_news=team_a_news,
+                        team_b_news=team_b_news,
+                        forecast_date=last_updated[:10],
+                        live_results_version=f"Matchday {len(completed_matches)}",
+                        match_events=match_record.get("match_events") if match_record else None,
+                        verified_statistics=match_record.get("verified_statistics") if match_record else None
+                    )
+                else:
+                    context.team_a_news = team_a_news
+                    context.team_b_news = team_b_news
                 
                 analysis = generate_match_analysis(context)
                 if analysis == "AI_TACTICAL_ANALYSIS_UNAVAILABLE":
