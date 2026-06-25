@@ -259,6 +259,30 @@ def feature_generator(team1, team2):
         np.log1p(h_stats['weighted_goals']), np.log1p(a_stats['weighted_goals'])
     ]
 
+# Load Live Match Data globally to be used in all tabs
+LIVE_RESULTS_URL = "https://raw.githubusercontent.com/muhammedsavad10/world-cup-2026-prediction-engine/main/data/world_cup_2026_live_results.json"
+live_results_file = os.path.join(data_dir_path, "world_cup_2026_live_results.json")
+
+local_data = live_results_manager.load_live_results(live_results_file)
+remote_data = None
+try:
+    import requests
+    response = requests.get(LIVE_RESULTS_URL, timeout=3)
+    if response.status_code == 200:
+        remote_data = response.json()
+except Exception:
+    pass
+    
+local_matches = local_data.get("matches", [])
+remote_matches = remote_data.get("matches", []) if remote_data else []
+
+if len(local_matches) >= len(remote_matches):
+    results_data = local_data
+else:
+    results_data = remote_data
+    
+completed_matches = results_data.get("matches", [])
+
 # Initialize simulator
 simulator = TournamentSimulator(datetime.date(2026, 6, 11), pipeline, GROUPS, feature_generator)
 simulator.gamma = 0.15
@@ -484,7 +508,15 @@ with tab1:
 
     if st.button("Run 2026 Simulation", use_container_width=True, type="primary"):
         with st.spinner("Executing simulation matches..."):
-            round_results, labels, odds = simulator.playKnockOuts()
+            completed_lookup = {}
+            for m in completed_matches:
+                if m.get("stage") == "group_stage":
+                    completed_lookup[(m["home_team"], m["away_team"])] = m
+                    completed_lookup[(m["away_team"], m["home_team"])] = m
+                match_num = m.get("match_number")
+                if match_num:
+                    completed_lookup[int(match_num)] = m
+            round_results, labels, odds = simulator.playKnockOuts(completed_lookup=completed_lookup)
             
             # Save labels to session state for Tab 2
             st.session_state['simulated_labels'] = labels
@@ -673,29 +705,7 @@ with tab3:
             *   *Why it happens*: Our simulation engine runs parallel iterations of the remaining tournament. For rare outcomes, small variation from run to run is normal statistical variance. At 1,000 runs, the 95% confidence margin for a 4% event is ±1.20%.
         """)
     
-    # 1. Load Live Match Data (Prioritize the source containing more completed matches)
-    LIVE_RESULTS_URL = "https://raw.githubusercontent.com/muhammedsavad10/world-cup-2026-prediction-engine/main/data/world_cup_2026_live_results.json"
-    live_results_file = os.path.join(data_dir_path, "world_cup_2026_live_results.json")
-    
-    local_data = live_results_manager.load_live_results(live_results_file)
-    remote_data = None
-    try:
-        import requests
-        response = requests.get(LIVE_RESULTS_URL, timeout=3)
-        if response.status_code == 200:
-            remote_data = response.json()
-    except Exception:
-        pass
-        
-    local_matches = local_data.get("matches", [])
-    remote_matches = remote_data.get("matches", []) if remote_data else []
-    
-    if len(local_matches) >= len(remote_matches):
-        results_data = local_data
-    else:
-        results_data = remote_data
-        
-    completed_matches = results_data.get("matches", [])
+    # 1. Live Match Data has been loaded globally at startup
     last_updated = results_data.get("last_updated", "2026-06-11T00:00:00Z")
     
     last_updated_display = last_updated[:10]
