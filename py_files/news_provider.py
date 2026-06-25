@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from duckduckgo_search import DDGS
+import concurrent.futures
 
 class NewsProvider(ABC):
     @abstractmethod
@@ -40,5 +41,17 @@ def set_news_provider(provider: NewsProvider):
     global _provider
     _provider = provider
 
-def fetch_live_team_news(team_name):
-    return _provider.fetch_news(team_name)
+def fetch_live_team_news(team_name) -> str:
+    """
+    Fetches news using the registered provider. Wraps the call in a thread pool executor
+    to enforce a non-blocking 2.0-second timeout limit. If timed out, degrades gracefully 
+    by returning an empty string.
+    """
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+        future = executor.submit(_provider.fetch_news, team_name)
+        try:
+            return future.result(timeout=2.0)
+        except concurrent.futures.TimeoutError:
+            return ""  # Degrade gracefully by returning empty string
+        except Exception:
+            return ""  # Degrade gracefully by returning empty string

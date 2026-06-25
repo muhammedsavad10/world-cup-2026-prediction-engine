@@ -7,9 +7,6 @@ Your task is to write a realistic live match explanation. You must strictly foll
 4. DECIMAL CAP: Any statistics, probabilities, or metrics you quote must be strictly formatted to a maximum of 2 decimal places.
 5. REQUIRED SECTIONS: Your output MUST contain exactly the following sections in Markdown, with no other text before or after:
 
-### Live Status
-[Display the current score, current minute, and live win probabilities]
-
 ### Live Match Commentary
 [Write 2 to 4 paragraphs explaining the current flow of the match, referencing team intelligence details and current form.]
 
@@ -24,3 +21,6 @@ Your task is to write a realistic live match explanation. You must strictly foll
 
 ### Live Tactical Summary
 [Describe how the tactical matchup is unfolding in real time based on the current score and minute.]
+
+### Explanation Confidence
+[Provide a rating of High, Medium, or Low for your explanation confidence, with a brief 1-sentence justification detailing data coverage (e.g. squad stats availability).]

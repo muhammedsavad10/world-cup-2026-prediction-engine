@@ -10,7 +10,9 @@ from const import WCGroups, data_dir_path
 from preprocess import load_data, get_match_features
 import preprocess
 from tournament_simulator import TournamentSimulator
-from reasoning_agent import generate_match_analysis, MatchState, get_match_state
+from reasoning_agent import generate_match_analysis, MatchState, get_match_state, MatchAnalysisContext
+from calibration import get_calibration_metrics
+from news_provider import fetch_live_team_news
 import live_results_manager
 from transparency_explainer import generate_recalibration_explanation
 import probability_audit
@@ -335,100 +337,8 @@ if os.path.exists(baseline_file):
     except Exception as e:
         st.error(f"Error loading baseline probabilities: {e}")
 
-def get_calibration_metrics(t1_name, t2_name, t1_prob, t2_prob, match_record, baseline_probs, live_probs):
-    h_score = match_record.get("home_score")
-    a_score = match_record.get("away_score")
-    winner = match_record.get("winner")
-    
-    # Margin-based confidence
-    margin = abs(t1_prob - t2_prob)
-    if margin >= 0.20:
-        confidence = "High"
-    elif margin >= 0.10:
-        confidence = "Medium"
-    else:
-        confidence = "Low"
-        
-    actual_winner = winner if winner != "Draw" and winner is not None else "Draw"
-    
-    # Prediction correctness
-    if t1_prob > t2_prob:
-        pred_winner = t1_name
-    elif t2_prob > t1_prob:
-        pred_winner = t2_name
-    else:
-        pred_winner = "Draw"
-        
-    is_correct = "Correct" if pred_winner == actual_winner else "Incorrect"
-    
-    # Upset level
-    fav_prob = max(t1_prob, t2_prob)
-    fav_team = t1_name if t1_prob > t2_prob else t2_name
-    
-    if actual_winner == "Draw":
-        if fav_prob >= 0.70:
-            upset_level = "Moderate Upset"
-        else:
-            upset_level = "Expected"
-    elif actual_winner == fav_team:
-        upset_level = "Expected"
-    else:
-        # Underdog won
-        if fav_prob >= 0.70:
-            upset_level = "Major Upset"
-        elif fav_prob >= 0.55:
-            upset_level = "Moderate Upset"
-        else:
-            upset_level = "Expected"
-            
-    # Probability Change (Before vs After)
-    t1_base_champ = baseline_probs.get(t1_name, {}).get("champion", 0.0)
-    t1_live_champ = live_probs.get(t1_name, {}).get("champion", 0.0)
-    t1_champ_delta = t1_live_champ - t1_base_champ
-    
-    t2_base_champ = baseline_probs.get(t2_name, {}).get("champion", 0.0)
-    t2_live_champ = live_probs.get(t2_name, {}).get("champion", 0.0)
-    t2_champ_delta = t2_live_champ - t2_base_champ
-    
-    t1_base_qual = baseline_probs.get(t1_name, {}).get("group_qual", 0.0)
-    t1_live_qual = live_probs.get(t1_name, {}).get("group_qual", 0.0)
-    t1_qual_delta = t1_live_qual - t1_base_qual
-    
-    t2_base_qual = baseline_probs.get(t2_name, {}).get("group_qual", 0.0)
-    t2_live_qual = live_probs.get(t2_name, {}).get("group_qual", 0.0)
-    t2_qual_delta = t2_live_qual - t2_base_qual
-    
-    def format_qual_odds(base_val, live_val, delta_val):
-        if live_val >= 0.999:
-            return "Already Qualified"
-        if live_val <= 0.001:
-            return "Eliminated"
-        sign = "+" if delta_val > 0 else ""
-        return f"{sign}{delta_val*100:.1f}%"
-        
-    def format_champ_odds(delta_val):
-        sign = "+" if delta_val > 0 else ""
-        return f"{sign}{delta_val*100:.2f}%"
-        
-    return {
-        "confidence": confidence,
-        "upset_level": upset_level,
-        "is_correct": is_correct,
-        "pred_winner": pred_winner,
-        "actual_winner": actual_winner,
-        "t1_champ_change": format_champ_odds(t1_champ_delta),
-        "t2_champ_change": format_champ_odds(t2_champ_delta),
-        "t1_qual_change": format_qual_odds(t1_base_qual, t1_live_qual, t1_qual_delta),
-        "t2_qual_change": format_qual_odds(t2_base_qual, t2_live_qual, t2_qual_delta),
-        "t1_base_champ": t1_base_champ * 100,
-        "t1_live_champ": t1_live_champ * 100,
-        "t2_base_champ": t2_base_champ * 100,
-        "t2_live_champ": t2_live_champ * 100,
-        "t1_base_qual": t1_base_qual * 100,
-        "t1_live_qual": t1_live_qual * 100,
-        "t2_base_qual": t2_base_qual * 100,
-        "t2_live_qual": t2_live_qual * 100
-    }
+# get_calibration_metrics is imported from calibration.py
+pass
 
 # Define the tabs
 tab1, tab2, tab3, tab4 = st.tabs([
@@ -535,23 +445,24 @@ def show_match_dialog(t1_name, t1_prob, t2_name, t2_prob):
             <hr style="border: 0; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 20px 0;">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; text-align: left; color: #CBD5E0; font-size: 0.95em;">
                 <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
-                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">🔮 Pre-Match Forecast</strong>
+                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">🔮 Forecast</strong>
                     • {t1_name}: {t1_prob*100:.1f}%<br>
                     • {t2_name}: {t2_prob*100:.1f}%
                 </div>
                 <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
-                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">🎯 Forecast Accuracy</strong>
-                    • Accuracy: <b>{metrics["is_correct"]}</b><br>
-                    • Confidence: <b>{metrics["confidence"]}</b>
+                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">⚽ Outcome</strong>
+                    • Score: <b>{t1_name} {h_score} – {a_score} {t2_name}</b>
                 </div>
                 <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
-                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">⚠️ Upset Severity</strong>
-                    • Level: <b>{metrics["upset_level"]}</b>
+                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">🎯 Prediction</strong>
+                    • Accuracy: <b>{metrics.is_correct}</b><br>
+                    • Confidence: <b>{metrics.confidence}</b><br>
+                    • Upset: <b>{metrics.upset_level}</b>
                 </div>
                 <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
-                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">📈 Odds Evolution</strong>
-                    • Champ: {t1_name} ({metrics["t1_champ_change"]}) | {t2_name} ({metrics["t2_champ_change"]})<br>
-                    • Qual: {t1_name} ({metrics["t1_qual_change"]}) | {t2_name} ({metrics["t2_qual_change"]})
+                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">📈 Tournament Impact</strong>
+                    • Champ Odds: {t1_name} ({metrics.t1_champ_change}) | {t2_name} ({metrics.t2_champ_change})<br>
+                    • Qual Odds: {t1_name} ({metrics.t1_qual_change}) | {t2_name} ({metrics.t2_qual_change})
                 </div>
             </div>
         </div>
@@ -559,13 +470,13 @@ def show_match_dialog(t1_name, t1_prob, t2_name, t2_prob):
         st.markdown(h2h_html, unsafe_allow_html=True)
     elif state == MatchState.LIVE:
         h_score = match_record.get("home_score", 0)
-        a_score = match_record.get("away_score", 0)
+        away_score = match_record.get("away_score", 0)
         curr_min = match_record.get("current_minute", "Unknown")
         
         st.markdown(clean_html(f"""
         <div style="text-align: center; background: rgba(255, 140, 0, 0.1); border: 1px solid rgba(255, 140, 0, 0.3); border-radius: 8px; padding: 15px; margin-bottom: 20px;">
             <div style="font-size: 0.9em; color: #FF8C00; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">LIVE MATCH IN PROGRESS ({curr_min}')</div>
-            <div style="font-size: 2.2em; font-weight: 800; color: #FFFFFF; margin: 5px 0;">{t1_name} {h_score} – {a_score} {t2_name}</div>
+            <div style="font-size: 2.2em; font-weight: 800; color: #FFFFFF; margin: 5px 0;">{t1_name} {h_score} – {away_score} {t2_name}</div>
         </div>
         """), unsafe_allow_html=True)
         
@@ -576,6 +487,8 @@ def show_match_dialog(t1_name, t1_prob, t2_name, t2_prob):
         with col_b:
             st.metric(label=f"{t2_name}", value=f"{t2_prob*100:.1f}%")
             st.progress(t2_prob)
+    elif state == MatchState.UNKNOWN:
+        st.warning("⚠️ **Match Status**: `Unknown`  \n**Reason**: Awaiting official confirmation.  \nPredictions and analysis will resume automatically once verified match data becomes available.")
     else:
         st.markdown("<h4 style='color: #FFD700; text-align: left; font-size: 1.1em; margin-bottom: 15px;'>Win Probabilities</h4>", unsafe_allow_html=True)
         
@@ -590,31 +503,43 @@ def show_match_dialog(t1_name, t1_prob, t2_name, t2_prob):
     st.markdown("<hr style='border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;'>", unsafe_allow_html=True)
     st.markdown("<h4 style='color: #FFD700; text-align: left; font-size: 1.1em; margin-bottom: 10px;'>🤖 AI Tactical Reasoning</h4>", unsafe_allow_html=True)
     
-    # Calculate probability impact if completed
-    probabilities_impact = None
-    if state == MatchState.COMPLETED:
-        probabilities_impact = {
-            "team_a_baseline_champ": baseline_probs.get(t1_name, {}).get("champion", 0.0) * 100,
-            "team_a_current_champ": live_probs.get(t1_name, {}).get("champion", 0.0) * 100,
-            "team_b_baseline_champ": baseline_probs.get(t2_name, {}).get("champion", 0.0) * 100,
-            "team_b_current_champ": live_probs.get(t2_name, {}).get("champion", 0.0) * 100,
-            "team_a_baseline_qual": baseline_probs.get(t1_name, {}).get("group_qual", 0.0) * 100,
-            "team_a_current_qual": live_probs.get(t1_name, {}).get("group_qual", 0.0) * 100,
-            "team_b_baseline_qual": baseline_probs.get(t2_name, {}).get("group_qual", 0.0) * 100,
-            "team_b_current_qual": live_probs.get(t2_name, {}).get("group_qual", 0.0) * 100
-        }
-        
-    with st.spinner("Reasoning Agent analyzing team dynamics..."):
-        analysis = generate_match_analysis(
-            t1_name, t2_name, 
-            t1_prob * 100, t2_prob * 100, 
-            rank_diff, form_diff, goals_diff, 
-            current_phase="pre_tournament",
-            match_record=match_record,
-            probabilities_impact=probabilities_impact,
-            forecast_date=last_updated[:10],
-            live_results_version=f"Matchday {len(completed_matches)}"
-        )
+    if state == MatchState.UNKNOWN:
+        st.info("AI reasoning is paused for this fixture.")
+    else:
+        # Calculate probability impact if completed
+        probabilities_impact = None
+        if state == MatchState.COMPLETED:
+            probabilities_impact = {
+                "team_a_baseline_champ": baseline_probs.get(t1_name, {}).get("champion", 0.0) * 100,
+                "team_a_current_champ": live_probs.get(t1_name, {}).get("champion", 0.0) * 100,
+                "team_b_baseline_champ": baseline_probs.get(t2_name, {}).get("champion", 0.0) * 100,
+                "team_b_current_champ": live_probs.get(t2_name, {}).get("champion", 0.0) * 100,
+                "team_a_baseline_qual": baseline_probs.get(t1_name, {}).get("group_qual", 0.0) * 100,
+                "team_a_current_qual": live_probs.get(t1_name, {}).get("group_qual", 0.0) * 100,
+                "team_b_baseline_qual": baseline_probs.get(t2_name, {}).get("group_qual", 0.0) * 100,
+                "team_b_current_qual": live_probs.get(t2_name, {}).get("group_qual", 0.0) * 100
+            }
+            
+        with st.spinner("Reasoning Agent analyzing team dynamics..."):
+            team_a_news = fetch_live_team_news(t1_name)
+            team_b_news = fetch_live_team_news(t2_name)
+            context = MatchAnalysisContext(
+                team_a=t1_name,
+                team_b=t2_name,
+                prob_a=t1_prob * 100,
+                prob_b=t2_prob * 100,
+                rank_diff=rank_diff,
+                form_diff=form_diff,
+                goals_diff=goals_diff,
+                current_phase="pre_tournament",
+                match_record=match_record,
+                probabilities_impact=probabilities_impact,
+                team_a_news=team_a_news,
+                team_b_news=team_b_news,
+                forecast_date=last_updated[:10],
+                live_results_version=f"Matchday {len(completed_matches)}"
+            )
+            analysis = generate_match_analysis(context)
     
     if analysis == "AI_TACTICAL_ANALYSIS_UNAVAILABLE":
         st.warning(
@@ -911,23 +836,24 @@ with tab2:
             <hr style="border: 0; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 20px 0;">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; text-align: left; color: #CBD5E0; font-size: 0.95em;">
                 <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
-                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">🔮 Pre-Match Forecast</strong>
+                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">🔮 Forecast</strong>
                     • {t1_name}: {t1_prob*100:.1f}%<br>
                     • {t2_name}: {t2_prob*100:.1f}%
                 </div>
                 <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
-                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">🎯 Forecast Accuracy</strong>
+                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">⚽ Outcome</strong>
+                    • Score: <b>{t1_name} {h_score if t1_name == match_record.get("home_team") else a_score} – {a_score if t1_name == match_record.get("home_team") else h_score} {t2_name}</b>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
+                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">🎯 Prediction</strong>
                     • Accuracy: <b>{metrics["is_correct"]}</b><br>
-                    • Confidence: <b>{metrics["confidence"]}</b>
+                    • Confidence: <b>{metrics["confidence"]}</b><br>
+                    • Upset: <b>{metrics["upset_level"]}</b>
                 </div>
                 <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
-                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">⚠️ Upset Severity</strong>
-                    • Level: <b>{metrics["upset_level"]}</b>
-                </div>
-                <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
-                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">📈 Odds Evolution</strong>
-                    • Champ: {t1_name} ({metrics["t1_champ_change"]}) | {t2_name} ({metrics["t2_champ_change"]})<br>
-                    • Qual: {t1_name} ({metrics["t1_qual_change"]}) | {t2_name} ({metrics["t2_qual_change"]})
+                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">📈 Tournament Impact</strong>
+                    • Champ Odds: {t1_name} ({metrics["t1_champ_change"]}) | {t2_name} ({metrics["t2_champ_change"]})<br>
+                    • Qual Odds: {t1_name} ({metrics["t1_qual_change"]}) | {t2_name} ({metrics["t2_qual_change"]})
                 </div>
             </div>
         </div>
@@ -954,6 +880,8 @@ with tab2:
         with col_b:
             st.metric(label=f"{t2_name}", value=f"{exact_t2_prob*100:.2f}%")
             st.progress(exact_t2_prob)
+    elif state == MatchState.UNKNOWN:
+        st.warning("⚠️ **Match Status**: `Unknown`  \n**Reason**: Awaiting official confirmation.  \nPredictions and analysis will resume automatically once verified match data becomes available.")
     else:
         # Display the comparison card
         h2h_html = clean_html(f'''
@@ -1001,7 +929,9 @@ with tab2:
     # Key for session state caching
     h2h_key = f"h2h_{t1_name}_{t2_name}"
     
-    if st.session_state.get(h2h_key):
+    if state == MatchState.UNKNOWN:
+        st.info("AI reasoning is paused for this fixture.")
+    elif st.session_state.get(h2h_key):
         st.info(st.session_state[h2h_key])
     else:
         st.write("AI tactical analysis is deferred to optimize performance. Click below to generate analysis on demand.")
@@ -1020,19 +950,34 @@ with tab2:
                         "team_b_current_qual": live_probs.get(t2_name, {}).get("group_qual", 0.0) * 100
                     }
                 
-                prob_a_input = (t1_prob * 100) if state == MatchState.COMPLETED else (exact_t1_prob * 100)
-                prob_b_input = (t2_prob * 100) if state == MatchState.COMPLETED else (exact_t2_prob * 100)
+                if state == MatchState.COMPLETED:
+                    prob_a_input = t1_prob * 100
+                    prob_b_input = t2_prob * 100
+                else:
+                    prob_a_input = exact_t1_prob * 100
+                    prob_b_input = exact_t2_prob * 100
                 
-                analysis = generate_match_analysis(
-                    t1_name, t2_name, 
-                    prob_a_input, prob_b_input, 
-                    rank_diff, form_diff, goals_diff, 
+                team_a_news = fetch_live_team_news(t1_name)
+                team_b_news = fetch_live_team_news(t2_name)
+                
+                context = MatchAnalysisContext(
+                    team_a=t1_name,
+                    team_b=t2_name,
+                    prob_a=prob_a_input,
+                    prob_b=prob_b_input,
+                    rank_diff=rank_diff,
+                    form_diff=form_diff,
+                    goals_diff=goals_diff,
                     current_phase=phase,
                     match_record=match_record,
                     probabilities_impact=probabilities_impact,
+                    team_a_news=team_a_news,
+                    team_b_news=team_b_news,
                     forecast_date=last_updated[:10],
                     live_results_version=f"Matchday {len(completed_matches)}"
                 )
+                
+                analysis = generate_match_analysis(context)
                 if analysis == "AI_TACTICAL_ANALYSIS_UNAVAILABLE":
                     st.warning("🤖 AI Tactical Analysis is currently unavailable because the Groq language model API is not configured.")
                 else:

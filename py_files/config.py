@@ -6,3 +6,6 @@ PROMPT_VERSION = "v1"
 FORECAST_VERSION = "1.0"
 MODEL_VERSION = "1.0"
 SIMULATION_RUNS = 10000
+
+# Metadata footer visibility toggle
+SHOW_DEBUG_METADATA = False
