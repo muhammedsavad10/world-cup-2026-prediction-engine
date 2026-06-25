@@ -846,21 +846,21 @@ with tab2:
                 </div>
                 <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
                     <strong style="color: #FFD700; display: block; margin-bottom: 5px;">🎯 Prediction</strong>
-                    • Accuracy: <b>{metrics["is_correct"]}</b><br>
-                    • Confidence: <b>{metrics["confidence"]}</b><br>
-                    • Upset: <b>{metrics["upset_level"]}</b>
+                    • Accuracy: <b>{metrics.is_correct}</b><br>
+                    • Confidence: <b>{metrics.confidence}</b><br>
+                    • Upset: <b>{metrics.upset_level}</b>
                 </div>
                 <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
                     <strong style="color: #FFD700; display: block; margin-bottom: 5px;">📈 Tournament Impact</strong>
-                    • Champ Odds: {t1_name} ({metrics["t1_champ_change"]}) | {t2_name} ({metrics["t2_champ_change"]})<br>
-                    • Qual Odds: {t1_name} ({metrics["t1_qual_change"]}) | {t2_name} ({metrics["t2_qual_change"]})
+                    • Champ Odds: {t1_name} ({metrics.t1_champ_change}) | {t2_name} ({metrics.t2_champ_change})<br>
+                    • Qual Odds: {t1_name} ({metrics.t1_qual_change}) | {t2_name} ({metrics.t2_qual_change})
                 </div>
             </div>
         </div>
         ''')
         st.markdown(h2h_html, unsafe_allow_html=True)
         st.markdown("### Match Review & Probabilities")
-        st.markdown(f"🎯 **AI Prediction Correctness**: `{metrics['is_correct']}` (Predicted Winner: **{metrics['pred_winner']}**, Actual Outcome: **{metrics['actual_winner']}**)")
+        st.markdown(f"🎯 **AI Prediction Correctness**: `{metrics.is_correct}` (Predicted Winner: **{metrics.pred_winner}**, Actual Outcome: **{metrics.actual_winner}**)")
     elif state == MatchState.LIVE:
         h_score = match_record.get("home_score", 0)
         a_score = match_record.get("away_score", 0)
