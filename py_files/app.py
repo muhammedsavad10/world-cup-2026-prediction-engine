@@ -10,6 +10,9 @@ from const import WCGroups, data_dir_path
 from preprocess import load_data, get_match_features
 import preprocess
 from tournament_simulator import TournamentSimulator
+import importlib
+import reasoning_agent
+importlib.reload(reasoning_agent)
 from reasoning_agent import generate_match_analysis, MatchState, get_match_state, MatchAnalysisContext
 from calibration import get_calibration_metrics
 from news_provider import fetch_live_team_news
