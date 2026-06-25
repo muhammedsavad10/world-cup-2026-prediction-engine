@@ -1,9 +1,18 @@
 import os
 import json
+from enum import Enum, auto
+from functools import lru_cache
 from groq import Groq
-from duckduckgo_search import DDGS
+from config import PROMPT_VERSION, FORECAST_VERSION, MODEL_VERSION, SIMULATION_RUNS
 
-# Initialize the Groq client safely to handle missing key at start
+# Match State Enum definition
+class MatchState(Enum):
+    FUTURE = auto()
+    LIVE = auto()
+    COMPLETED = auto()
+    UNKNOWN = auto()
+
+# Initialize the Groq client safely
 client = None
 api_key = os.environ.get("GROQ_API_KEY")
 if api_key:
@@ -24,38 +33,12 @@ if os.path.exists(json_path):
         print(f"Error loading team intelligence dataset: {e}")
 
 def get_team_info(team_name):
-    """
-    Looks up a team in the local team intelligence dictionary,
-    mapping abbreviations like 'USA' to 'United States'.
-    """
     name_lookup = team_name.lower().strip()
     if name_lookup == "usa":
         name_lookup = "united states"
     return team_intelligence.get(name_lookup)
 
-def fetch_live_team_news(team_name):
-    """
-    Scrapes the live web with tight chronological parameters to enforce 
-    current 2026 manager and squad ground truths.
-    """
-    try:
-        with DDGS() as ddgs:
-            # Query heavily restricted to current active cycle to prevent legacy coach leaks
-            query = f"{team_name} national football team current manager squad June 2026"
-            search_results = list(ddgs.text(query, max_results=3))
-            
-            snippets = []
-            for result in search_results:
-                snippets.append(result.get('body', ''))
-            
-            return "\n".join(snippets)
-    except Exception as e:
-        return f"Live search data currently unavailable for {team_name}."
-
 def format_team_context(info, team_name):
-    """
-    Formats the team intelligence dictionary into a concise context block.
-    """
     if not info:
         return f"No local team intelligence data available for {team_name}."
     
@@ -72,10 +55,109 @@ def format_team_context(info, team_name):
         context += f"  * {player.get('name')} ({player.get('position')}, Club: {player.get('club')}, Age: {player.get('age')}, Caps/Goals: {player.get('caps')}/{player.get('goals')}, Value: {player.get('market_value')}, Injury: {player.get('injury_status')}, Season Stats: {player.get('current_season_stats')}, Form: {player.get('recent_form_summary')})\n"
     return context
 
-def generate_match_analysis(team_a, team_b, prob_a, prob_b, rank_diff, form_diff, goals_diff, current_phase="pre_tournament"):
+@lru_cache(maxsize=None)
+def load_prompt(mode, version):
     """
-    Search-Augmented Agentic AI engineered to ignore data science jargon and justify prediction outcomes.
+    Cached prompt loader. Reads text file templates from the prompts/ directory.
     """
+    prompt_path = os.path.join(base_dir, "prompts", f"{mode}_{version}.txt")
+    if not os.path.exists(prompt_path):
+        return ""
+    try:
+        with open(prompt_path, "r", encoding="utf-8") as f:
+            return f.read()
+    except Exception:
+        return ""
+
+def get_match_state(match_record):
+    """
+    Centralized match-state resolver mapping short status codes from API-Football.
+    """
+    if match_record is None:
+        return MatchState.FUTURE
+        
+    status = match_record.get("status", "UNKNOWN")
+    if status in ["FT", "AET", "PEN", "AWD", "WO"]:
+        return MatchState.COMPLETED
+    if status in ["1H", "HT", "2H", "ET"]:
+        return MatchState.LIVE
+    if status in ["NS", "TBD"]:
+        return MatchState.FUTURE
+    if status in ["PST", "CANC", "ABD", "INT", "SUSP"]:
+        return MatchState.UNKNOWN
+        
+    return MatchState.UNKNOWN
+
+def get_teams_context(team_a, team_b, team_a_news=None, team_b_news=None):
+    """
+    Builds context string for both teams, incorporating structured dataset details and optional external news.
+    """
+    info_a = get_team_info(team_a)
+    info_b = get_team_info(team_b)
+    
+    team_a_context = format_team_context(info_a, team_a)
+    team_b_context = format_team_context(info_b, team_b)
+    
+    dataset_context = f"""
+    AUTHORITATIVE DATASET INFO:
+    Team A ({team_a}) Context:
+    {team_a_context}
+    
+    Team B ({team_b}) Context:
+    {team_b_context}
+    """
+    
+    news_context = ""
+    if team_a_news or team_b_news:
+        news_context = "\nEXTERNAL LIVE NEWS REPORT:"
+        if team_a_news:
+            news_context += f"\n- Team A ({team_a}) News: {team_a_news}"
+        if team_b_news:
+            news_context += f"\n- Team B ({team_b}) News: {team_b_news}"
+            
+    return dataset_context + news_context
+
+def build_explanation_footer(state, forecast_date=None, live_results_version=None):
+    """
+    Constructs a structured, transparent metadata explanation footer.
+    """
+    if state == MatchState.COMPLETED:
+        mode_text = "Completed Match Review"
+        evidence_text = "Official Match Result"
+        sim_text = "Completed matches fixed. Remaining tournament simulated using 10,000 Monte Carlo runs."
+    elif state == MatchState.LIVE:
+        mode_text = "Live Match Commentary"
+        evidence_text = "Live Match State"
+        sim_text = "Current result fixed. Remaining tournament simulated using 10,000 Monte Carlo runs."
+    elif state == MatchState.UNKNOWN:
+        mode_text = "Unknown Status Fallback"
+        evidence_text = "Incomplete/Suspended Match Info"
+        sim_text = "Fallback to pre-match forecast."
+    else:
+        mode_text = "Forecast"
+        evidence_text = "Pre-match statistical estimates"
+        sim_text = "Entire tournament simulated using 10,000 Monte Carlo runs."
+        
+    date_str = forecast_date if forecast_date else "2026-06-25"
+    version_str = live_results_version if live_results_version else "Matchday 1"
+    
+    footer = f"""
+
+---
+### 📊 Analysis Metadata
+*   **Mode**: {mode_text}
+*   **Evidence**: {evidence_text}
+*   **Simulation**: {sim_text}
+*   **Forecast Version**: {FORECAST_VERSION}
+*   **Prompt Version**: {PROMPT_VERSION}
+*   **Model Version**: {MODEL_VERSION}
+*   **Simulation Runs**: {SIMULATION_RUNS}
+*   **Forecast Date**: {date_str}
+*   **Live Results Version**: {version_str}
+"""
+    return footer
+
+def call_groq_completions(system_prompt, user_prompt):
     global client
     if not client:
         # Try initializing client again in case the key was configured late
@@ -84,32 +166,34 @@ def generate_match_analysis(team_a, team_b, prob_a, prob_b, rank_diff, form_diff
             client = Groq(api_key=api_key)
         else:
             return "AI_TACTICAL_ANALYSIS_UNAVAILABLE"
+    try:
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            model="llama-3.1-8b-instant",
+            temperature=0.3,
+            max_tokens=800,
+        )
+        return chat_completion.choices[0].message.content
+    except Exception as e:
+        err_msg = str(e).lower()
+        if "api_key" in err_msg or "api key" in err_msg or "authentication" in err_msg or "unauthorized" in err_msg or "401" in err_msg:
+            return "AI_TACTICAL_ANALYSIS_UNAVAILABLE"
+        return f"Tactical analysis synthesis interrupted. Error: {str(e)}"
 
-    # Look up teams in dataset
-    info_a = get_team_info(team_a)
-    info_b = get_team_info(team_b)
+def generate_prediction_explanation(team_a, team_b, prob_a, prob_b, rank_diff, form_diff, goals_diff, current_phase, team_a_news=None, team_b_news=None):
+    system_prompt = load_prompt("prediction", PROMPT_VERSION)
+    if not system_prompt:
+        return "AI_TACTICAL_ANALYSIS_UNAVAILABLE"
 
-    # Restrict live search usage: only search when the team is missing from the JSON dataset
-    live_news_a = ""
-    if not info_a:
-        live_news_a = fetch_live_team_news(team_a)
-        
-    live_news_b = ""
-    if not info_b:
-        live_news_b = fetch_live_team_news(team_b)
-    
-    # Format local dataset info context
-    team_a_context = format_team_context(info_a, team_a)
-    team_b_context = format_team_context(info_b, team_b)
-
-    # Force clean, explicit 2-decimal rounding before feeding the prompt context
     rounded_prob_a = round(float(prob_a), 2)
     rounded_prob_b = round(float(prob_b), 2)
     rounded_rank = round(float(rank_diff), 2)
     rounded_form = round(float(form_diff), 2)
     rounded_goals = round(float(goals_diff), 2)
     
-    # Determine the predicted outcome based on model win probabilities
     if rounded_prob_a > rounded_prob_b:
         prediction_headline = f"{team_a} defeats {team_b}"
     elif rounded_prob_b > rounded_prob_a:
@@ -127,64 +211,127 @@ def generate_match_analysis(team_a, team_b, prob_a, prob_b, rank_diff, form_diff
     - Goal Efficiency Lead: {rounded_goals}
     """
     
-    dataset_context = f"""
-    AUTHORITATIVE DATASET INFO:
-    Team A ({team_a}) Context:
-    {team_a_context}
+    team_context = get_teams_context(team_a, team_b, team_a_news, team_b_news)
+    user_prompt = f"Matchup: {team_a} vs {team_b}\nPhase: {current_phase}\n\n{math_context}\n\n{team_context}"
     
-    Team B ({team_b}) Context:
-    {team_b_context}
+    return call_groq_completions(system_prompt, user_prompt)
+
+def generate_live_explanation(team_a, team_b, prob_a, prob_b, rank_diff, form_diff, goals_diff, match_record, probabilities_impact, team_a_news=None, team_b_news=None):
+    system_prompt = load_prompt("live", PROMPT_VERSION)
+    if not system_prompt:
+        return "AI_TACTICAL_ANALYSIS_UNAVAILABLE"
+
+    home_score = match_record.get("home_score", 0)
+    away_score = match_record.get("away_score", 0)
+    current_minute = match_record.get("current_minute", "Unknown")
+    
+    rounded_prob_a = round(float(prob_a), 2)
+    rounded_prob_b = round(float(prob_b), 2)
+    rounded_rank = round(float(rank_diff), 2)
+    rounded_form = round(float(form_diff), 2)
+    rounded_goals = round(float(goals_diff), 2)
+    
+    live_context = f"""
+    LIVE MATCH STATE:
+    - Current Score: {team_a} {home_score} – {away_score} {team_b}
+    - Current Minute: {current_minute}
+    - Home Probability: {rounded_prob_a}%
+    - Away Probability: {rounded_prob_b}%
+    - FIFA Rank Gap: {rounded_rank}
+    - Form Advantage: {rounded_form}
+    - Goal Efficiency Lead: {rounded_goals}
     """
+    
+    team_context = get_teams_context(team_a, team_b, team_a_news, team_b_news)
+    user_prompt = f"Matchup: {team_a} vs {team_b}\n\n{live_context}\n\n{team_context}"
+    
+    return call_groq_completions(system_prompt, user_prompt)
 
-    scraped_web_context = ""
-    if live_news_a or live_news_b:
-        scraped_web_context = f"""
-        LIVE SEARCH DATA (Used ONLY because team(s) were missing from the authoritative JSON dataset):
-        Team A ({team_a}) Live News:
-        {live_news_a}
+def generate_result_explanation(team_a, team_b, prob_a, prob_b, rank_diff, form_diff, goals_diff, match_record, probabilities_impact, team_a_news=None, team_b_news=None):
+    system_prompt = load_prompt("completed", PROMPT_VERSION)
+    if not system_prompt:
+        return "AI_TACTICAL_ANALYSIS_UNAVAILABLE"
+
+    home_team = match_record.get("home_team")
+    away_team = match_record.get("away_team")
+    home_score = match_record.get("home_score", 0)
+    away_score = match_record.get("away_score", 0)
+    winner = match_record.get("winner")
+    
+    actual_winner = winner if winner != "Draw" and winner is not None else "Draw"
+    
+    rounded_prob_a = round(float(prob_a), 2)
+    rounded_prob_b = round(float(prob_b), 2)
+    rounded_rank = round(float(rank_diff), 2)
+    rounded_form = round(float(form_diff), 2)
+    rounded_goals = round(float(goals_diff), 2)
+    
+    # Determine pre-match predicted winner
+    if rounded_prob_a > rounded_prob_b:
+        pred_winner = team_a
+    elif rounded_prob_b > rounded_prob_a:
+        pred_winner = team_b
+    else:
+        pred_winner = "Draw"
         
-        Team B ({team_b}) Live News:
-        {live_news_b}
+    is_correct = "Correct" if pred_winner == actual_winner else "Incorrect"
+    
+    prob_impact_text = ""
+    if probabilities_impact:
+        prob_impact_text = f"""
+        TOURNAMENT PROBABILITY IMPACT (from pre-tournament/baseline estimate to current live status):
+        - {team_a} Championship Probability: {probabilities_impact.get('team_a_baseline_champ', 0.0):.2f}% -> {probabilities_impact.get('team_a_current_champ', 0.0):.2f}%
+        - {team_b} Championship Probability: {probabilities_impact.get('team_b_baseline_champ', 0.0):.2f}% -> {probabilities_impact.get('team_b_current_champ', 0.0):.2f}%
+        - {team_a} Group Qualification Probability: {probabilities_impact.get('team_a_baseline_qual', 0.0):.2f}% -> {probabilities_impact.get('team_a_current_qual', 0.0):.2f}%
+        - {team_b} Group Qualification Probability: {probabilities_impact.get('team_b_baseline_qual', 0.0):.2f}% -> {probabilities_impact.get('team_b_current_qual', 0.0):.2f}%
         """
+        
+    result_context = f"""
+    COMPLETED MATCH RESULT REVIEW:
+    - Final Score: {home_team} {home_score} – {away_score} {away_team}
+    - Winner/Outcome: {actual_winner}
+    - Pre-kickoff Win Probability {team_a}: {rounded_prob_a}%
+    - Pre-kickoff Win Probability {team_b}: {rounded_prob_b}%
+    - Model Forecast Accuracy: {is_correct}
+    
+    {prob_impact_text}
+    
+    FIFA Rank Gap: {rounded_rank}
+    Form Advantage: {rounded_form}
+    Goal Efficiency Lead: {rounded_goals}
+    """
+    
+    team_context = get_teams_context(team_a, team_b, team_a_news, team_b_news)
+    user_prompt = f"Matchup: {team_a} vs {team_b}\n\n{result_context}\n\n{team_context}"
+    
+    return call_groq_completions(system_prompt, user_prompt)
 
-    system_prompt = (
-        "You are an elite professional sports football analyst and presenter writing for publications like FIFA, ESPN, Opta, and The Athletic.\n"
-        "Your task is to analyze and write a realistic football justification for a pre-calculated prediction model output using the team intelligence dataset. You must strictly follow these rules:\n\n"
-        "1. NO PREDICTION DRIFT: Do NOT modify, alter, override, challenge, recalculate, or replace the pre-calculated prediction. Do not suggest other winners or tie scores. Your sole job is to explain why this outcome is plausible.\n"
-        "2. EXPLANATION-ONLY BEHAVIOR: Explain why the prediction makes football sense. Never use phrases like 'I would predict...', 'The model could be wrong...', or 'A more likely outcome...'. Treat the prediction outcome as final.\n"
-        "3. AUTHORITATIVE DATA ONLY: Rely on the provided AUTHORITATIVE DATASET INFO. Reference actual coaches, captains, players, form, injuries, and tactics as stated. Do NOT invent players, statistics, or facts not present in the provided dataset.\n"
-        "4. NO DATA SCIENCE JARGON: Do NOT use terms like 'delta', 'coefficient', 'variance', 'matrix', 'regressor', or 'intercept'. Use clean football terms like 'advantage', 'gap', 'differential', or 'lead'.\n"
-        "5. DECIMAL CAP: Any statistics, probabilities, or metrics you quote must be strictly formatted to a maximum of 2 decimal places.\n"
-        "6. REQUIRED SECTIONS: Your output MUST contain exactly the following sections in Markdown, with no other text before or after:\n\n"
-        "### Prediction\n"
-        "[Display the supplied prediction headline exactly as received, along with win probabilities]\n\n"
-        "### Explanation\n"
-        "[Write 2 to 6 paragraphs of professional football reasoning justifying the prediction. Reference squad strength, coach impacts, captain and leadership, and tactical matchups.]\n\n"
-        "### Key Factors\n"
-        "* [Factor 1]\n"
-        "* [Factor 2]\n"
-        "* [Factor 3]\n"
-        "* [Factor 4]\n\n"
-        "### Players Likely To Influence The Outcome\n"
-        "[List relevant players from the dataset with their positions, clubs, or statistics to justify how they will affect the outcome.]\n\n"
-        "### Tactical Story\n"
-        "[Describe a realistic, coherent narrative of how the match is likely to unfold based on the pre-calculated prediction.]"
-    )
-
-    try:
-        user_prompt_content = f"Matchup: {team_a} vs {team_b}\n\n{math_context}\n\n{dataset_context}\n\n{scraped_web_context}"
-        chat_completion = client.chat.completions.create(
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt_content}
-            ],
-            model="llama-3.1-8b-instant",
-            temperature=0.3, # Low temperature minimizes creative fabrications
-            max_tokens=800,
-        )
-        return chat_completion.choices[0].message.content
-    except Exception as e:
-        err_msg = str(e).lower()
-        if "api_key" in err_msg or "api key" in err_msg or "authentication" in err_msg or "unauthorized" in err_msg or "401" in err_msg:
-            return "AI_TACTICAL_ANALYSIS_UNAVAILABLE"
-        return f"Tactical analysis synthesis interrupted. Error: {str(e)}"
+def generate_match_analysis(
+    team_a, team_b, prob_a, prob_b, rank_diff, form_diff, goals_diff,
+    current_phase="pre_tournament", match_record=None, probabilities_impact=None,
+    team_a_news=None, team_b_news=None, forecast_date=None, live_results_version=None
+):
+    """
+    The main Explainable AI dispatcher. Resolves the fixture state and routes execution to
+    the correct prompt constructor, appending the transparent metadata footer.
+    """
+    state = get_match_state(match_record)
+    
+    if state == MatchState.COMPLETED:
+        analysis = generate_result_explanation(team_a, team_b, prob_a, prob_b, rank_diff, form_diff, goals_diff, match_record, probabilities_impact, team_a_news, team_b_news)
+    elif state == MatchState.LIVE:
+        analysis = generate_live_explanation(team_a, team_b, prob_a, prob_b, rank_diff, form_diff, goals_diff, match_record, probabilities_impact, team_a_news, team_b_news)
+    elif state == MatchState.UNKNOWN:
+        # Gracefully handle UNKNOWN state: return a notice or fall back to predictions
+        notice = "### ⚠️ Match Status Unavailable\nThis match status is currently marked as Postponed, Suspended, or Cancelled. Real-time statistical analysis is currently deferred. Showing pre-match prediction forecast below.\n\n"
+        fallback = generate_prediction_explanation(team_a, team_b, prob_a, prob_b, rank_diff, form_diff, goals_diff, current_phase, team_a_news, team_b_news)
+        analysis = notice + fallback
+    else:
+        analysis = generate_prediction_explanation(team_a, team_b, prob_a, prob_b, rank_diff, form_diff, goals_diff, current_phase, team_a_news, team_b_news)
+        
+    if analysis == "AI_TACTICAL_ANALYSIS_UNAVAILABLE":
+        return analysis
+        
+    # Append transparent explanation footer
+    footer = build_explanation_footer(state, forecast_date, live_results_version)
+    return analysis + footer

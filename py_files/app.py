@@ -10,7 +10,7 @@ from const import WCGroups, data_dir_path
 from preprocess import load_data, get_match_features
 import preprocess
 from tournament_simulator import TournamentSimulator
-from reasoning_agent import generate_match_analysis
+from reasoning_agent import generate_match_analysis, MatchState, get_match_state
 import live_results_manager
 from transparency_explainer import generate_recalibration_explanation
 import probability_audit
@@ -282,11 +282,153 @@ else:
     results_data = remote_data
     
 completed_matches = results_data.get("matches", [])
+for m in completed_matches:
+    if "status" not in m:
+        m["status"] = "FT"
 
 # Initialize simulator
 simulator = TournamentSimulator(datetime.date(2026, 6, 11), pipeline, GROUPS, feature_generator)
 simulator.gamma = 0.15
 simulator.prob_cap = 0.12
+
+# Load precomputed live probabilities and baseline probabilities globally
+last_updated = results_data.get("last_updated", "2026-06-11T00:00:00Z")
+
+@st.cache_data
+def load_precomputed_probabilities_static(last_updated_str):
+    probs_file = os.path.join(data_dir_path, "world_cup_2026_live_probabilities.json")
+    if not os.path.exists(probs_file):
+        return None, "File not found"
+    try:
+        with open(probs_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            if "probabilities" in data and isinstance(data["probabilities"], dict):
+                return data["probabilities"], None
+            return None, "Invalid schema structure"
+    except Exception as e:
+        return None, str(e)
+
+probs_dict, load_error = load_precomputed_probabilities_static(last_updated)
+
+if probs_dict is not None:
+    live_probs = probs_dict
+else:
+    if not IS_LOCAL_DEV:
+        st.error("### 🛠️ Live Prediction System Maintenance\n\nThe prediction engine is currently updating results or undergoing scheduled maintenance.\n\nAll tournament dashboard visuals are temporarily paused. Please check back in a few minutes.")
+        st.stop()
+    else:
+        # Fallback simulation
+        try:
+            np.random.seed(42)
+            live_probs = simulator.run_monte_carlo_simulation(completed_matches, num_runs=1000)
+        except Exception as sim_err:
+            st.error(f"Failed to execute local fallback simulation: {sim_err}")
+            st.stop()
+
+# Load baseline probabilities
+baseline_file = os.path.join(data_dir_path, "world_cup_2026_baseline_probabilities.json")
+baseline_probs = {}
+if os.path.exists(baseline_file):
+    try:
+        with open(baseline_file, "r", encoding="utf-8") as f:
+            baseline_probs = json.load(f)
+    except Exception as e:
+        st.error(f"Error loading baseline probabilities: {e}")
+
+def get_calibration_metrics(t1_name, t2_name, t1_prob, t2_prob, match_record, baseline_probs, live_probs):
+    h_score = match_record.get("home_score")
+    a_score = match_record.get("away_score")
+    winner = match_record.get("winner")
+    
+    # Margin-based confidence
+    margin = abs(t1_prob - t2_prob)
+    if margin >= 0.20:
+        confidence = "High"
+    elif margin >= 0.10:
+        confidence = "Medium"
+    else:
+        confidence = "Low"
+        
+    actual_winner = winner if winner != "Draw" and winner is not None else "Draw"
+    
+    # Prediction correctness
+    if t1_prob > t2_prob:
+        pred_winner = t1_name
+    elif t2_prob > t1_prob:
+        pred_winner = t2_name
+    else:
+        pred_winner = "Draw"
+        
+    is_correct = "Correct" if pred_winner == actual_winner else "Incorrect"
+    
+    # Upset level
+    fav_prob = max(t1_prob, t2_prob)
+    fav_team = t1_name if t1_prob > t2_prob else t2_name
+    
+    if actual_winner == "Draw":
+        if fav_prob >= 0.70:
+            upset_level = "Moderate Upset"
+        else:
+            upset_level = "Expected"
+    elif actual_winner == fav_team:
+        upset_level = "Expected"
+    else:
+        # Underdog won
+        if fav_prob >= 0.70:
+            upset_level = "Major Upset"
+        elif fav_prob >= 0.55:
+            upset_level = "Moderate Upset"
+        else:
+            upset_level = "Expected"
+            
+    # Probability Change (Before vs After)
+    t1_base_champ = baseline_probs.get(t1_name, {}).get("champion", 0.0)
+    t1_live_champ = live_probs.get(t1_name, {}).get("champion", 0.0)
+    t1_champ_delta = t1_live_champ - t1_base_champ
+    
+    t2_base_champ = baseline_probs.get(t2_name, {}).get("champion", 0.0)
+    t2_live_champ = live_probs.get(t2_name, {}).get("champion", 0.0)
+    t2_champ_delta = t2_live_champ - t2_base_champ
+    
+    t1_base_qual = baseline_probs.get(t1_name, {}).get("group_qual", 0.0)
+    t1_live_qual = live_probs.get(t1_name, {}).get("group_qual", 0.0)
+    t1_qual_delta = t1_live_qual - t1_base_qual
+    
+    t2_base_qual = baseline_probs.get(t2_name, {}).get("group_qual", 0.0)
+    t2_live_qual = live_probs.get(t2_name, {}).get("group_qual", 0.0)
+    t2_qual_delta = t2_live_qual - t2_base_qual
+    
+    def format_qual_odds(base_val, live_val, delta_val):
+        if live_val >= 0.999:
+            return "Already Qualified"
+        if live_val <= 0.001:
+            return "Eliminated"
+        sign = "+" if delta_val > 0 else ""
+        return f"{sign}{delta_val*100:.1f}%"
+        
+    def format_champ_odds(delta_val):
+        sign = "+" if delta_val > 0 else ""
+        return f"{sign}{delta_val*100:.2f}%"
+        
+    return {
+        "confidence": confidence,
+        "upset_level": upset_level,
+        "is_correct": is_correct,
+        "pred_winner": pred_winner,
+        "actual_winner": actual_winner,
+        "t1_champ_change": format_champ_odds(t1_champ_delta),
+        "t2_champ_change": format_champ_odds(t2_champ_delta),
+        "t1_qual_change": format_qual_odds(t1_base_qual, t1_live_qual, t1_qual_delta),
+        "t2_qual_change": format_qual_odds(t2_base_qual, t2_live_qual, t2_qual_delta),
+        "t1_base_champ": t1_base_champ * 100,
+        "t1_live_champ": t1_live_champ * 100,
+        "t2_base_champ": t2_base_champ * 100,
+        "t2_live_champ": t2_live_champ * 100,
+        "t1_base_qual": t1_base_qual * 100,
+        "t1_live_qual": t1_live_qual * 100,
+        "t2_base_qual": t2_base_qual * 100,
+        "t2_live_qual": t2_live_qual * 100
+    }
 
 # Define the tabs
 tab1, tab2, tab3, tab4 = st.tabs([
@@ -355,25 +497,123 @@ def show_match_dialog(t1_name, t1_prob, t2_name, t2_prob):
     </div>
     """), unsafe_allow_html=True)
     
-    st.markdown("<h4 style='color: #FFD700; text-align: left; font-size: 1.1em; margin-bottom: 15px;'>Win Probabilities</h4>", unsafe_allow_html=True)
+    # Check if this match is completed
+    match_record = None
+    for m in completed_matches:
+        h = m.get("home_team")
+        a = m.get("away_team")
+        if (h == t1_name and a == t2_name) or (h == t2_name and a == t1_name):
+            match_record = m
+            break
+            
+    state = get_match_state(match_record)
     
-    col_a, col_b = st.columns(2)
-    with col_a:
-        st.metric(label=f"{t1_name}", value=f"{t1_prob*100:.1f}%")
-        st.progress(t1_prob)
-    with col_b:
-        st.metric(label=f"{t2_name}", value=f"{t2_prob*100:.1f}%")
-        st.progress(t2_prob)
+    if state == MatchState.COMPLETED:
+        # Override t1_prob, t2_prob with the cached pre-kickoff predictions from the model
+        t1_prob, t2_prob = get_cached_prediction(t1_name, t2_name, pipeline)
+        h_score = match_record.get("home_score")
+        a_score = match_record.get("away_score")
+        winner = match_record.get("winner")
         
+        metrics = get_calibration_metrics(t1_name, t2_name, t1_prob, t2_prob, match_record, baseline_probs, live_probs)
+        
+        h2h_html = clean_html(f'''
+        <div class="h2h-container" style="background: rgba(10, 15, 20, 0.85); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 12px; padding: 25px; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
+            <div style="display: flex; justify-content: space-around; align-items: center; text-align: center; flex-wrap: wrap; margin-bottom: 20px;">
+                <div style="flex: 1; min-width: 120px; margin: 10px;">
+                    <div style="font-size: 5em; line-height: 1;">{t1_flag}</div>
+                    <h3 style="margin: 10px 0 5px 0; color: #FFFFFF; font-weight: 800; font-size: 1.6em;">{t1_name}</h3>
+                    <div style="font-size: 2.8em; font-weight: 800; color: #FFFFFF; margin-top: 5px;">{h_score if t1_name == match_record.get("home_team") else a_score}</div>
+                </div>
+                <div style="flex: 0 0 80px; font-size: 2.2em; font-weight: 800; color: #FF8C00; font-style: italic; margin: 10px;">FT</div>
+                <div style="flex: 1; min-width: 120px; margin: 10px;">
+                    <div style="font-size: 5em; line-height: 1;">{t2_flag}</div>
+                    <h3 style="margin: 10px 0 5px 0; color: #FFFFFF; font-weight: 800; font-size: 1.6em;">{t2_name}</h3>
+                    <div style="font-size: 2.8em; font-weight: 800; color: #FFFFFF; margin-top: 5px;">{a_score if t1_name == match_record.get("home_team") else h_score}</div>
+                </div>
+            </div>
+            <hr style="border: 0; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 20px 0;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; text-align: left; color: #CBD5E0; font-size: 0.95em;">
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
+                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">🔮 Pre-Match Forecast</strong>
+                    • {t1_name}: {t1_prob*100:.1f}%<br>
+                    • {t2_name}: {t2_prob*100:.1f}%
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
+                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">🎯 Forecast Accuracy</strong>
+                    • Accuracy: <b>{metrics["is_correct"]}</b><br>
+                    • Confidence: <b>{metrics["confidence"]}</b>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
+                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">⚠️ Upset Severity</strong>
+                    • Level: <b>{metrics["upset_level"]}</b>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
+                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">📈 Odds Evolution</strong>
+                    • Champ: {t1_name} ({metrics["t1_champ_change"]}) | {t2_name} ({metrics["t2_champ_change"]})<br>
+                    • Qual: {t1_name} ({metrics["t1_qual_change"]}) | {t2_name} ({metrics["t2_qual_change"]})
+                </div>
+            </div>
+        </div>
+        ''')
+        st.markdown(h2h_html, unsafe_allow_html=True)
+    elif state == MatchState.LIVE:
+        h_score = match_record.get("home_score", 0)
+        a_score = match_record.get("away_score", 0)
+        curr_min = match_record.get("current_minute", "Unknown")
+        
+        st.markdown(clean_html(f"""
+        <div style="text-align: center; background: rgba(255, 140, 0, 0.1); border: 1px solid rgba(255, 140, 0, 0.3); border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+            <div style="font-size: 0.9em; color: #FF8C00; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">LIVE MATCH IN PROGRESS ({curr_min}')</div>
+            <div style="font-size: 2.2em; font-weight: 800; color: #FFFFFF; margin: 5px 0;">{t1_name} {h_score} – {a_score} {t2_name}</div>
+        </div>
+        """), unsafe_allow_html=True)
+        
+        col_a, col_b = st.columns(2)
+        with col_a:
+            st.metric(label=f"{t1_name}", value=f"{t1_prob*100:.1f}%")
+            st.progress(t1_prob)
+        with col_b:
+            st.metric(label=f"{t2_name}", value=f"{t2_prob*100:.1f}%")
+            st.progress(t2_prob)
+    else:
+        st.markdown("<h4 style='color: #FFD700; text-align: left; font-size: 1.1em; margin-bottom: 15px;'>Win Probabilities</h4>", unsafe_allow_html=True)
+        
+        col_a, col_b = st.columns(2)
+        with col_a:
+            st.metric(label=f"{t1_name}", value=f"{t1_prob*100:.1f}%")
+            st.progress(t1_prob)
+        with col_b:
+            st.metric(label=f"{t2_name}", value=f"{t2_prob*100:.1f}%")
+            st.progress(t2_prob)
+            
     st.markdown("<hr style='border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;'>", unsafe_allow_html=True)
     st.markdown("<h4 style='color: #FFD700; text-align: left; font-size: 1.1em; margin-bottom: 10px;'>🤖 AI Tactical Reasoning</h4>", unsafe_allow_html=True)
     
+    # Calculate probability impact if completed
+    probabilities_impact = None
+    if state == MatchState.COMPLETED:
+        probabilities_impact = {
+            "team_a_baseline_champ": baseline_probs.get(t1_name, {}).get("champion", 0.0) * 100,
+            "team_a_current_champ": live_probs.get(t1_name, {}).get("champion", 0.0) * 100,
+            "team_b_baseline_champ": baseline_probs.get(t2_name, {}).get("champion", 0.0) * 100,
+            "team_b_current_champ": live_probs.get(t2_name, {}).get("champion", 0.0) * 100,
+            "team_a_baseline_qual": baseline_probs.get(t1_name, {}).get("group_qual", 0.0) * 100,
+            "team_a_current_qual": live_probs.get(t1_name, {}).get("group_qual", 0.0) * 100,
+            "team_b_baseline_qual": baseline_probs.get(t2_name, {}).get("group_qual", 0.0) * 100,
+            "team_b_current_qual": live_probs.get(t2_name, {}).get("group_qual", 0.0) * 100
+        }
+        
     with st.spinner("Reasoning Agent analyzing team dynamics..."):
         analysis = generate_match_analysis(
             t1_name, t2_name, 
             t1_prob * 100, t2_prob * 100, 
             rank_diff, form_diff, goals_diff, 
-            current_phase="pre_tournament"
+            current_phase="pre_tournament",
+            match_record=match_record,
+            probabilities_impact=probabilities_impact,
+            forecast_date=last_updated[:10],
+            live_results_version=f"Matchday {len(completed_matches)}"
         )
     
     if analysis == "AI_TACTICAL_ANALYSIS_UNAVAILABLE":
@@ -634,40 +874,121 @@ with tab2:
     form_diff = team_a_form - team_b_form
     goals_diff = team_a_goals - team_b_goals
     
-    # Display the comparison card
-    h2h_html = clean_html(f'''
-    <div class="h2h-container">
-        <div style="display: flex; justify-content: space-around; align-items: center; text-align: center; flex-wrap: wrap;">
-            <div style="flex: 1; min-width: 150px; margin: 10px;">
-                <div style="font-size: 6em; line-height: 1;">{f1}</div>
-                <h2 style="margin: 15px 0 5px 0; color: #FFFFFF; font-weight: 800; font-size: 1.8em;">{t1_name}</h2>
-                <div style="color: #A0AEC0; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px;">Home / Team A</div>
-            </div>
-            <div style="flex: 0 0 100px; font-size: 2.5em; font-weight: 800; color: #FF8C00; font-style: italic; margin: 10px;">VS</div>
-            <div style="flex: 1; min-width: 150px; margin: 10px;">
-                <div style="font-size: 6em; line-height: 1;">{f2}</div>
-                <h2 style="margin: 15px 0 5px 0; color: #FFFFFF; font-weight: 800; font-size: 1.8em;">{t2_name}</h2>
-                <div style="color: #A0AEC0; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px;">Away / Team B</div>
-            </div>
-        </div>
-        <hr style="border: 0; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 25px 0;">
-        <div style="text-align: center;">
-            <div style="font-size: 1.1em; color: #A0AEC0; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Match Category</div>
-            <div style="font-size: 2.2em; font-weight: 800; color: #FFD700;">{stage_name}</div>
-        </div>
-    </div>
-    ''')
-    st.markdown(h2h_html, unsafe_allow_html=True)
+    # Check if this match is completed in Tab 2
+    match_record = None
+    for m in completed_matches:
+        h = m.get("home_team")
+        a = m.get("away_team")
+        if (h == t1_name and a == t2_name) or (h == t2_name and a == t1_name):
+            match_record = m
+            break
+            
+    state = get_match_state(match_record)
     
-    st.markdown("### Win Probability Mappings")
-    col_a, col_b = st.columns(2)
-    with col_a:
-        st.metric(label=f"{f1} {t1_name} Win Probability", value=f"{exact_t1_prob*100:.2f}%")
-        st.progress(exact_t1_prob)
-    with col_b:
-        st.metric(label=f"{f2} {t2_name} Win Probability", value=f"{exact_t2_prob*100:.2f}%")
-        st.progress(exact_t2_prob)
+    if state == MatchState.COMPLETED:
+        t1_prob, t2_prob = get_cached_prediction(t1_name, t2_name, pipeline)
+        h_score = match_record.get("home_score")
+        a_score = match_record.get("away_score")
+        winner = match_record.get("winner")
         
+        metrics = get_calibration_metrics(t1_name, t2_name, t1_prob, t2_prob, match_record, baseline_probs, live_probs)
+        
+        h2h_html = clean_html(f'''
+        <div class="h2h-container" style="background: rgba(10, 15, 20, 0.85); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 12px; padding: 25px; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
+            <div style="display: flex; justify-content: space-around; align-items: center; text-align: center; flex-wrap: wrap; margin-bottom: 20px;">
+                <div style="flex: 1; min-width: 120px; margin: 10px;">
+                    <div style="font-size: 5em; line-height: 1;">{f1}</div>
+                    <h2 style="margin: 15px 0 5px 0; color: #FFFFFF; font-weight: 800; font-size: 1.8em;">{t1_name}</h2>
+                    <div style="font-size: 2.8em; font-weight: 800; color: #FFFFFF; margin-top: 5px;">{h_score if t1_name == match_record.get("home_team") else a_score}</div>
+                </div>
+                <div style="flex: 0 0 80px; font-size: 2.2em; font-weight: 800; color: #FF8C00; font-style: italic; margin: 10px;">FT</div>
+                <div style="flex: 1; min-width: 120px; margin: 10px;">
+                    <div style="font-size: 5em; line-height: 1;">{f2}</div>
+                    <h2 style="margin: 15px 0 5px 0; color: #FFFFFF; font-weight: 800; font-size: 1.8em;">{t2_name}</h2>
+                    <div style="font-size: 2.8em; font-weight: 800; color: #FFFFFF; margin-top: 5px;">{a_score if t1_name == match_record.get("home_team") else h_score}</div>
+                </div>
+            </div>
+            <hr style="border: 0; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 20px 0;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; text-align: left; color: #CBD5E0; font-size: 0.95em;">
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
+                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">🔮 Pre-Match Forecast</strong>
+                    • {t1_name}: {t1_prob*100:.1f}%<br>
+                    • {t2_name}: {t2_prob*100:.1f}%
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
+                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">🎯 Forecast Accuracy</strong>
+                    • Accuracy: <b>{metrics["is_correct"]}</b><br>
+                    • Confidence: <b>{metrics["confidence"]}</b>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
+                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">⚠️ Upset Severity</strong>
+                    • Level: <b>{metrics["upset_level"]}</b>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px;">
+                    <strong style="color: #FFD700; display: block; margin-bottom: 5px;">📈 Odds Evolution</strong>
+                    • Champ: {t1_name} ({metrics["t1_champ_change"]}) | {t2_name} ({metrics["t2_champ_change"]})<br>
+                    • Qual: {t1_name} ({metrics["t1_qual_change"]}) | {t2_name} ({metrics["t2_qual_change"]})
+                </div>
+            </div>
+        </div>
+        ''')
+        st.markdown(h2h_html, unsafe_allow_html=True)
+        st.markdown("### Match Review & Probabilities")
+        st.markdown(f"🎯 **AI Prediction Correctness**: `{metrics['is_correct']}` (Predicted Winner: **{metrics['pred_winner']}**, Actual Outcome: **{metrics['actual_winner']}**)")
+    elif state == MatchState.LIVE:
+        h_score = match_record.get("home_score", 0)
+        a_score = match_record.get("away_score", 0)
+        curr_min = match_record.get("current_minute", "Unknown")
+        
+        st.markdown(clean_html(f"""
+        <div style="text-align: center; background: rgba(255, 140, 0, 0.1); border: 1px solid rgba(255, 140, 0, 0.3); border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+            <div style="font-size: 0.9em; color: #FF8C00; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">LIVE MATCH IN PROGRESS ({curr_min}')</div>
+            <div style="font-size: 2.2em; font-weight: 800; color: #FFFFFF; margin: 5px 0;">{t1_name} {h_score} – {a_score} {t2_name}</div>
+        </div>
+        """), unsafe_allow_html=True)
+        
+        col_a, col_b = st.columns(2)
+        with col_a:
+            st.metric(label=f"{t1_name}", value=f"{exact_t1_prob*100:.2f}%")
+            st.progress(exact_t1_prob)
+        with col_b:
+            st.metric(label=f"{t2_name}", value=f"{exact_t2_prob*100:.2f}%")
+            st.progress(exact_t2_prob)
+    else:
+        # Display the comparison card
+        h2h_html = clean_html(f'''
+        <div class="h2h-container">
+            <div style="display: flex; justify-content: space-around; align-items: center; text-align: center; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 150px; margin: 10px;">
+                    <div style="font-size: 6em; line-height: 1;">{f1}</div>
+                    <h2 style="margin: 15px 0 5px 0; color: #FFFFFF; font-weight: 800; font-size: 1.8em;">{t1_name}</h2>
+                    <div style="color: #A0AEC0; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px;">Home / Team A</div>
+                </div>
+                <div style="flex: 0 0 100px; font-size: 2.5em; font-weight: 800; color: #FF8C00; font-style: italic; margin: 10px;">VS</div>
+                <div style="flex: 1; min-width: 150px; margin: 10px;">
+                    <div style="font-size: 6em; line-height: 1;">{f2}</div>
+                    <h2 style="margin: 15px 0 5px 0; color: #FFFFFF; font-weight: 800; font-size: 1.8em;">{t2_name}</h2>
+                    <div style="color: #A0AEC0; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px;">Away / Team B</div>
+                </div>
+            </div>
+            <hr style="border: 0; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 25px 0;">
+            <div style="text-align: center;">
+                <div style="font-size: 1.1em; color: #A0AEC0; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Match Category</div>
+                <div style="font-size: 2.2em; font-weight: 800; color: #FFD700;">{stage_name}</div>
+            </div>
+        </div>
+        ''')
+        st.markdown(h2h_html, unsafe_allow_html=True)
+        
+        st.markdown("### Win Probability Mappings")
+        col_a, col_b = st.columns(2)
+        with col_a:
+            st.metric(label=f"{f1} {t1_name} Win Probability", value=f"{exact_t1_prob*100:.2f}%")
+            st.progress(exact_t1_prob)
+        with col_b:
+            st.metric(label=f"{f2} {t2_name} Win Probability", value=f"{exact_t2_prob*100:.2f}%")
+            st.progress(exact_t2_prob)
+            
     st.markdown("---")
     st.markdown("### 🤖 AI Tactical Reasoning")
     
@@ -686,11 +1007,31 @@ with tab2:
         st.write("AI tactical analysis is deferred to optimize performance. Click below to generate analysis on demand.")
         if st.button("Generate AI Analysis", key="btn_h2h_ai"):
             with st.spinner("Agentic AI is analyzing..."):
+                probabilities_impact = None
+                if state == MatchState.COMPLETED:
+                    probabilities_impact = {
+                        "team_a_baseline_champ": baseline_probs.get(t1_name, {}).get("champion", 0.0) * 100,
+                        "team_a_current_champ": live_probs.get(t1_name, {}).get("champion", 0.0) * 100,
+                        "team_b_baseline_champ": baseline_probs.get(t2_name, {}).get("champion", 0.0) * 100,
+                        "team_b_current_champ": live_probs.get(t2_name, {}).get("champion", 0.0) * 100,
+                        "team_a_baseline_qual": baseline_probs.get(t1_name, {}).get("group_qual", 0.0) * 100,
+                        "team_a_current_qual": live_probs.get(t1_name, {}).get("group_qual", 0.0) * 100,
+                        "team_b_baseline_qual": baseline_probs.get(t2_name, {}).get("group_qual", 0.0) * 100,
+                        "team_b_current_qual": live_probs.get(t2_name, {}).get("group_qual", 0.0) * 100
+                    }
+                
+                prob_a_input = (t1_prob * 100) if state == MatchState.COMPLETED else (exact_t1_prob * 100)
+                prob_b_input = (t2_prob * 100) if state == MatchState.COMPLETED else (exact_t2_prob * 100)
+                
                 analysis = generate_match_analysis(
                     t1_name, t2_name, 
-                    exact_t1_prob * 100, exact_t2_prob * 100, 
+                    prob_a_input, prob_b_input, 
                     rank_diff, form_diff, goals_diff, 
-                    current_phase=phase
+                    current_phase=phase,
+                    match_record=match_record,
+                    probabilities_impact=probabilities_impact,
+                    forecast_date=last_updated[:10],
+                    live_results_version=f"Matchday {len(completed_matches)}"
                 )
                 if analysis == "AI_TACTICAL_ANALYSIS_UNAVAILABLE":
                     st.warning("🤖 AI Tactical Analysis is currently unavailable because the Groq language model API is not configured.")
@@ -743,53 +1084,8 @@ with tab3:
     with col3:
         st.metric(label="Last Updated", value=last_updated_display)
         
-    # 2. Invariant Standings & Probabilities Load
-    # (IS_LOCAL_DEV is initialized globally at the top of the file)
-    
-    @st.cache_data
-    def load_precomputed_probabilities_static(last_updated_str):
-        probs_file = os.path.join(data_dir_path, "world_cup_2026_live_probabilities.json")
-        if not os.path.exists(probs_file):
-            return None, "File not found"
-        try:
-            with open(probs_file, "r", encoding="utf-8") as f:
-                data = json.load(f)
-                if "probabilities" in data and isinstance(data["probabilities"], dict):
-                    return data["probabilities"], None
-                return None, "Invalid schema structure"
-        except Exception as e:
-            return None, str(e)
-
-    probs_dict, load_error = load_precomputed_probabilities_static(last_updated)
-    
-    if probs_dict is not None:
-        live_probs = probs_dict
-    else:
-        if not IS_LOCAL_DEV:
-            # Production: strictly read-only fallback to system maintenance banner
-            st.error("### 🛠️ Live Prediction System Maintenance\n\n"
-                     "The prediction engine is currently updating results or undergoing scheduled maintenance.\n\n"
-                     "All tournament dashboard visuals are temporarily paused. Please check back in a few minutes.")
-            st.stop()
-        else:
-            # Local dev: fallback simulation on the fly
-            st.warning(f"⚠️ Probabilities JSON is missing or corrupted ({load_error}). Running fallback simulation locally...")
-            try:
-                np.random.seed(42)
-                live_probs = simulator.run_monte_carlo_simulation(completed_matches, num_runs=1000)
-            except Exception as sim_err:
-                st.error(f"Failed to execute local fallback simulation: {sim_err}")
-                st.stop()
-    
-    # Load baseline probabilities
-    baseline_file = os.path.join(data_dir_path, "world_cup_2026_baseline_probabilities.json")
-    baseline_probs = {}
-    if os.path.exists(baseline_file):
-        try:
-            with open(baseline_file, "r", encoding="utf-8") as f:
-                baseline_probs = json.load(f)
-        except Exception as e:
-            st.error(f"Error loading baseline probabilities: {e}")
+    # 2. Invariant Standings & Probabilities Load (Utilizing globally loaded live_probs and baseline_probs)
+    pass
             
     # Cached group tables logic to avoid slow rendering
     @st.cache_data

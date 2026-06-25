@@ -272,7 +272,8 @@ def resolve_match_numbers(raw_data):
             "away_score": a_score,
             "winner": winner,
             "group": group_letter,
-            "stage": "group_stage"
+            "stage": "group_stage",
+            "status": f.get("fixture", {}).get("status", {}).get("short", "FT")
         })
         
     if not ko_fixtures:
@@ -403,7 +404,8 @@ def resolve_match_numbers(raw_data):
             "away_score": a_score,
             "winner": winner,
             "group": None,
-            "stage": get_stage_by_match_num(match_id_found)
+            "stage": get_stage_by_match_num(match_id_found),
+            "status": f.get("fixture", {}).get("status", {}).get("short", "FT")
         })
         
     return completed_matches
