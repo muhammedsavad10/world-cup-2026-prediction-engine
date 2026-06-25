@@ -527,13 +527,27 @@ with tab1:
         labels = st.session_state['simulated_labels']
         round_results = st.session_state['round_results']
         
-        # Divide matches by round
-        r32 = labels[0:16]
-        r16 = labels[16:24]
-        qf = labels[24:28]
-        sf = labels[28:30]
-        final = labels[30:31]
-        third_place = labels[31:32]
+        # Map labels by match number (Index 30 is final/104, Index 31 is third_place/103)
+        match_labels = {}
+        for idx, label in enumerate(labels):
+            if idx == 30:
+                mid = 104
+            elif idx == 31:
+                mid = 103
+            else:
+                mid = 73 + idx
+            match_labels[mid] = label
+            
+        # Re-order rounds topologically so they align visually in the layout columns
+        r32_order = [74, 77, 73, 75, 83, 84, 81, 82, 76, 78, 79, 80, 86, 88, 85, 87]
+        r16_order = [89, 90, 93, 94, 91, 92, 95, 96]
+        qf_order = [97, 98, 99, 100]
+        sf_order = [101, 102]
+        
+        r32 = [match_labels[mid] for mid in r32_order]
+        r16 = [match_labels[mid] for mid in r16_order]
+        qf = [match_labels[mid] for mid in qf_order]
+        sf = [match_labels[mid] for mid in sf_order]
         
         # Render column headers above the bracket container for clean alignment
         headers_html = '<div style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 5px; padding: 0 10px;"><div style="width: 18%; text-align: center; color: #FFD700; font-weight: 800; text-transform: uppercase; font-size: 1.05em; border-bottom: 2px solid #FFD700; padding-bottom: 8px; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255,215,0,0.3);">Round of 32</div><div style="width: 18%; text-align: center; color: #FFD700; font-weight: 800; text-transform: uppercase; font-size: 1.05em; border-bottom: 2px solid #FFD700; padding-bottom: 8px; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255,215,0,0.3);">Round of 16</div><div style="width: 18%; text-align: center; color: #FFD700; font-weight: 800; text-transform: uppercase; font-size: 1.05em; border-bottom: 2px solid #FFD700; padding-bottom: 8px; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255,215,0,0.3);">Quarter-Finals</div><div style="width: 18%; text-align: center; color: #FFD700; font-weight: 800; text-transform: uppercase; font-size: 1.05em; border-bottom: 2px solid #FFD700; padding-bottom: 8px; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255,215,0,0.3);">Semi-Finals</div><div style="width: 18%; text-align: center; color: #FFD700; font-weight: 800; text-transform: uppercase; font-size: 1.05em; border-bottom: 2px solid #FFD700; padding-bottom: 8px; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255,215,0,0.3);">Final & Champion</div></div>'
