@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-25T10:42:05+05:30",
+  "last_updated": "2026-06-26T14:04:52+05:30",
   "matches": [
     {
       "away_score": 0,
@@ -594,6 +594,72 @@
       "match_number": 54,
       "stage": "group_stage",
       "winner": "Morocco"
+    },
+    {
+      "away_score": 2,
+      "away_team": "Ivory Coast",
+      "date": "2026-06-25",
+      "group": "E",
+      "home_score": 0,
+      "home_team": "Curacao",
+      "match_number": 55,
+      "stage": "group_stage",
+      "winner": "Ivory Coast"
+    },
+    {
+      "away_score": 1,
+      "away_team": "Germany",
+      "date": "2026-06-25",
+      "group": "E",
+      "home_score": 2,
+      "home_team": "Ecuador",
+      "match_number": 56,
+      "stage": "group_stage",
+      "winner": "Ecuador"
+    },
+    {
+      "away_score": 1,
+      "away_team": "Sweden",
+      "date": "2026-06-25",
+      "group": "F",
+      "home_score": 1,
+      "home_team": "Japan",
+      "match_number": 57,
+      "stage": "group_stage",
+      "winner": null
+    },
+    {
+      "away_score": 3,
+      "away_team": "Netherlands",
+      "date": "2026-06-25",
+      "group": "F",
+      "home_score": 1,
+      "home_team": "Tunisia",
+      "match_number": 58,
+      "stage": "group_stage",
+      "winner": "Netherlands"
+    },
+    {
+      "away_score": 2,
+      "away_team": "USA",
+      "date": "2026-06-25",
+      "group": "D",
+      "home_score": 3,
+      "home_team": "Turkey",
+      "match_number": 59,
+      "stage": "group_stage",
+      "winner": "Turkey"
+    },
+    {
+      "away_score": 0,
+      "away_team": "Australia",
+      "date": "2026-06-25",
+      "group": "D",
+      "home_score": 0,
+      "home_team": "Paraguay",
+      "match_number": 60,
+      "stage": "group_stage",
+      "winner": null
     }
   ]
 }

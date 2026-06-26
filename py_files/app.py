@@ -634,6 +634,31 @@ def get_cached_prediction(team_a, team_b, _pipeline):
     probs = _pipeline.predict_proba([feat])[0]
     return float(probs[1]), float(probs[0])
 
+def calculate_model_accuracy_stats(completed_matches_list, _pipeline):
+    correct_count = 0
+    total_count = 0
+    for match in completed_matches_list:
+        home_team = match.get("home_team")
+        away_team = match.get("away_team")
+        winner = match.get("winner")
+        
+        # Get predictions
+        prob_home, prob_away = get_cached_prediction(home_team, away_team, _pipeline)
+        if prob_home > prob_away:
+            pred_winner = home_team
+        elif prob_away > prob_home:
+            pred_winner = away_team
+        else:
+            pred_winner = "Draw"
+            
+        actual_winner = winner if winner != "Draw" and winner is not None else "Draw"
+        if pred_winner == actual_winner:
+            correct_count += 1
+        total_count += 1
+        
+    percentage = (correct_count / total_count * 100) if total_count > 0 else 0.0
+    return total_count, correct_count, percentage
+
 # Generate Group Stage round-robin pairings mathematically (72 games total)
 group_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
 group_fixtures = []
@@ -1128,14 +1153,19 @@ with tab3:
     completed_count = len(completed_matches)
     remaining_count = max(0, 104 - completed_count)
     
+    # Calculate model accuracy dynamically
+    total_pred, correct_pred, accuracy_pct = calculate_model_accuracy_stats(completed_matches, pipeline)
+    
     # Hero status metrics
     st.markdown("### 📊 Live Tournament Status")
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.metric(label="Matches Completed", value=f"{completed_count} / 104")
     with col2:
-        st.metric(label="Matches Remaining", value=f"{remaining_count}")
+        st.metric(label="Model Accuracy", value=f"{accuracy_pct:.1f}%", delta=f"{correct_pred} / {total_pred} Correct", delta_color="off")
     with col3:
+        st.metric(label="Matches Remaining", value=f"{remaining_count}")
+    with col4:
         st.metric(label="Last Updated", value=last_updated_display)
         
     # 2. Invariant Standings & Probabilities Load (Utilizing globally loaded live_probs and baseline_probs)
