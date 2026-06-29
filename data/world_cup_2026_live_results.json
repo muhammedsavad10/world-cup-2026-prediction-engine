@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-27T11:07:33+05:30",
+  "last_updated": "2026-06-29T07:13:10+05:30",
   "matches": [
     {
       "away_score": 0,
@@ -726,6 +726,83 @@
       "match_number": 66,
       "stage": "group_stage",
       "winner": null
+    },
+    {
+      "away_score": 2,
+      "away_team": "England",
+      "date": "2026-06-27",
+      "group": "L",
+      "home_score": 0,
+      "home_team": "Panama",
+      "match_number": 67,
+      "stage": "group_stage",
+      "winner": "England"
+    },
+    {
+      "away_score": 1,
+      "away_team": "Ghana",
+      "date": "2026-06-27",
+      "group": "L",
+      "home_score": 2,
+      "home_team": "Croatia",
+      "match_number": 68,
+      "stage": "group_stage",
+      "winner": "Croatia"
+    },
+    {
+      "away_score": 3,
+      "away_team": "Austria",
+      "date": "2026-06-27",
+      "group": "J",
+      "home_score": 3,
+      "home_team": "Algeria",
+      "match_number": 69,
+      "stage": "group_stage",
+      "winner": null
+    },
+    {
+      "away_score": 3,
+      "away_team": "Argentina",
+      "date": "2026-06-27",
+      "group": "J",
+      "home_score": 1,
+      "home_team": "Jordan",
+      "match_number": 70,
+      "stage": "group_stage",
+      "winner": "Argentina"
+    },
+    {
+      "away_score": 0,
+      "away_team": "Portugal",
+      "date": "2026-06-27",
+      "group": "K",
+      "home_score": 0,
+      "home_team": "Colombia",
+      "match_number": 71,
+      "stage": "group_stage",
+      "winner": null
+    },
+    {
+      "away_score": 1,
+      "away_team": "Uzbekistan",
+      "date": "2026-06-27",
+      "group": "K",
+      "home_score": 3,
+      "home_team": "DR Congo",
+      "match_number": 72,
+      "stage": "group_stage",
+      "winner": "DR Congo"
+    },
+    {
+      "away_score": 1,
+      "away_team": "Canada",
+      "date": "2026-06-28",
+      "group": null,
+      "home_score": 0,
+      "home_team": "South Africa",
+      "match_number": 73,
+      "stage": "round_of_32",
+      "winner": "Canada"
     }
   ]
 }
